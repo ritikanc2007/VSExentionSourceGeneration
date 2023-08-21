@@ -1,0 +1,173 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Receivers\**" />
+    <Compile Remove="Templates\**" />
+    <EmbeddedResource Remove="Receivers\**" />
+    <EmbeddedResource Remove="Templates\**" />
+    <None Remove="Receivers\**" />
+    <None Remove="Templates\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Definitions\AttributeInfo.cs" />
+    <Compile Remove="Definitions\BaseDefinition.cs" />
+    <Compile Remove="Definitions\ClassDefinition.cs" />
+    <Compile Remove="Definitions\InterfaceDefinition.cs" />
+    <Compile Remove="Definitions\TypeDefinitionInfo.cs" />
+    <Compile Remove="Definitions\FolderAndNamespacePath.cs" />
+    <Compile Remove="Definitions\GeneratorAttributeInfo.cs" />
+    <Compile Remove="Definitions\TypeDefinitionInfo.cs" />
+    <Compile Remove="Definitions\MemberDefinition.cs" />
+    <Compile Remove="GenerateServiceAttribute.cs" />
+    <Compile Remove="ServiceGenerator.cs" />
+    <Compile Remove="StringExtensions.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="DTOSampleAttributes.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.CodeDom" Version="7.0.0" />
+	</ItemGroup>
+  <ItemGroup>
+    <Compile Update="Generators\Controllers\Templates\ModelsController.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ModelsController.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\CQRS\Templates\Commands\CQRSModelCommand.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CQRSModelCommand.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\CQRS\Templates\Commands\CQRSModelCommandHandler.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CQRSModelCommandHandler.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\CQRS\Templates\Commands\CQRSModelCommandValidator.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CQRSModelCommandValidator.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\CQRS\Templates\Queries\CQRSModelQueryHandler.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CQRSModelQueryHandler.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\CQRS\Templates\Queries\CQRSModelQueryRequest.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CQRSModelQueryRequest.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\CQRS\Templates\Queries\CQRSModelQueryValidator.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CQRSModelQueryValidator.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\Dependencies\DependencyRegistrationTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DependencyRegistrationTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\DTO\Template\ModelDTO.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ModelDTO.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\GlobalUsings\GlobalUsingTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>GlobalUsingTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\MapperProfiles\MapperProfileTemplate.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MapperProfileTemplate.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\Repositories\Service\Template\IModelsRepository.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>IModelsRepository.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Generators\Repositories\Service\Template\ModelsRepository.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ModelsRepository.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Generators\Controllers\Templates\ModelsController.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ModelsController.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\CQRS\Templates\Commands\CQRSModelCommand.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CQRSModelCommand.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\CQRS\Templates\Commands\CQRSModelCommandHandler.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CQRSModelCommandHandler.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\CQRS\Templates\Commands\CQRSModelCommandValidator.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CQRSModelCommandValidator.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\CQRS\Templates\Queries\CQRSModelQueryHandler.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CQRSModelQueryHandler.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\CQRS\Templates\Queries\CQRSModelQueryRequest.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CQRSModelQueryRequest.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\CQRS\Templates\Queries\CQRSModelQueryValidator.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>CQRSModelQueryValidator.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\Dependencies\DependencyRegistrationTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>DependencyRegistrationTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\DTO\Template\ModelDTO.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ModelDTO.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\GlobalUsings\GlobalUsingTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>GlobalUsingTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\MapperProfiles\MapperProfileTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>MapperProfileTemplate.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\Repositories\Service\Template\IModelsRepository.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>IModelsRepository.cs</LastGenOutput>
+    </None>
+    <None Update="Generators\Repositories\Service\Template\ModelsRepository.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ModelsRepository.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SourceGeneratorParser\SourceGeneratorParser.csproj" />
+  </ItemGroup>
+
+</Project>

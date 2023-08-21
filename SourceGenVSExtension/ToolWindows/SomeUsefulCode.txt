@@ -1,0 +1,391 @@
+﻿using Community.VisualStudio.Toolkit;
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Data;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text;
+using EnvDTE;
+using Microsoft.CSharp;
+using System.CodeDom.Compiler;
+using System.CodeDom;
+using Microsoft.VisualStudio.Shell.Interop;
+using System.IO;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis;
+using System.Linq;
+
+using SourceGeneratorParser;
+using SourceGeneratorParser.Parsers;
+using SourceGeneratorParser.Parsers.Common;
+using SourceGeneratorParser.Models.Types;
+using System.Windows.Controls;
+using Microsoft.VisualStudio.PlatformUI;
+
+namespace ToolWindow
+{
+    public partial class MyToolWindowControl : UserControl
+    {
+        public MyToolWindowControl(Version vsVersion)
+        {
+            InitializeComponent();
+
+            lblHeadline.Content = $"Visual Studio v{vsVersion}";
+
+            VS.Events.SolutionEvents.OnAfterOpenSolution += SolutionEvents_OnAfterOpenSolution;
+
+           
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            VS.MessageBox.Show("ToolWindow", "Button clicked from XAML code");
+
+            VS.Events.SolutionEvents.OnAfterOpenSolution += SolutionEvents_OnAfterOpenSolution;
+        }
+
+        private void SolutionEvents_OnAfterOpenSolution(Community.VisualStudio.Toolkit.Solution obj)
+        {
+            List<ProjectItem> Projects = GetProjects();
+            SourceTreeView.ItemsSource = Projects;
+        }
+
+        async void SelectedClick(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            //GeneratorSettings settings = new GeneratorSettings();
+            //    settings.ShowDialog();
+
+            // CollectMetadata();
+            return;
+
+            //TreeViewItem selectedItem = SourceTreeView.SelectedItem as TreeViewItem;
+            //string fileName = @"C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\Restarted.Generators\ServiceGenerator.cs";
+
+            // Access open project document
+            // access seleced text
+
+            var solution = VS.Solutions.GetCurrentSolution();
+            var projects = solution.Children;
+
+
+            var projHierC = await VS.Solutions.GetAllProjectHierarchiesAsync();
+
+            foreach (var proj in projHierC)
+            {
+                // var projItem = proj as ProjectItem;
+
+                var context = proj.GetActiveProjectContext();
+
+                //foreach (var projItem in proj.)
+                //{
+                //    foreach (var sourceFiles in projItem.Children)
+                //    {
+
+                //        foreach (var file in sourceFiles.Children)
+                //        {
+                //        }
+                //    }
+                //}
+            }
+
+
+            DocumentView docView = await VS.Documents.GetActiveDocumentViewAsync();
+            if (docView?.TextView == null) return; //not a text window
+            SnapshotPoint position = docView.TextView.Caret.Position.BufferPosition;
+            // get file name of the selected text
+            string fileName = docView.TextView.TextBuffer.GetFileName();
+
+            // find solution path 
+            //Find the SolutionItem from an absolute file path.
+            PhysicalFile item = await PhysicalFile.FromFileAsync(fileName);
+
+            //docView.TextBuffer?.Insert(position, "some text"); // Inserts text at the caret
+
+            // USE this when you open file from SOLUTION
+            // await VS.Documents.OpenViaProjectAsync(fileName);
+
+            //Open Project file in preview tab
+            await VS.Documents.OpenInPreviewTabAsync(fileName);
+            //var root = CSharpSyntaxTree.ParseText( File.ReadAllText(fileName)).GetCompilationUnitRoot();
+
+            //await VS.Documents.OpenAsync(fileName);
+        }
+
+        void OptionClick(object sender, RoutedEventArgs e)
+        {
+            //Code 5
+            var selectedItem = SourceTreeView.SelectedItem;
+            MenuItem item = sender as MenuItem;
+            if (selectedItem != null && item != null)
+            {
+                string menuItemName = item.Name;
+                // string menuItemHeader = item.Header.ToString();
+
+                DynamicForm();
+            }
+
+        }
+
+
+        List<ProjectItem> GetProjects()
+        {
+            List<ProjectItem> projectList = new List<ProjectItem>();
+            var solution = VS.Solutions.GetCurrentSolution();
+
+            ProjectItem solutionItem = new ProjectItem(solution.Name, solution.Type.ToString(), solution.FullPath);
+                
+            projectList.Add(solutionItem);
+            
+           
+                loadChildren(solution.Children, ref solutionItem);
+            
+
+            return projectList;
+        }
+
+        void loadChildren(IEnumerable<SolutionItem> items , ref ProjectItem parentItem)
+        {
+            foreach (var ch in items)
+            {
+                
+                ProjectItem childCode = new ProjectItem(ch.Name,ch.Type.ToString(), ch.FullPath);
+                parentItem.Projects.Add(childCode);
+                loadChildren(ch.Children, ref childCode);
+            }
+        }
+        List<Project> GetProjectsOld()
+        {
+            List<Project> list = new List<Project>();
+
+            Project project = new Project("Restarted.API", @"Project");
+            project.Files.Add(new SourceFile("UsersController.cs", "Source"));
+            project.Files.Add(new SourceFile("BranchesController.cs", "Source"));
+
+            list.Add(project);
+
+            project = new Project("Restarted.Application", @"Project");
+            project.Files.Add(new SourceFile("UsersQuery.cs", "Source"));
+            project.Files.Add(new SourceFile("UsersHandler.cs", "Source"));
+
+            project.Files.Add(new SourceFile("BranchesQuery.cs", "Source"));
+            project.Files.Add(new SourceFile("BranchesHandler.cs", "Source"));
+
+            list.Add(project);
+
+            project = new Project("Restarted.Infrastructure", @"Project");
+            project.Files.Add(new SourceFile("IUserRepository.cs", "Source"));
+            project.Files.Add(new SourceFile("UserRepository.cs", "Source"));
+
+            project.Files.Add(new SourceFile("IBranchRepository.cs", "Source"));
+            project.Files.Add(new SourceFile("BranchRepository.cs", "Source"));
+
+            list.Add(project);
+
+            list.Where(o => o.Name !="").ToList();
+
+            return list;
+
+        }
+
+
+        async void CollectMetadata()
+        {
+
+            DocumentView docView = await VS.Documents.GetActiveDocumentViewAsync();
+            if (docView?.TextView == null) return; //not a text window
+            SnapshotPoint position = docView.TextView.Caret.Position.BufferPosition;
+            // get file name of the selected text
+            string fileName = docView.TextView.TextBuffer.GetFileName();
+
+            string source = File.ReadAllText(fileName);
+
+            IParser Parser = TransformFactory.Create(ParserType.SyntaxTree);
+            TypeDefinitionInfo typeDefinition = Parser.Parse(new ParsingDetails(source));
+
+
+            //var root = CSharpSyntaxTree.ParseText(source).GetCompilationUnitRoot();
+
+            //SyntaxNode typeDeclarationSyntaxNode = null;
+            //FindClassSyntax(root.ChildNodes(), out typeDeclarationSyntaxNode);
+
+            //CompilationUnitVisitor visitor = new CompilationUnitVisitor();
+
+            //visitor.Visit(typeDeclarationSyntaxNode);
+
+            //var classDef = visitor.ClassDefinition;
+            //var interfaceDef = visitor.InterfaceDefinition;
+            ////root.Accept(new ClassSyntaxVisitor());
+
+            //GeneratorContext generatorContext = new GeneratorContext();
+            //if (classDef != null)
+            //{
+            //   var pluralService= System.Data.Entity.Design.PluralizationServices.PluralizationService.CreateService(new System.Globalization.CultureInfo("en-US"));
+
+            //    string pluralEntityName=  pluralService.Pluralize(classDef.Name);
+            //    AttributeMetaDataDto dtoData = new AttributeMetaDataDto()
+            //    {
+            //        AllPropertiesNullable = true,
+            //        Members = @"Id,Name:string,UserName, Address:AddressDTO, Contact:ContactDTO, Roles:List<RoleDTO>",
+            //        Convention="{entity}DTO"
+
+            //    };      
+
+
+            //var filesDto = DTOService.Process(classDef, generatorContext,dtoData);
+            //}
+
+            //if (interfaceDef != null)
+            //{
+            //}
+
+        }
+
+
+        void FindClassSyntax(IEnumerable<SyntaxNode> childNodels, out SyntaxNode typeDeclarationSyntaxNode)
+        {
+            typeDeclarationSyntaxNode = null;
+            foreach (var node in childNodels)
+            {
+                if (node is ClassDeclarationSyntax|| node is InterfaceDeclarationSyntax)
+                {
+                    typeDeclarationSyntaxNode = node;
+                    return;
+                }
+
+                FindClassSyntax(node.ChildNodes(), out typeDeclarationSyntaxNode);
+            }
+
+
+        }
+
+        public System.Windows.Forms.Form form;
+        public Dictionary<string, string> settings = new Dictionary<string, string>();
+        public void DynamicForm()
+        {
+            System.Windows.Forms.Form form = new System.Windows.Forms.Form();
+            form.Location = new System.Drawing.Point(300, 200);
+
+            
+            form.Width = 700;
+            form.SuspendLayout();
+            int usedHeight = 0;
+
+            settings.Add("Convention", "{entity}DTO");
+            settings.Add("PluralName", "");
+            settings.Add("Members", "Id,Name,Address,Phone,Email");
+            settings.Add("AllNull", "true");
+            foreach (KeyValuePair<string, string> kvp in settings)
+            {
+                System.Windows.Forms.Label label = new System.Windows.Forms.Label();
+                label.Text = kvp.Key;
+                label.Top = usedHeight + 7; label.Left = 5;
+                form.Controls.Add(label);
+
+                System.Windows.Forms.TextBox textBox = new System.Windows.Forms.TextBox();
+                textBox.Text = kvp.Value;
+                textBox.Tag = kvp.Key;
+                textBox.Top = usedHeight + 5; 
+                textBox.Left = 150;
+                textBox.Width = 300;
+                
+                //textBox.Anchor = System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right;
+                form.Controls.Add(textBox);
+
+                usedHeight += textBox.Height + 5;
+            }
+            System.Windows.Forms.Button btnSave = new System.Windows.Forms.Button();
+                btnSave.Name="btnSave";
+            btnSave.Text="Save";
+            btnSave.Click +=BtnSave_Click;
+            form.Controls.Add(btnSave);
+            System.Windows.Forms.Button btnCancel = new System.Windows.Forms.Button();
+            btnCancel.Text="Cancel";
+            btnCancel.Name="btnCancel";
+            btnCancel.Click+=BtnCancel_Click;
+            form.Controls.Add(btnCancel);
+
+
+            form.ResumeLayout();
+            form.Height = usedHeight + 10;
+            form.ShowDialog();
+        }
+
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            Dictionary<string, string> settings = new Dictionary<string, string>();
+            foreach (TextBox item in form.Controls)
+            {
+                settings.Add(item.Tag.ToString(), item.Text);
+            }
+
+            
+        }
+
+        private void BtnSave_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    #region Classes
+
+    public class ProjectItem : SourceBase
+    {
+        public ProjectItem(string name, string itemType)
+        {
+            Name=name;
+            ItemType=itemType;
+
+            Projects = new List<ProjectItem>();
+        }
+        public ProjectItem(string name, string itemType, string path)
+        {
+            Name=name;
+            ItemType=itemType;
+            Path=path;
+            Projects = new List<ProjectItem>();
+        }
+        public List<ProjectItem> Projects { get; set; }
+    }
+    public class SourceBase
+    {
+        public string Name { get; set; }
+
+        public string ItemType { get; set; }
+
+        public string Path { get; set; }
+    }
+    public class Project : SourceBase
+    {
+        public Project(string name, string itemType)
+        {
+            Name=name;
+            ItemType=itemType;
+            
+            Files = new List<SourceFile>();
+        }
+        public Project(string name, string itemType, string path)
+        {
+            Name=name;
+            ItemType=itemType;
+            Path=path;
+            Files = new List<SourceFile>();
+        }
+        public List<SourceFile> Files { get; set; }
+    }
+
+    public class SourceFile : SourceBase
+    {
+        public SourceFile(string name, string itemType)
+        {
+            Name=name;
+            ItemType=itemType;
+            
+        }
+    }
+
+
+
+    #endregion
+}

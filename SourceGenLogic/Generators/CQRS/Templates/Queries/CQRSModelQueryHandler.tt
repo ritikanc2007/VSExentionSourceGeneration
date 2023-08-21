@@ -1,0 +1,42 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="SourceGeneratorParser.Models.Types" #>
+<#@ import namespace="SourceGeneratorParser.Models.Metadata" #>
+
+using MediatR;
+
+
+namespace <#= Parameter.PreferredNameSpace #>
+{
+    public class <#=Parameter.CQRSRequestName#>Handler : IRequestHandler<<#=Parameter.CQRSRequestName#>, <#=Parameter.CurrentMethod.ReturnType #>>
+    {
+        private readonly <#=Parameter.TypeDefinitionInfo.Name#> repository;
+
+        public <#=Parameter.CQRSRequestName#>Handler(<#=Parameter.TypeDefinitionInfo.Name#> repository)
+        {
+
+            this.repository=repository;
+        }
+        public async Task<<#=Parameter.CurrentMethod.ReturnType #>> Handle(<#=Parameter.CQRSRequestName#> request, CancellationToken cancellationToken)
+        {
+           
+
+            return  repository.<#=Parameter.CurrentMethod.Name#>(
+             <#
+                int index=0;
+                foreach (ArgumentItemInfo prop in Parameter.CurrentMethod.Arguments)
+                 { 
+                 index +=1;
+                #>
+       request.<#=prop.Name #><#= (index == Parameter.CurrentMethod.Arguments.Count) ? "" :"," #>
+      
+            <# } // end of foreach#>
+            );
+        }
+
+
+    }
+}

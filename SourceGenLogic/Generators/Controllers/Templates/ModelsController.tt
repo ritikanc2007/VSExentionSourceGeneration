@@ -1,0 +1,89 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+using AutoMapper;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+
+namespace <#=Parameter.PreferredNameSpace#>
+{
+    [AllowAnonymous]
+    [ApiController]
+    [Route("api/[controller]")]
+    public class <#=Parameter.SourceFileName#> : ControllerBase
+    {
+
+        private readonly IMediator mediator;
+        private readonly IMapper mapper;
+
+        public <#=Parameter.SourceFileName#>(IMediator mediator, IMapper mapper)
+        {
+            this.mediator=mediator;
+            this.mapper=mapper;
+        }
+         <#//START-FOR           
+            foreach (var param in Parameter.Actions)
+            {              
+            #>
+                <# //START-GET-ACTION
+                    if(param.HttpAction=="GET")
+                    {
+                #>
+                       [HttpGet("<#=param.Route#>")]
+                        public async Task<IActionResult> <#=param.MethodName#>(<#=param.MethodParameterDefinition#>)
+                        {
+
+                            var result = await this.mediator.Send(new <#=param.CQRSRequestName#>(<#=param.MethodParametersString#>)).Result;
+                            return Ok(result);
+                        }
+                <#  }//END-GET-ACTION#>
+
+                <# //START-POST-ACTION
+                    if(param.HttpAction=="POST")
+                    {
+                #>
+                        [HttpPost("<#=param.Route#>")]
+                        public async Task<IActionResult> <#=param.MethodName#>(<#=param.MethodParameterDefinition#>)
+                        {
+
+                            var result = await this.mediator.Send(new <#=param.CQRSRequestName#>(<#=param.MethodParametersString#>)).Result;
+                            return Ok(result);
+                        }
+                <#  }//END-POST-ACTION#>
+
+                <# //START-PUT-ACTION
+                    if(param.HttpAction=="PUT")
+                    {
+                #>
+                        [HttpPut("<#=param.Route#>")]
+                        public async Task<IActionResult> <#=param.MethodName#>(<#=param.MethodParameterDefinition#>)
+                        {
+
+                            var result = await this.mediator.Send(new <#=param.CQRSRequestName#>(<#=param.MethodParametersString#>)).Result;
+                            return Ok(result);
+                        }
+                <#  }//END-PUT-ACTION#>
+
+                <# //START-DELETE-ACTION
+                    if(param.HttpAction=="DELETE")
+                    {
+                #>
+                        [HttpDelete("<#=param.Route#>")]
+                        public async Task<IActionResult> <#=param.MethodName#>(<#=param.MethodParameterDefinition#>)
+                        {
+
+                            var result = await this.mediator.Send(new <#=param.CQRSRequestName#>(<#=param.MethodParametersString#>)).Result;
+                            return Ok(result);
+                        }
+                <#  }//END-DELETE-ACTION#>
+        
+         <# }//END-FOR #>
+
+
+        
+    }
+}

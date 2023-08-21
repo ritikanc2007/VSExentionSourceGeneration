@@ -1,0 +1,126 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Restarted.Generators.Generators.Repositories.Service.Template" #>
+
+using System.Collections.Generic;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+
+
+namespace <#= Parameter.PreferredNameSpace #>
+{
+    public class <#=Parameter.SourceFileName#> : I<#=Parameter.SourceFileName#>
+    {
+        private readonly <#= Parameter.DatabaseContextName#> context;
+        private readonly IMapper mapper;
+
+        public <#=Parameter.SourceFileName#>(<#= Parameter.DatabaseContextName#> context, IMapper mapper)
+        {
+            this.context=context;
+            this.mapper=mapper;
+        }
+
+       
+        public async Task<int> Add(<#=Parameter.ClassName#>DTO entityDto)
+        {
+            var entity = this.mapper.Map<<#=Parameter.ClassName#>>(entityDto);
+            this.context.Add(entity);
+            return await this.context.SaveChangesAsync();
+
+        }
+
+        public Task<int> Delete(int id)
+        {
+            var entity = this.context.<#=PluralClassName#>
+                  .Where(u => u.Id == id)
+                  .FirstOrDefault();
+
+            
+            if (entity == null)
+                return Task.FromResult(0);
+
+            if (context?.Entry(entity).State == EntityState.Detached)
+            {
+                context.Attach(entity);
+            }
+            
+            this.context.Remove(entity);
+
+            return this.context.SaveChangesAsync();
+        }
+
+        public async Task<<#=Parameter.ClassName#>DTO> Get(int id)
+        {
+            var result = await this.context.<#=PluralClassName#>
+                     .FirstOrDefaultAsync(o => o.Id == id);
+
+            var dto = this.mapper.Map<<#=Parameter.ClassName#>DTO>(result);
+
+            return dto;
+        }
+
+
+        public async Task<IEnumerable<<#=Parameter.ClassName#>DTO>> GetAll()
+        {
+            return await this.context.<#=PluralClassName#>
+                .ProjectTo<<#=Parameter.ClassName#>DTO>(mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
+        public async Task<PagedResponse<IEnumerable<<#=Parameter.ClassName#>ListDTO>>> GetAll(int rowIndex, int pageSize)
+        {
+            int totalCount = this.context.<#=PluralClassName#>.Count();
+            
+              var data = this.context.<#=PluralClassName#>
+                 .ProjectTo<<#=Parameter.ClassName#>ListDTO>(mapper.ConfigurationProvider)
+                 .Skip((rowIndex  -1) * pageSize)
+                 .Take(pageSize)
+                 .AsEnumerable();
+
+            return await Task.FromResult(new PagedResponse<IEnumerable<<#=Parameter.ClassName#>ListDTO>>(data, rowIndex, pageSize, totalCount));
+        }
+
+        public async Task<bool> IsExists(string name)
+        {
+            return await this.context
+                 .<#=PluralClassName#>
+                 .Where(o => o.Name == name)
+                 .CountAsync() >0;
+        }
+
+
+
+        public Task<int> Update(<#=Parameter.ClassName#>DTO entityDto)
+        {
+            var entity = this.context
+                            .<#=PluralClassName#>
+                            .Where(u => u.Id == entityDto.Id)
+                            .FirstOrDefault();
+
+            if (entity == null)
+                return Task.FromResult(0);
+
+            this.mapper.Map(entityDto, entity);
+           
+  
+            this.context.Entry(entity).State = EntityState.Modified;
+
+            return this.context.SaveChangesAsync();
+        }
+
+         public async Task<IEnumerable<NameListDTO?>> Lookup()
+        {
+            return await this.context.<#=PluralClassName#>
+                  .OrderBy(o => o.Name)
+                  .Select(o =>
+                  new NameListDTO { Id = o.Id, Name= o.Name }
+                  ).ToListAsync();;
+        }
+
+        
+    }
+}
