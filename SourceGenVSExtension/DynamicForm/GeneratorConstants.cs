@@ -11,6 +11,7 @@ namespace ToolWindow.DynamicForm
     {
         public const string CONST_GENERATOR_PATHS_FILE = "GeneratorPathsAndNameSpace.json";
         public const string CONST_GENERATOR_CONVENTION_FILE = "ConventionSettings.json";
+        public const string CONST_GENERATOR_CONTEXT_FILE = "SourceGeneratorContext.json";
     }
 
 }

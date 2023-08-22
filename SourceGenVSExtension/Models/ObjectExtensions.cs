@@ -27,7 +27,7 @@ namespace ToolWindow.DynamicForm.Model
             return someObject;
         }
 
-
+        
         public static T ToSettings<T>(this List<GeneratorSetting> source)
       where T : class, new()
         {

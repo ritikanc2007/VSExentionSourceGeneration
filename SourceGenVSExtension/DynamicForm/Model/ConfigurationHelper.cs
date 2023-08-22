@@ -21,7 +21,7 @@ namespace ToolWindow.DynamicForm.Model
             return settings; //settings.ToSettings<PathSetting>();
         }
 
-        public static ConventionSetting ConventionSettings()
+        public static ConventionSetting ConventionSettings() //Class/Interface name conventions
         {
             List<GeneratorSetting> settings = SerializationHelper.DeserializeSettings(GeneratorConstants.CONST_GENERATOR_CONVENTION_FILE);
             if (settings == null) return null;
@@ -59,7 +59,11 @@ namespace ToolWindow.DynamicForm.Model
 
         public string CQRS { get; set; }
 
-       
+        public string DI { get; set; }
 
+        public string Mapper { get; set; }
+
+
+        public string GlobalUsing { get; set; }
     }
 }

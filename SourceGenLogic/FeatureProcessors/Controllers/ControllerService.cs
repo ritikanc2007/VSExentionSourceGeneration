@@ -50,17 +50,20 @@ namespace Restarted.Generators.FeatureProcessors.Controllers
             //    data.ControllerName
             //    data.GenerationPath
             //    data.Actions
+            
 
             ApiTemplateParameter parameter = new ApiTemplateParameter(typeDefinitionInfo, data.NameSpace, data.ControllerName,  data.EntityName, data.PluralName, data.Actions);
 
             // Process Validator
             ProcessResult processResult = ProcessControllerTemplate(parameter, typeDefinitionInfo);
 
-            string pathGenerated = FileService.GenerateSourceAtFolderLocation(data.GenerationPath, processResult.FileName, processResult.SourceCode);
+            var finalReplacedPath= FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
+
+            string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath, processResult.FileName, processResult.SourceCode);
             files.Add(pathGenerated);
 
             //GENERATORCONTEXT Adding namesapces
-            //generatorContext.NameSpaces.Add(new NameSpaceInfo( TypeOfCode.Controller, controller, param.PreferredNameSpace, processResult.FileName));
+            generatorContext.NameSpaces.Add(new NameSpaceInfo( TypeOfCode.Controller, data.ControllerName, data.NameSpace, pathGenerated));
 
 
 

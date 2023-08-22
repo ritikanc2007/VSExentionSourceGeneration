@@ -1,0 +1,77 @@
+@host=https://localhost:7101
+@hostId=dc16d820-a297-4618-88c4-570fedd91cdf
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCdWJlckRpbm5lci5Eb21haW4uVXNlcnMuVmFsdWVPYmplY3RzLlVzZXJJZCIsImdpdmVuX25hbWUiOiJUYWptYSIsImZhbWlseV9uYW1lIjoiSGVpbnoiLCJqdGkiOiI5NmU1Y2U5MS0wY2NiLTQwNmUtYmIyMy05MTA2YjZhOTI2OWMiLCJleHAiOjE2NzMzNjQ4NzUsImlzcyI6IkJ1YmVyRGlubmVyIiwiYXVkIjoiQnViZXJEaW5uZXIifQ.Rgi_iJKY5FV-DRgqQCxKxXm3VI7GXs7HTW68zW1rCbA
+
+## Branch By Id
+GET {{host}}/api/branches/13
+Content-Type: application/json
+If-None-Match:Ny8yNi8yMDIzIDI6NTM6MTcgUE0=
+Authorization: Bearer {{token}}
+###
+
+## Branches by pageindex and pagesize
+POST {{host}}/api/branches/paged
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "searchfilter": "",
+  "pageIndex": 1,
+  "pageSize": 10
+}
+###
+## Branches Id, NAme list
+GET {{host}}/api/branches/lookup
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+## Check duplicate branch name exists duplicate/{nametoCheck}
+GET {{host}}/api/branches/duplicate/Maruti
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+## Create Branch
+
+POST https://localhost:7101/api/branches
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Test-Branch-003",
+  "branchCode": "BR-001",
+  "organizationId": 108,
+  "businessType": 1,
+  "isActive": true,
+  "isDeleted": false
+}
+
+###
+## Update Branch
+PUT https://localhost:7101/api/branches?id=1013
+Content-Type: application/json
+If-Match:Ny8yNi8yMDIzIDI6NTM6MTcgUE0=
+Authorization: Bearer {{token}}
+
+{
+    "id": 13,
+    "name": "asdfsadfasdfasdfasdfsfaasdfsadfafff",
+  "branchCode": "test",
+  "organizationId": 108,
+  "businessType": 1,
+  "contactId": null,
+  "addressId": null,
+  "isActive": false,
+  "isDeleted": false,
+  "address": null,
+  "contact": null
+  
+  
+}
+
+###
+## Delete Branch
+DELETE https://localhost:7101/api/branches/15
+Content-Type: application/json
+Authorization: Bearer {{token}}

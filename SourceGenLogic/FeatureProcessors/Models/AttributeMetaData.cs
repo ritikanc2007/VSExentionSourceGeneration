@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Composition.Convention;
 using System.Text;
 
 namespace Restarted.Generators.FeatureProcessors.Models
@@ -12,25 +13,23 @@ namespace Restarted.Generators.FeatureProcessors.Models
 
         }
         public string GenerationPath { get; set; }
-        //internal FileParamInfo FileInfo { get; set; }
+        public FileParamInfo PathConvention { get; set; }
     }
 
-    internal class FileParamInfo
+    public class FileParamInfo
     {
-        public FileParamInfo(string featureName, string featureModuleName, string generationPath, string methodName)
+        public FileParamInfo(string conventionPath,  string featureName, string featureModuleName,  string methodName)
         {
             FeatureName=featureName;
             FeatureModuleName=featureModuleName;
-            GenerationPath=generationPath;
+            ConventionPath= conventionPath;
             MethodName=methodName;
         }
 
-        internal string FeatureName { get; set; }
-        internal string FeatureModuleName { get; set; }
-        internal string GenerationPath { get; set; }
-        internal string MethodName { get; set; }
-
-        
+        public string FeatureName { get; set; }
+        public string FeatureModuleName { get; set; }
+        public string MethodName { get; set; }
+        public string ConventionPath { get; set;}
     }
 
 

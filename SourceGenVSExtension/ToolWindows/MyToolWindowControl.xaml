@@ -13,9 +13,9 @@
              d:DesignHeight="300" d:DesignWidth="300"
              Name="MyToolWindow">
     <Grid>
-        <StackPanel Orientation="Vertical">
+        <StackPanel Orientation="Vertical" >
             <Label x:Name="lblHeadline" Margin="10" HorizontalAlignment="Center">Source Explorer says:  Click me!!</Label>
-            <TreeView 
+            <TreeView Width="200" Height="400"
             Grid.Row="1" 
             Grid.Column="0"
             x:Name="SourceTreeView"
@@ -40,8 +40,12 @@
                                             <MenuItem Click="OptionClick" Name="REPO"  Header="Repository"></MenuItem>
                                             <MenuItem Click="OptionClick" Name="CQRS"  Header="CQRS + Controller"></MenuItem>
                                             <MenuItem Click="OptionClick" Name="CTRL"  Header="Controller"></MenuItem>
+                                            <MenuItem Click="OptionClick" Name="DI"  Header="Register DI"></MenuItem>
+                                            <MenuItem Click="OptionClick" Name="MAPPERS"  Header="Mapper Profiles"></MenuItem>
+                                            <MenuItem Click="OptionClick" Name="GLOBALUSING"  Header="Global Usings"></MenuItem>
                                             <MenuItem Click="OptionClick" Name="PATHS"  Header="Setup Paths"></MenuItem>
-                                            <MenuItem Click="OptionClick" Name="CONVENSIONS"  Header="Define Conventions"></MenuItem>
+                                            <MenuItem Click="OptionClick" Name="CONVENTIONS"  Header="Define Conventions"></MenuItem>
+                                            <MenuItem Click="OptionClick" Name="DELETE"  Header="Delete All Settings"></MenuItem>
                                             <!--<MenuItem Click="OptionClick" Name="TREEPATH"  Header="Define TREEPATH"></MenuItem>-->
                                         </ContextMenu>
                                     </TextBlock.ContextMenu>

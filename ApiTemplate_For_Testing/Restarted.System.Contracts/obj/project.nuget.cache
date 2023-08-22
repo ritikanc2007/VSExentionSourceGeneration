@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "CjAbeUGx6ayPdzP5eCbRYy4BkJelviGHRDWXTntCV9gUs0O+dZeizzSYED0ERnDRWqAhgorBYtBYsuSQpEkFbQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\TOBEDELETED\\ApiTemplate\\Restarted.System.Contracts\\Restarted.System.Contracts.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Narendra\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
+    "C:\\Users\\Narendra\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\Narendra\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

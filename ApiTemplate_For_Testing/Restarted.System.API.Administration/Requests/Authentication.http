@@ -1,0 +1,26 @@
+@host=https://localhost:7101
+@hostId=dc16d820-a297-4618-88c4-570fedd91cdf
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCdWJlckRpbm5lci5Eb21haW4uVXNlcnMuVmFsdWVPYmplY3RzLlVzZXJJZCIsImdpdmVuX25hbWUiOiJUYWptYSIsImZhbWlseV9uYW1lIjoiSGVpbnoiLCJqdGkiOiI5NmU1Y2U5MS0wY2NiLTQwNmUtYmIyMy05MTA2YjZhOTI2OWMiLCJleHAiOjE2NzMzNjQ4NzUsImlzcyI6IkJ1YmVyRGlubmVyIiwiYXVkIjoiQnViZXJEaW5uZXIifQ.Rgi_iJKY5FV-DRgqQCxKxXm3VI7GXs7HTW68zW1rCbA
+
+## LOGIN
+POST {{host}}/api/authentication/login
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "Email": "ritikanc",
+  "Password": "secretpass001"
+}
+###
+
+## REGISTER
+POST {{host}}/api/authentication/register
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "Name": "Ritika 001",
+  "Email": "ritikanc",
+  "Password": "secretpass001"
+}
+

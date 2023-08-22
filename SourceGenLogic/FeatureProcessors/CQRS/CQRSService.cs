@@ -43,8 +43,13 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
 
                 var methodData = data.MethodInfo.Where(o => o.MethodName == methodDef.Name).FirstOrDefault();
 
+                var finalReplacedPath = FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, methodDef.Name);
+                if (methodData.RequestType == "Command")
+                    finalReplacedPath = finalReplacedPath.Replace("{RequestType}", "Commands");
+                else
+                    finalReplacedPath = finalReplacedPath.Replace("{RequestType}", "Queries");
                 // Transform Template
-                var result = ProcessCQRSTemplates(typeDefinitionInfo,generatorContext, NameSpacePath, data.GenerationPath, methodData.RequestType,  methodDef, methodData.CQRSRequestName, data.PluralName);
+                var result = ProcessCQRSTemplates(typeDefinitionInfo,generatorContext, NameSpacePath, finalReplacedPath, methodData.RequestType,  methodDef, methodData.CQRSRequestName, data.PluralName);
 
                 //GENERATORCONTEXT Adding namesapces -- MOVED INSIDE TO CAPTURE ALL FILES
                // generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.CQRSActions, methodData.CQRSRequestName, NameSpacePath, data.GenerationPath));
@@ -98,7 +103,7 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
                 results.Add(result);
 
                 //GENERATORCONTEXT Adding namesapces
-                generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.CQRSActions, parameter.SourceFileName, nameSpacePath, generationPath));
+                generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.CQRSActions, parameter.SourceFileName, nameSpacePath, pathGenerated));
 
             }
 

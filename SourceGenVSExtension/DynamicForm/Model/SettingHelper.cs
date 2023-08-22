@@ -35,6 +35,12 @@ namespace WinFormsApp1.DynamicForm.Model
             string pluralName = CommonHelper.GetPluralName(typeDefinitionInfo.Name);
             string columns = ToMemberString(typeDefinitionInfo.Members);
 
+
+            //Add Feature and FeatureModule
+            settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Feature Module", "", ControlType.text));
+          
+
             // settings.Add(new GeneratorSetting("Convention", "Convention",Convension, ControlType.text)); // Remove
             settings.Add(new GeneratorSetting("Name", "DTO Name", nameValue, ControlType.text));
             //settings.Add(new GeneratorSetting("PluralName", "Plural", pluralName, ControlType.text)); // Remove 
@@ -59,6 +65,12 @@ namespace WinFormsApp1.DynamicForm.Model
            
             string members = ToMemberString(typeDefinitionInfo.Members);
 
+            //START Add Feature and FeatureModule
+            //Add Feature and FeatureModule
+            settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Feature Module", "", ControlType.text));
+
+            //END FEATURE
             settings.Add(new GeneratorSetting(ConstName, "DTO Name", nameValue, ControlType.text));
             settings.Add(new GeneratorSetting(ConstAllPropertiesNull, "All Null Properties?", AllPropertiesNull, ControlType.CheckBox));
             settings.Add(new GeneratorSetting(ConstMembers, "Members", members, ControlType.textArea));
@@ -71,6 +83,12 @@ namespace WinFormsApp1.DynamicForm.Model
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
 
             var dtoConvention = ConfigurationHelper.ConventionSettings().DTOS;
+            //START Add Feature and FeatureModule
+            //Add Feature and FeatureModule
+            settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Feature Module", "", ControlType.text));
+
+            //END FEATURE
             settings.Add(new GeneratorSetting(ConstDTOName, "DTO Name", dtoConvention.Replace("{entity}", typeDefinitionInfo.Name), ControlType.text));
             settings.Add(new GeneratorSetting(ConstEntityName, "Entity", typeDefinitionInfo.Name, ControlType.text));
             settings.Add(new GeneratorSetting(ConstDbContextName, "DB Context", "dbContext", ControlType.text)); // Remove 
@@ -81,7 +99,13 @@ namespace WinFormsApp1.DynamicForm.Model
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
 
+            //START Add Feature and FeatureModule
+            //Add Feature and FeatureModule
+            settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Feature Module", "", ControlType.text));
 
+
+            //END FEATURE
             var eventControl = new GeneratorSetting("EntityName", "Entity", "", ControlType.text, isEventControl: true, eventMethod: "EntityPluralNameAction");
             var dependentControl = new GeneratorSetting("PluralName", "Plural", "", ControlType.text);
             settings.Add(eventControl);
@@ -99,6 +123,30 @@ namespace WinFormsApp1.DynamicForm.Model
 
             return settings;
 
+        }
+        internal static List<GeneratorSetting> GetGenerateCTRLSettings(TypeDefinitionInfo typeDefinitionInfo, string initialFolderDirectory)
+        {
+            List<GeneratorSetting> settings = new List<GeneratorSetting>();
+
+            //START Add Feature and FeatureModule
+            settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Feature Module", "", ControlType.text));
+            //END FEATURE
+
+            var eventControl = new GeneratorSetting("EntityName", "Entity", "", ControlType.text, isEventControl: true, eventMethod: "EntityPluralNameAction");
+            var dependentControl = new GeneratorSetting("PluralName", "Plural", "", ControlType.text);
+            settings.Add(eventControl);
+            settings.Add(dependentControl); // Remove 
+
+
+            List<string> Methods = new List<string>();
+            foreach (var method in typeDefinitionInfo?.Methods)
+            {
+                string methodName = method.Name;
+                settings.Add(new GeneratorSetting(methodName, methodName, methodName, ControlType.CQRSControl));
+            }
+
+            return settings;
         }
 
         public static List<GeneratorSetting> GetPathSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
@@ -131,15 +179,14 @@ namespace WinFormsApp1.DynamicForm.Model
             settings.Add(new GeneratorSetting("Repositories", "Repository", "{pluralName}Repository", ControlType.text)); // Remove 
             settings.Add(new GeneratorSetting("Interfaces", "(I)Repository", "I{pluralName}Repository", ControlType.text)); // Remove 
             settings.Add(new GeneratorSetting("CQRS", "CQRS", "{methodName}{entity}Query", ControlType.text));
-
+            settings.Add(new GeneratorSetting("DI", "DI File Name", "DependencyRegistration", ControlType.text));
+            settings.Add(new GeneratorSetting("Mapper", "Mapper Profile", "MapperProfile", ControlType.text));
+            settings.Add(new GeneratorSetting("GlobalUsing", "GlobalUsing", "GlobalUsing", ControlType.text));
             return settings;
 
         }
 
-        internal static List<GeneratorSetting> GetGenerateCTRLSettings(TypeDefinitionInfo typeDefinitionInfo, string initialFolderDirectory)
-        {
-            throw new NotImplementedException();
-        }
+     
         public static string ToMemberString(List<MemberItemInfo> members)
         {
             StringBuilder bldr = new StringBuilder();

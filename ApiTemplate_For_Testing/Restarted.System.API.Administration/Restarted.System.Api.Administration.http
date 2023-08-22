@@ -1,0 +1,23 @@
+﻿@Restarted.System.Api.Administration_HostAddress = https://localhost:7101
+
+GET {{Restarted.System.Api.Administration_HostAddress}}/api/users/lookup
+
+###
+
+GET {{Restarted.System.Api.Administration_HostAddress}}/api/organizations/paged/1/10
+
+###
+
+GET {{Restarted.System.Api.Administration_HostAddress}}/api/branches/paged/1/10
+
+###
+
+GET {{Restarted.System.Api.Administration_HostAddress}}/api/organizations
+
+###
+
+GET {{Restarted.System.Api.Administration_HostAddress}}/api/users/lookup
+
+###
+
+###

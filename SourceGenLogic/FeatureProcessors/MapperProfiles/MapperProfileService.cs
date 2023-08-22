@@ -12,35 +12,36 @@ using Restarted.Generators.FeatureProcessors.Common;
 using Restarted.Generators.Common.Configurations;
 using System.Collections.Immutable;
 using Restarted.Generators.Generators.MapperProfiles;
+using Restarted.Generators.FeatureProcessors.Models;
 
 namespace Restarted.Generators.FeatureProcessors.MapperProfiles
 {
-    internal static class MapperProfileService
+    public static class MapperProfileService
     {
 
-        public static List<string> Process(GeneratorContext generatorContext)
+        public static List<string> Process(GeneratorContext generatorContext, AttributeMetaDataMapper data)
         {
 
 
             List<string> files = new();
 
-            string path = GeneratorConfigurations.GeneratorSetting().GetSetting("MapperProfile").GenerationPath;
-
-            // Generate Folder Path and namespaces
-            FolderAndNamespacePath fileInfo = FileService.GenerateFolderPathAndNamespace(path, "", "", "");
+                     
 
             // Generate FileName
-            string fileName = "MapperProfilesAuto";
+            string fileName = data.FileName;
 
             // Transform Template
-            var result = ProcessMapperProfileTemplate(fileInfo.NameSpacePath, fileName, generatorContext.MapperProfiles);
+            var result = ProcessMapperProfileTemplate(data.NameSpace, fileName, generatorContext.MapperProfiles);
 
-            // 
-            string pathGenerated = FileService.GenerateSourceAtFolderLocation(fileInfo.FolderPath, fileName, result.SourceCode);
+
+            var finalReplacedPath = FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
+
+
+            string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath, fileName, result.SourceCode);
 
             files.Add(pathGenerated);
 
-
+           
 
             return files;
 
@@ -52,6 +53,12 @@ namespace Restarted.Generators.FeatureProcessors.MapperProfiles
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new MapperProfileTemplate(parameter);
             return processor.Process(codeTemplate);
+        }
+        public class AttributeMetaDataMapper : AttributeMetaData
+        {
+
+            public string FileName { get; set; }
+            public string NameSpace { get; set; }
         }
     }
 }

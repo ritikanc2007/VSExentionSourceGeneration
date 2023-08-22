@@ -33,6 +33,8 @@ namespace WinFormsApp1.DynamicForm
             initialFolderPath = initialFolderDirectory;
             if (SelectedMenuAction == "DTO")
                 settings = SettingHelper.GetGenerateDTOSettings(typeDefinitionInfo, initialFolderDirectory);
+            if (SelectedMenuAction == "REPO")
+                settings = SettingHelper.GetGenerateRepositorySettings(typeDefinitionInfo, initialFolderDirectory);
             if (SelectedMenuAction == "PATHS")
             {
                 if (savedSettings !=null)
@@ -58,6 +60,8 @@ namespace WinFormsApp1.DynamicForm
             else if (SelectedMenuAction == "CTRL")
                 settings = SettingHelper.GetGenerateCTRLSettings(typeDefinitionInfo, initialFolderDirectory);
 
+
+            if (settings == null) return null;
             form = new Form();
             form.Location = new Point(300, 200);
 

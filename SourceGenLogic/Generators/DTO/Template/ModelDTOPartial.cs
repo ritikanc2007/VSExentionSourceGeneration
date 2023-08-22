@@ -33,6 +33,7 @@ namespace Restarted.Generators.Generators.DTO.Template
             int idx = 0;
             foreach (var nameType in this.Parameter.Members)
             {
+                if (string.IsNullOrEmpty(nameType.Name)) continue;
                 idx +=1;
                 string comma = (idx == Parameter.Members.Count) ? "" : ",";
                 string name = LowerFirstChar(nameType.Name);

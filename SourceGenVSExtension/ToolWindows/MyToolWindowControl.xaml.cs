@@ -69,10 +69,14 @@ namespace ToolWindow
 
         private void SolutionEvents_OnAfterOpenSolution(Community.VisualStudio.Toolkit.Solution obj)
         {
+            LoadSourceExplores();
+        }
+
+        void LoadSourceExplores()
+        {
             List<ProjectFile> Projects = GetProjects();
             SourceTreeView.ItemsSource = Projects;
         }
-
 
         async void SelectedClick(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
@@ -91,7 +95,7 @@ namespace ToolWindow
             var selectedItem = SourceTreeView.SelectedItem;
             MenuItem item = sender as MenuItem;
 
-            var pathSettings =  ConfigurationHelper.PathSettings();
+            var pathSettings = ConfigurationHelper.PathSettings();
             var conventionSetting = ConfigurationHelper.ConventionSettings();
             if (selectedItem != null && item != null)
             {
@@ -100,21 +104,33 @@ namespace ToolWindow
 
                 var formBuilder = new DynamicFormBuilder();
 
-               
+
 
                 #region Validate Path and Convention setting and enforce
                 // Path setting related
-                if (pathSettings == null)
+                if (pathSettings == null &&  menuItemName != "PATHS")
                 {
                     VS.MessageBox.ShowError("Please ensure that PATH settings are configured!");
                     menuItemName = "PATHS"; // setting to force paths setupd
                 }
-                if (conventionSetting == null)
+                if (conventionSetting == null &&  menuItemName != "CONVENTIONS")
                 {
                     VS.MessageBox.ShowError("Please ensure that CONVENTION settings are configured!");
                     menuItemName = "CONVENTIONS"; // setting to force paths setupd
                 }
-                if (SelectedTypeDefinitionInfo != null && (menuItemName == "PATHS" || menuItemName == "CONVENTIONS"))
+
+                // delete all settings
+                if (menuItemName =="DELETE")
+                {
+                    if (VS.MessageBox.ShowConfirm("Are you sure you want to delete all saved settings?", "All setting related to Path,Convention & Saved context information will be deleted."))
+                    {
+                        File.Delete(GeneratorConstants.CONST_GENERATOR_CONVENTION_FILE);
+                        File.Delete(GeneratorConstants.CONST_GENERATOR_PATHS_FILE);
+                        File.Delete(GeneratorConstants.CONST_GENERATOR_CONTEXT_FILE);
+                        return;
+                    }
+                }
+                if ((menuItemName == "PATHS" || menuItemName == "CONVENTIONS"))
                 {
                     List<GeneratorSetting> genSetting = null;
 
@@ -149,39 +165,68 @@ namespace ToolWindow
                 {
                     List<string> files = new List<string>(); ;
                     // execute generator
-                    GeneratorContext generatorContext = new GeneratorContext();
+                    GeneratorContext generatorContext = SerializationHelper.GetSavedGenerationContext(GeneratorConstants.CONST_GENERATOR_CONTEXT_FILE);
+                    if (generatorContext == null) generatorContext = new GeneratorContext();
+
 
 
                     if (SelectedTypeDefinitionInfo != null && menuItemName == "DTO")
                     {
 
                         // generate CQRS
-                        ProcessGeneration.DTO(generatorContext, SelectedTypeDefinitionInfo, settings);
+                        files=   ProcessGeneration.DTO(generatorContext, SelectedTypeDefinitionInfo, settings);
 
                     }
                     else if (SelectedTypeDefinitionInfo != null && menuItemName == "REPO")
                     {
                         // generate CQRS
-                        ProcessGeneration.Repository(generatorContext, SelectedTypeDefinitionInfo, settings);
+                        files=  ProcessGeneration.Repository(generatorContext, SelectedTypeDefinitionInfo, settings);
                     }
                     else if (SelectedTypeDefinitionInfo != null && menuItemName == "CQRS")
                     {
                         // generate CQRS
-                        ProcessGeneration.CQRS(generatorContext, SelectedTypeDefinitionInfo, settings);
+                        files=   ProcessGeneration.CQRS(generatorContext, SelectedTypeDefinitionInfo, settings);
 
                         // generate controllers
-                        ProcessGeneration.ControllersCQRS(generatorContext, SelectedTypeDefinitionInfo, settings);
+                        files=  ProcessGeneration.ControllersCQRS(generatorContext, SelectedTypeDefinitionInfo, settings);
                     }
                     else if (SelectedTypeDefinitionInfo != null && menuItemName == "CTRL")
                     {
 
                         // generate controllers
-                        ProcessGeneration.ControllersCQRS(generatorContext, SelectedTypeDefinitionInfo, settings);
+                        files=  ProcessGeneration.ControllersCQRS(generatorContext, SelectedTypeDefinitionInfo, settings);
+                    }
+                    else if (SelectedTypeDefinitionInfo != null && menuItemName == "DI")
+                    {
+
+                        // generate controllers
+                        files=  ProcessGeneration.DependencyRegistration(generatorContext, SelectedTypeDefinitionInfo, settings);
+                    }
+                    else if (SelectedTypeDefinitionInfo != null && menuItemName == "MAPPERS")
+                    {
+
+                        // generate controllers
+                        files=  ProcessGeneration.MapperProfiles(generatorContext, SelectedTypeDefinitionInfo, settings);
+                    }
+                    else if (SelectedTypeDefinitionInfo != null && menuItemName == "GLOBALUSING")
+                    {
+
+                        // generate controllers
+                        files=  ProcessGeneration.GlobalUsings(generatorContext, SelectedTypeDefinitionInfo, settings);
                     }
 
+                    // Save Generation Context
+                    SerializationHelper.SaveGenerationContext(generatorContext, GeneratorConstants.CONST_GENERATOR_CONTEXT_FILE);
 
                     string file = files.FirstOrDefault();
-                    VS.MessageBox.Show($"File generated at {file}");
+                    if (file != null)
+                    {
+                        if (VS.MessageBox.ShowConfirm($"File generated at {file} location.", "Do you want to repolulate the explorer?"))
+                        {
+                            LoadSourceExplores();
+                        }
+
+                    }
                 }
             }
         }
@@ -197,12 +242,12 @@ namespace ToolWindow
                 string source = File.ReadAllText(SelectedSolutionItem.Path);
 
                 IParser Parser = TransformFactory.Create(ParserType.SyntaxTree);
-                 typeDefinition = Parser.Parse(new ParsingDetails(source));
+                typeDefinition = Parser.Parse(new ParsingDetails(source));
             }
             catch (Exception ex)
             {
 
-                
+
             }
 
             return typeDefinition;
@@ -228,7 +273,7 @@ namespace ToolWindow
             projectList.Add(solutionItem);
 
 
-           
+
             loadChildren(solution.Children, ref solutionItem);
 
 

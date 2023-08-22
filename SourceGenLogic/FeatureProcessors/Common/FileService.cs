@@ -33,14 +33,9 @@ namespace Restarted.Generators.FeatureProcessors.Common
         }
 
 
-        internal static FolderAndNamespacePath GenerateFolderPathAndNamespace(string generationPathConst, string featureName, string featureModuleName, string methodName = null)
+        internal static String ConventionBasedPath(string conventionPath, string featureName, string featureModuleName, string methodName = null)
         {
-
-            var baseFolder = GeneratorConfigurations.PathConfiguration.PathDef[FolderPath.BASE_FOLDER_PATH];
-            var path = GeneratorConfigurations.PathConfiguration.PathDef[generationPathConst];
-            string applicationName = GeneratorConfigurations.PathConfiguration.PathDef[FolderPath.APPLICATION_NAME];
-            string allFolderPathSuffix = GeneratorConfigurations.PathConfiguration.PathDef[FolderPath.AlL_PATH_SUFFIX];
-            string finalPath = path.Replace("{ApplicationName}", applicationName);
+            string finalPath = conventionPath;
 
 
             if (!string.IsNullOrEmpty(featureName))
@@ -59,15 +54,7 @@ namespace Restarted.Generators.FeatureProcessors.Common
                 finalPath=  finalPath.Replace("\\{MethodName}", "");
 
 
-            string nameSpace = finalPath.Replace('\\', '.');
-            if (nameSpace.Substring(nameSpace.Length - 1, 1) == ".")
-                nameSpace = nameSpace.Remove(nameSpace.Length - 1, 1);
-            finalPath = baseFolder + finalPath;
-
-
-            if (!string.IsNullOrEmpty(allFolderPathSuffix))
-                finalPath = $"{finalPath}{allFolderPathSuffix}\\";
-            return new FolderAndNamespacePath(finalPath, nameSpace);
+            return finalPath;
         }
 
         internal static string GenerateSourceAtFolderLocation(string filePath, string fileName, string generatedSourceCode)

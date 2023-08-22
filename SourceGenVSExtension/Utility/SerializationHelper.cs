@@ -54,5 +54,26 @@ namespace ToolWindow.Utility
 
             return settings;
         }
+
+        public static void SaveGenerationContext(GeneratorContext context, string fileName)
+        {
+            string json = JsonConvert.SerializeObject(context, Formatting.None, new JsonSerializerSettings() { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
+            File.WriteAllText(fileName, json);
+        }
+
+        public static GeneratorContext GetSavedGenerationContext(string fileName)
+        {
+            GeneratorContext context = null;
+
+
+            if (File.Exists(fileName))
+            {
+                string jsonSaved = File.ReadAllText(fileName);
+                context = JsonConvert.DeserializeObject<GeneratorContext>(jsonSaved);
+
+            }
+
+            return context;
+        }
     }
 }

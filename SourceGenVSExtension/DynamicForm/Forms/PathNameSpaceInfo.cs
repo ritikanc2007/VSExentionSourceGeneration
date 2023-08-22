@@ -26,7 +26,7 @@ namespace ToolWindow.DynamicForm.Forms
 
         public string FullPath { get; set; }
 
-
+        public string Convention { get; set; }
 
     }
 }

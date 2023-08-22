@@ -2,34 +2,32 @@
 using Restarted.Generators.Common.Context;
 using Restarted.Generators.Definitions;
 using Restarted.Generators.FeatureProcessors.Common;
+using Restarted.Generators.FeatureProcessors.Models;
 using Restarted.Generators.Generators.Dependencies;
 using Restarted.Generators.Processor;
 using Restarted.Generators.Processor.Interfaces;
 
-namespace Restarted.Generators.FeatureProcessors.DependencyRegistrations
+namespace Restarted.Generators.FeatureProcessors
 {
-    internal static class DependencyRegistrationService
+    public static class DependencyRegistrationService
     {
 
-        public static List<string> Process(GeneratorContext generatorContext)
+        public static List<string> Process(GeneratorContext generatorContext,AttributeMetaDataDI data)
         {
 
 
             List<string> files = new();
 
-            string path = GeneratorConfigurations.GeneratorSetting().GetSetting("DependencyRegistrationProfile").GenerationPath;
-
-            // Generate Folder Path and namespaces
-            FolderAndNamespacePath fileInfo = FileService.GenerateFolderPathAndNamespace(path, "", "", "");
-
+          
             // Generate FileName
-            string fileName = "DependencyInjectionRegisterAuto";
+            string fileName = data.FileName;
 
             // Transform Template
-            var result = ProcessDependencyRegistrationTemplate(fileInfo.NameSpacePath, fileName, generatorContext.DependencyRepositories);
+            var result = ProcessDependencyRegistrationTemplate(data.NameSpace, fileName, generatorContext.DependencyRepositories);
 
-            // 
-            string pathGenerated = FileService.GenerateSourceAtFolderLocation(fileInfo.FolderPath, fileName, result.SourceCode);
+            var finalReplacedPath = FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
+
+            string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath, fileName, result.SourceCode);
 
             files.Add(pathGenerated);
 
@@ -46,5 +44,11 @@ namespace Restarted.Generators.FeatureProcessors.DependencyRegistrations
             ICodeTemplate codeTemplate = new DependencyRegistrationTemplate(parameter);
             return processor.Process(codeTemplate);
         }
+        public class AttributeMetaDataDI : AttributeMetaData
+        {
+            public string FileName { get; set; }
+            public string NameSpace { get; set; }
+        }
+
     }
 }

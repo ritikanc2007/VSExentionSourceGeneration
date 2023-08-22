@@ -34,15 +34,18 @@ namespace Restarted.Generators.FeatureProcessors.DTO
             // Transform Template
             var result = ProcessDTOTemplate(typeDefinitionInfo, NameSpacePath, SourceFileNAme, data.Members, bool.Parse(data.AllPropertiesNullable));
 
+            var finalReplacedPath = FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
+
+
             // Generate FileName
             string fileName = SourceFileNAme;
             // 
-            string pathGenerated = FileService.GenerateSourceAtFolderLocation(data.GenerationPath, fileName, result.SourceCode);
+            string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath, fileName, result.SourceCode);
 
             files.Add(pathGenerated);
 
             //GENERATORCONTEXT Adding namesapces
-            generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.DTO, SourceFileNAme, NameSpacePath, data.GenerationPath));
+            generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.DTO, SourceFileNAme, NameSpacePath, finalReplacedPath));
             // Key Contains Targe & value contains source i.e UserDTO is Key & User is value
             // Reason: you can have multiple DTOs for User entity
             generatorContext.MapperProfiles.Add(SourceFileNAme, typeDefinitionInfo.Name);

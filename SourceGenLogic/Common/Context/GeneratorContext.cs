@@ -36,7 +36,10 @@ namespace Restarted.Generators.Common.Context
         RepositoryInterface,
         DTO,
         DI,
-        Mapper
+        Mapper,
+        ControllersRootPath,
+        ApplicationRootPath,
+        InfrastructureRootPath
     }
     public class NameSpaceInfo
     {

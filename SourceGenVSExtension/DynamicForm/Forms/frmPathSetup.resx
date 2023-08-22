@@ -120,7 +120,12 @@
   <metadata name="projectFileBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <metadata name="projectFileBindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <data name="richTextBoxConventions.Text" xml:space="preserve">
+    <value>Conventions (OPTIONAL)
+CONSIDER: Feature : Users, FeatureModule: Authentication, MethodName: Login
+CONVENTIONS: Admin.API\Application\{Feature}\{FeatureModule}\{RequestType}\{MethodName}\
+In this example, In api project, We want "Users" feature folder, "Authentication" sub module folder 
+and every CQRS method should have seperate folder to store request and handlers
+NOTE: Feature, featureModule values will be prompted before generating code. {RequestType} is for CQRS, will be replaced with Command/Queries</value>
+  </data>
 </root>

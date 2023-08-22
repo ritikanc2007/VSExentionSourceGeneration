@@ -48,6 +48,8 @@ namespace Restarted.Generators.FeatureProcessors.Repository
 
                 string generationPath = data.GenerationPaths["Repository"];
 
+
+
                 IProcessorResult result = null;
                 if (isRepositoryProcessing)
                 {
@@ -60,15 +62,27 @@ namespace Restarted.Generators.FeatureProcessors.Repository
                     result= ProcessInterface(typeDefinitionInfo, NameSpacePath, sourcefileName, data.DTOName, data.EntityName, data.DatabaseContextName, data.PluralEntityName);
                 }
 
-                // 
-                string pathGenerated = FileService.GenerateSourceAtFolderLocation(generationPath, sourcefileName, result.SourceCode);
+                string typeName = isRepositoryProcessing ? "Repository" : "Interface";
+                string convPath = string.Empty;
+                if (data.PathConventions.ContainsKey(typeName))
+                {
+                    convPath = data.PathConventions[typeName].ConventionPath;
+                }
+
+
+                var finalReplacedPath = FileService.ConventionBasedPath(convPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
+
+
+                string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath, sourcefileName, result.SourceCode);
 
                 files.Add(pathGenerated);
 
 
 
-                
-                generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.Repository, sourcefileName, NameSpacePath, generationPath));
+                if (isRepositoryProcessing)
+                    generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.Repository, sourcefileName, NameSpacePath, generationPath));
+                else
+                    generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.RepositoryInterface, sourcefileName, NameSpacePath, generationPath));
 
             }
             generatorContext.DependencyRepositories.Add(data.InterFaceName, data.RepositoryName);
@@ -82,15 +96,15 @@ namespace Restarted.Generators.FeatureProcessors.Repository
 
         private static IProcessorResult ProcessRepository(TypeDefinitionInfo typeDefinitionInfo, string nameSpace, string sourceFileName, string dtoName, string className, string dbContextName, string pluralEntityName)
         {
-            ITemplateParameter parameter = new RepositoryTemplateParameter(typeDefinitionInfo,nameSpace, sourceFileName, dtoName, className, pluralEntityName, dbContextName);
+            ITemplateParameter parameter = new RepositoryTemplateParameter(typeDefinitionInfo, nameSpace, sourceFileName, dtoName, className, pluralEntityName, dbContextName);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new ModelsRepository(parameter);
             return processor.Process(codeTemplate);
         }
 
-        private static IProcessorResult ProcessInterface(TypeDefinitionInfo typeDefinitionInfo,string nameSpace, string sourceFileName, string dtoName, string className, string dbContextName, string pluralEntityName)
+        private static IProcessorResult ProcessInterface(TypeDefinitionInfo typeDefinitionInfo, string nameSpace, string sourceFileName, string dtoName, string className, string dbContextName, string pluralEntityName)
         {
-            ITemplateParameter parameter = new RepositoryTemplateParameter(typeDefinitionInfo,nameSpace, sourceFileName, dtoName, className, pluralEntityName, dbContextName);
+            ITemplateParameter parameter = new RepositoryTemplateParameter(typeDefinitionInfo, nameSpace, sourceFileName, dtoName, className, pluralEntityName, dbContextName);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new IModelsRepository(parameter);
             return processor.Process(codeTemplate);
@@ -107,7 +121,7 @@ namespace Restarted.Generators.FeatureProcessors.Repository
         public string DatabaseContextName { get; set; }
 
         public string EntityName { get; set; }
-       
+
         public string PluralEntityName { get; set; }
         public string RepositoryName { get; set; }
         public string InterFaceName { get; set; }
@@ -115,7 +129,7 @@ namespace Restarted.Generators.FeatureProcessors.Repository
         public Dictionary<string, string> GenerationPaths { get; set; }
 
         public Dictionary<string, string> NameSpace { get; set; }
-
+        public Dictionary<string, FileParamInfo> PathConventions { get; set; }
     }
 
 }

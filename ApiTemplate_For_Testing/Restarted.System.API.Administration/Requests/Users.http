@@ -1,0 +1,119 @@
+@host=https://localhost:7101
+@hostId=dc16d820-a297-4618-88c4-570fedd91cdf
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJCdWJlckRpbm5lci5Eb21haW4uVXNlcnMuVmFsdWVPYmplY3RzLlVzZXJJZCIsImdpdmVuX25hbWUiOiJUYWptYSIsImZhbWlseV9uYW1lIjoiSGVpbnoiLCJqdGkiOiI5NmU1Y2U5MS0wY2NiLTQwNmUtYmIyMy05MTA2YjZhOTI2OWMiLCJleHAiOjE2NzMzNjQ4NzUsImlzcyI6IkJ1YmVyRGlubmVyIiwiYXVkIjoiQnViZXJEaW5uZXIifQ.Rgi_iJKY5FV-DRgqQCxKxXm3VI7GXs7HTW68zW1rCbA
+
+## users By Id
+GET {{host}}/api/users/2
+Content-Type: application/json
+Authorization: Bearer {{token}}
+###
+##
+POST {{host}}/api/users/paged/1/10
+
+###
+## users by pageindex and pagesize
+POST {{host}}/api/users/paged
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "searchfilter": "017",
+  "pageIndex": 1,
+  "pageSize": 10
+}
+###
+## users Id, NAme list
+GET {{host}}/api/users/lookup
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+## Check duplicate users name exists duplicate/{nametoCheck}
+GET {{host}}/api/users/duplicate/narendracv
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+## Create users
+
+POST https://localhost:7101/api/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "Test_Add_22332",
+    "username": "Test_Add_del_2232",
+    "password": "Test_Add",
+    "isDeleted": false,
+    "isActive": true,
+    "address": {
+    "line1": "user address",
+    "line2": "user line 2",
+    "country": 1,
+    "state": null,
+    "city": null,
+    "pin": null
+  },
+  "contact": {
+    "primaryPhone": "1231312312",
+    "primaryEmail": "22222"
+
+  },
+  "userAttributes": [
+    {
+      "attributeId": 1,
+      "value": "user attr"
+    }
+  ]
+
+}
+
+###
+## Update users
+PUT https://localhost:7101/api/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": 1002,
+  "name": "Test_Add",
+  "username": "Test_Add_Upd",
+  "password": "Test_Add",
+  "addressId": 1006,
+  "contactId": 1005,
+  "image": "",
+  "isDeleted": false,
+  "isActive": true,
+  "address": {
+    "id": 1006,
+    "line1": "user address-Upd",
+    "line2": "user line 2",
+    "country": 1,
+    "state": null,
+    "city": null,
+    "pin": null
+  },
+  "contact": {
+    "id": 1005,
+    "primaryPhone": "1231312312-upd",
+    "primaryEmail": "22222",
+    "secondaryPhone": null,
+    "secondaryEmail": null,
+    "primaryFax": null,
+    "secondaryFax": null
+  },
+  "userAttributes": [
+    {
+      "userId": 1002,
+      "attributeId": 1,
+      "value": "user attr-upd"
+    }
+  ]
+}
+
+
+###
+## Delete users
+DELETE https://localhost:7101/api/users/1003
+Content-Type: application/json
+Authorization: Bearer {{token}}
