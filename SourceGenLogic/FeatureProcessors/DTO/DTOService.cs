@@ -29,23 +29,23 @@ namespace Restarted.Generators.FeatureProcessors.DTO
 
             string SourceFileNAme = data.Name;
 
-            string NameSpacePath = data.NameSpace;
+
+            var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace,data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
 
             // Transform Template
-            var result = ProcessDTOTemplate(typeDefinitionInfo, NameSpacePath, SourceFileNAme, data.Members, bool.Parse(data.AllPropertiesNullable));
+            var result = ProcessDTOTemplate(typeDefinitionInfo, finalReplacedPath.NameSpacePath, SourceFileNAme, data.Members, bool.Parse(data.AllPropertiesNullable));
 
-            var finalReplacedPath = FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
-
+           
 
             // Generate FileName
             string fileName = SourceFileNAme;
             // 
-            string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath, fileName, result.SourceCode);
+            FileService.GenerateSourceAtFolderLocation(finalReplacedPath.FolderPath, fileName, result.SourceCode);
 
-            files.Add(pathGenerated);
+            files.Add(finalReplacedPath.FolderPath);
 
             //GENERATORCONTEXT Adding namesapces
-            generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.DTO, SourceFileNAme, NameSpacePath, finalReplacedPath));
+            generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.DTO, SourceFileNAme, finalReplacedPath.NameSpacePath, finalReplacedPath.FolderPath));
             // Key Contains Targe & value contains source i.e UserDTO is Key & User is value
             // Reason: you can have multiple DTOs for User entity
             generatorContext.MapperProfiles.Add(SourceFileNAme, typeDefinitionInfo.Name);
@@ -79,6 +79,7 @@ namespace Restarted.Generators.FeatureProcessors.DTO
         public string Members { get; set; }
 
         public string NameSpace { get; set; }
+
 
     }
 }

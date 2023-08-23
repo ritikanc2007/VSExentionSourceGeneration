@@ -30,14 +30,15 @@ namespace Restarted.Generators.FeatureProcessors.MapperProfiles
             // Generate FileName
             string fileName = data.FileName;
 
+
+            var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
+
             // Transform Template
-            var result = ProcessMapperProfileTemplate(data.NameSpace, fileName, generatorContext.MapperProfiles);
+            var result = ProcessMapperProfileTemplate(finalReplacedPath.NameSpacePath, fileName, generatorContext.MapperProfiles);
 
 
-            var finalReplacedPath = FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
 
-
-            string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath, fileName, result.SourceCode);
+            string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath.FolderPath, fileName, result.SourceCode);
 
             files.Add(pathGenerated);
 
@@ -59,6 +60,7 @@ namespace Restarted.Generators.FeatureProcessors.MapperProfiles
 
             public string FileName { get; set; }
             public string NameSpace { get; set; }
+            public string ProjectName { get; set; }
         }
     }
 }

@@ -25,7 +25,7 @@ namespace <#= Parameter.PreferredNameSpace #>
         }
 
        
-        public async Task<int> Add(<#=Parameter.ClassName#>DTO entityDto)
+        public async Task<int> Add(<#=Parameter.DTOName#> entityDto)
         {
             var entity = this.mapper.Map<<#=Parameter.ClassName#>>(entityDto);
             this.context.Add(entity);
@@ -53,35 +53,38 @@ namespace <#= Parameter.PreferredNameSpace #>
             return this.context.SaveChangesAsync();
         }
 
-        public async Task<<#=Parameter.ClassName#>DTO> Get(int id)
+        public async Task<<#=Parameter.DTOName#>> Get(int id)
         {
             var result = await this.context.<#=PluralClassName#>
+                    <#=IncludesString#>
                      .FirstOrDefaultAsync(o => o.Id == id);
 
-            var dto = this.mapper.Map<<#=Parameter.ClassName#>DTO>(result);
+            var dto = this.mapper.Map<<#=Parameter.DTOName#>>(result);
 
             return dto;
         }
 
 
-        public async Task<IEnumerable<<#=Parameter.ClassName#>DTO>> GetAll()
+        public async Task<IEnumerable<<#=Parameter.DTOName#>>> GetAll()
         {
             return await this.context.<#=PluralClassName#>
-                .ProjectTo<<#=Parameter.ClassName#>DTO>(mapper.ConfigurationProvider)
+                <#=IncludesString#>
+                .ProjectTo<<#=Parameter.DTOName#>>(mapper.ConfigurationProvider)
                 .ToListAsync();
         }
 
-        public async Task<PagedResponse<IEnumerable<<#=Parameter.ClassName#>ListDTO>>> GetAll(int rowIndex, int pageSize)
+        public async Task<PagedResponse<IEnumerable<<#=Parameter.DTOName#>List>>> GetAll(int rowIndex, int pageSize)
         {
             int totalCount = this.context.<#=PluralClassName#>.Count();
             
               var data = this.context.<#=PluralClassName#>
-                 .ProjectTo<<#=Parameter.ClassName#>ListDTO>(mapper.ConfigurationProvider)
+                <#=IncludesString#>
+                 .ProjectTo<<#=Parameter.DTOName#>List>(mapper.ConfigurationProvider)
                  .Skip((rowIndex  -1) * pageSize)
                  .Take(pageSize)
                  .AsEnumerable();
 
-            return await Task.FromResult(new PagedResponse<IEnumerable<<#=Parameter.ClassName#>ListDTO>>(data, rowIndex, pageSize, totalCount));
+            return await Task.FromResult(new PagedResponse<IEnumerable<<#=Parameter.DTOName#>List>>(data, rowIndex, pageSize, totalCount));
         }
 
         public async Task<bool> IsExists(string name)
@@ -94,7 +97,8 @@ namespace <#= Parameter.PreferredNameSpace #>
 
 
 
-        public Task<int> Update(<#=Parameter.ClassName#>DTO entityDto)
+     
+        public Task<int> Update(<#=Parameter.DTOName#> entityDto)
         {
             var entity = this.context
                             .<#=PluralClassName#>

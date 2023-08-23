@@ -19,7 +19,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Template
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+    #line 1 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class ModelsRepository : ModelsRepositoryBase
     {
@@ -32,42 +32,42 @@ namespace Restarted.Generators.Generators.Repositories.Service.Template
             this.Write("\r\nusing System.Collections.Generic;\r\nusing AutoMapper;\r\nusing AutoMapper.Queryabl" +
                     "eExtensions;\r\nusing Microsoft.EntityFrameworkCore;\r\n\r\n\r\nnamespace ");
             
-            #line 14 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 14 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.PreferredNameSpace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public class ");
             
-            #line 16 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 16 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.SourceFileName));
             
             #line default
             #line hidden
             this.Write(" : I");
             
-            #line 16 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 16 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.SourceFileName));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n        private readonly ");
             
-            #line 18 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 18 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DatabaseContextName));
             
             #line default
             #line hidden
             this.Write(" context;\r\n        private readonly IMapper mapper;\r\n\r\n        public ");
             
-            #line 21 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 21 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.SourceFileName));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 21 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 21 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DatabaseContextName));
             
             #line default
@@ -76,14 +76,14 @@ namespace Restarted.Generators.Generators.Repositories.Service.Template
                     "    this.mapper=mapper;\r\n        }\r\n\r\n       \r\n        public async Task<int> Ad" +
                     "d(");
             
-            #line 28 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 28 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("DTO entityDto)\r\n        {\r\n            var entity = this.mapper.Map<");
+            this.Write(" entityDto)\r\n        {\r\n            var entity = this.mapper.Map<");
             
-            #line 30 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 30 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
             
             #line default
@@ -92,7 +92,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Template
                     "is.context.SaveChangesAsync();\r\n\r\n        }\r\n\r\n        public Task<int> Delete(i" +
                     "nt id)\r\n        {\r\n            var entity = this.context.");
             
-            #line 38 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 38 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(PluralClassName));
             
             #line default
@@ -117,108 +117,129 @@ namespace Restarted.Generators.Generators.Repositories.Service.Template
 
         public async Task<");
             
-            #line 56 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 56 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("DTO> Get(int id)\r\n        {\r\n            var result = await this.context.");
+            this.Write("> Get(int id)\r\n        {\r\n            var result = await this.context.");
             
-            #line 58 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 58 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(PluralClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n                    ");
+            
+            #line 59 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(IncludesString));
             
             #line default
             #line hidden
             this.Write("\r\n                     .FirstOrDefaultAsync(o => o.Id == id);\r\n\r\n            var " +
                     "dto = this.mapper.Map<");
             
-            #line 61 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 62 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("DTO>(result);\r\n\r\n            return dto;\r\n        }\r\n\r\n\r\n        public async Tas" +
-                    "k<IEnumerable<");
+            this.Write(">(result);\r\n\r\n            return dto;\r\n        }\r\n\r\n\r\n        public async Task<I" +
+                    "Enumerable<");
             
-            #line 67 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 68 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("DTO>> GetAll()\r\n        {\r\n            return await this.context.");
+            this.Write(">> GetAll()\r\n        {\r\n            return await this.context.");
             
-            #line 69 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 70 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(PluralClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n                ");
+            
+            #line 71 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(IncludesString));
             
             #line default
             #line hidden
             this.Write("\r\n                .ProjectTo<");
             
-            #line 70 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 72 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("DTO>(mapper.ConfigurationProvider)\r\n                .ToListAsync();\r\n        }\r\n\r" +
-                    "\n        public async Task<PagedResponse<IEnumerable<");
+            this.Write(">(mapper.ConfigurationProvider)\r\n                .ToListAsync();\r\n        }\r\n\r\n  " +
+                    "      public async Task<PagedResponse<IEnumerable<");
             
-            #line 74 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 76 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("ListDTO>>> GetAll(int rowIndex, int pageSize)\r\n        {\r\n            int totalCo" +
-                    "unt = this.context.");
+            this.Write("List>>> GetAll(int rowIndex, int pageSize)\r\n        {\r\n            int totalCount" +
+                    " = this.context.");
             
-            #line 76 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 78 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(PluralClassName));
             
             #line default
             #line hidden
             this.Write(".Count();\r\n            \r\n              var data = this.context.");
             
-            #line 78 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 80 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(PluralClassName));
+            
+            #line default
+            #line hidden
+            this.Write("\r\n                ");
+            
+            #line 81 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(IncludesString));
             
             #line default
             #line hidden
             this.Write("\r\n                 .ProjectTo<");
             
-            #line 79 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 82 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("ListDTO>(mapper.ConfigurationProvider)\r\n                 .Skip((rowIndex  -1) * p" +
-                    "ageSize)\r\n                 .Take(pageSize)\r\n                 .AsEnumerable();\r\n\r" +
-                    "\n            return await Task.FromResult(new PagedResponse<IEnumerable<");
+            this.Write("List>(mapper.ConfigurationProvider)\r\n                 .Skip((rowIndex  -1) * page" +
+                    "Size)\r\n                 .Take(pageSize)\r\n                 .AsEnumerable();\r\n\r\n  " +
+                    "          return await Task.FromResult(new PagedResponse<IEnumerable<");
             
-            #line 84 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 87 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("ListDTO>>(data, rowIndex, pageSize, totalCount));\r\n        }\r\n\r\n        public as" +
-                    "ync Task<bool> IsExists(string name)\r\n        {\r\n            return await this.c" +
-                    "ontext\r\n                 .");
+            this.Write("List>>(data, rowIndex, pageSize, totalCount));\r\n        }\r\n\r\n        public async" +
+                    " Task<bool> IsExists(string name)\r\n        {\r\n            return await this.cont" +
+                    "ext\r\n                 .");
             
-            #line 90 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 93 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(PluralClassName));
             
             #line default
             #line hidden
             this.Write("\r\n                 .Where(o => o.Name == name)\r\n                 .CountAsync() >0" +
-                    ";\r\n        }\r\n\r\n\r\n\r\n        public Task<int> Update(");
+                    ";\r\n        }\r\n\r\n\r\n\r\n     \r\n        public Task<int> Update(");
             
-            #line 97 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 101 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("DTO entityDto)\r\n        {\r\n            var entity = this.context\r\n               " +
-                    "             .");
+            this.Write(" entityDto)\r\n        {\r\n            var entity = this.context\r\n                  " +
+                    "          .");
             
-            #line 100 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 104 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(PluralClassName));
             
             #line default
@@ -242,7 +263,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Template
         {
             return await this.context.");
             
-            #line 117 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
+            #line 121 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\ModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(PluralClassName));
             
             #line default

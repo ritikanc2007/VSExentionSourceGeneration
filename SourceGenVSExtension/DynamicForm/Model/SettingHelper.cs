@@ -25,6 +25,8 @@ namespace WinFormsApp1.DynamicForm.Model
         private const string ConstDbContextName = "DatabaseContextName";
         private const string ConstPluralName = "PluralEntityName";
         private const string ConstEntityName = "EntityName";
+        private const string ConstIncludes = "Includes";
+
         public static List<GeneratorSetting> GetGenerateAllSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
@@ -38,7 +40,7 @@ namespace WinFormsApp1.DynamicForm.Model
 
             //Add Feature and FeatureModule
             settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
-            settings.Add(new GeneratorSetting("FeatureModule", "Feature Module", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Module", "", ControlType.text));
           
 
             // settings.Add(new GeneratorSetting("Convention", "Convention",Convension, ControlType.text)); // Remove
@@ -68,7 +70,7 @@ namespace WinFormsApp1.DynamicForm.Model
             //START Add Feature and FeatureModule
             //Add Feature and FeatureModule
             settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
-            settings.Add(new GeneratorSetting("FeatureModule", "Feature Module", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Module", "", ControlType.text));
 
             //END FEATURE
             settings.Add(new GeneratorSetting(ConstName, "DTO Name", nameValue, ControlType.text));
@@ -86,11 +88,12 @@ namespace WinFormsApp1.DynamicForm.Model
             //START Add Feature and FeatureModule
             //Add Feature and FeatureModule
             settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
-            settings.Add(new GeneratorSetting("FeatureModule", "Feature Module", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Module", "", ControlType.text));
 
             //END FEATURE
             settings.Add(new GeneratorSetting(ConstDTOName, "DTO Name", dtoConvention.Replace("{entity}", typeDefinitionInfo.Name), ControlType.text));
             settings.Add(new GeneratorSetting(ConstEntityName, "Entity", typeDefinitionInfo.Name, ControlType.text));
+           // settings.Add(new GeneratorSetting(ConstIncludes, "Includes (,)", typeDefinitionInfo.Name, ControlType.text));
             settings.Add(new GeneratorSetting(ConstDbContextName, "DB Context", "dbContext", ControlType.text)); // Remove 
             return settings;
 
@@ -102,7 +105,7 @@ namespace WinFormsApp1.DynamicForm.Model
             //START Add Feature and FeatureModule
             //Add Feature and FeatureModule
             settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
-            settings.Add(new GeneratorSetting("FeatureModule", "Feature Module", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Module", "", ControlType.text));
 
 
             //END FEATURE
@@ -130,7 +133,7 @@ namespace WinFormsApp1.DynamicForm.Model
 
             //START Add Feature and FeatureModule
             settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
-            settings.Add(new GeneratorSetting("FeatureModule", "Feature Module", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Module", "", ControlType.text));
             //END FEATURE
 
             var eventControl = new GeneratorSetting("EntityName", "Entity", "", ControlType.text, isEventControl: true, eventMethod: "EntityPluralNameAction");

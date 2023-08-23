@@ -39,7 +39,8 @@ namespace Restarted.Generators.Common.Context
         Mapper,
         ControllersRootPath,
         ApplicationRootPath,
-        InfrastructureRootPath
+        InfrastructureRootPath,
+        ContractsRootPath
     }
     public class NameSpaceInfo
     {

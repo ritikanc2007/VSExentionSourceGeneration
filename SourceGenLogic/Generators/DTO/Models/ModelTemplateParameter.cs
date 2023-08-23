@@ -29,15 +29,24 @@ namespace Restarted.Generators.Generators.DTO.Template
         private  List<NameType> MapMembers(string commaSeperatedMembers, List<NameType> classMembers, bool allMembersNullable)
         {
             Dictionary<string, string> membersAndTypes = new Dictionary<string, string>();
+            // e.g.UserListDTO Address, Email, Phone properties
+            // definition
+            // Address.Line1 as Address:string,
+            // Contact.PrimaryEmail as Email:string,
+            // Contact.PrimaryPhone as Phone:string
+            // Based on definition GENERATE Mapper profile
 
-
-            // "Id:int?,Name:string?,UserName:string?, Address:AddressDTO, Contact:ContactDTO, Roles:List<RoleDTO>"
+            // "Id:int?,Name:string?,UserName:string?, Address.Line1 as AddressDTO:string, Contact.PrimaryEmail as Email:string, Roles:List<RoleDTO>"
+            // "Id:int?,Name:string?,UserName:string?, Address as Address, Contact:ContactDTO, Roles:List<RoleDTO>"
             if (!string.IsNullOrEmpty(commaSeperatedMembers))
             {
                 string fieldNameToAdd = null;
                 string fieldDataTypeToAdd = null;
 
+
                 var fields = commaSeperatedMembers.Trim().Split(',');
+                
+                
                 foreach (var field in fields)
                 {
                     var fieldValue = field.Split(':');
@@ -56,6 +65,17 @@ namespace Restarted.Generators.Generators.DTO.Template
                         else
                             fieldDataTypeToAdd = "string";
                     }
+
+                    //// Check "as" alias added in definition
+                    //string asDefinition = " as ";
+                    //if (fieldNameToAdd.Trim().Contains(asDefinition))
+                    //{
+                    //    string[] asSplit = fieldNameToAdd.Split(new[] { asDefinition }, StringSplitOptions.None);
+                    //    string asPart = asSplit[0];
+                    //    fieldNameToAdd = asSplit[1];
+
+                    //}
+
 
                     membersAndTypes.Add(fieldNameToAdd, fieldDataTypeToAdd);
                 }

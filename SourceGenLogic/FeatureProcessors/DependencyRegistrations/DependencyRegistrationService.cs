@@ -22,12 +22,13 @@ namespace Restarted.Generators.FeatureProcessors
             // Generate FileName
             string fileName = data.FileName;
 
+            var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
+
             // Transform Template
-            var result = ProcessDependencyRegistrationTemplate(data.NameSpace, fileName, generatorContext.DependencyRepositories);
+            var result = ProcessDependencyRegistrationTemplate(finalReplacedPath.NameSpacePath, fileName, generatorContext.DependencyRepositories);
 
-            var finalReplacedPath = FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
-
-            string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath, fileName, result.SourceCode);
+        
+            string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath.FolderPath, fileName, result.SourceCode);
 
             files.Add(pathGenerated);
 
@@ -48,6 +49,7 @@ namespace Restarted.Generators.FeatureProcessors
         {
             public string FileName { get; set; }
             public string NameSpace { get; set; }
+            public string ProjectName { get; set; }
         }
 
     }

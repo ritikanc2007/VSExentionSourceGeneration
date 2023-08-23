@@ -10,7 +10,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
     {
         
       
-        public RepositoryTemplateParameter(TypeDefinitionInfo typeDefinitionInfo,string nameSpace,string sourceFileName, string dtoName, string className,string pluralEntityName, string dbContextName)
+        public RepositoryTemplateParameter(TypeDefinitionInfo typeDefinitionInfo,string nameSpace,string sourceFileName, string dtoName, string className,string pluralEntityName, string dbContextName, string includes=null)
         {
             SourceFileName = sourceFileName;
             DTOName = dtoName;
@@ -19,6 +19,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
             DatabaseContextName= dbContextName;
             PluralEntityName = pluralEntityName;
             TypeDefinitionInfo=typeDefinitionInfo;
+            Includes = !string.IsNullOrEmpty(includes) ? includes.Split(',') : null;
         }
 
         public TypeDefinitionInfo TypeDefinitionInfo { get; set; }
@@ -29,7 +30,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
 
         public string PluralEntityName { get; set; }
         public string DatabaseContextName { get; set; }
-
+        public string[] Includes  { get; set; }
         public string SourceFileName { get; set; }
     }
 

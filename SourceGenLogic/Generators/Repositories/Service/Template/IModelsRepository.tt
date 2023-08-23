@@ -13,17 +13,17 @@ namespace <#= Parameter.PreferredNameSpace #>
     {
         Task<IEnumerable<NameListDTO?>> Lookup();
        
-        Task<<#=Parameter.ClassName#>DTO> Get(int id);
+        Task<<#=Parameter.DTOName#>> Get(int id);
 
-        Task<IEnumerable<<#=Parameter.ClassName#>DTO>> GetAll();
+        Task<IEnumerable<<#=Parameter.DTOName#>>> GetAll();
 
-        Task<PagedResponse<IEnumerable<<#=Parameter.ClassName#>ListDTO>>> GetAll(int rowIndex, int pageSize);
+        Task<PagedResponse<IEnumerable<<#=Parameter.DTOName#>List>>> GetAll(int rowIndex, int pageSize);
 
         Task<bool> IsExists(string name);
 
-        Task<int> Add(<#=Parameter.ClassName#>DTO entityDto);
+        Task<int> Add(<#=Parameter.DTOName#> entityDto);
 
-        Task<int> Update(<#=Parameter.ClassName#>DTO entityDto);
+        Task<int> Update(<#=Parameter.DTOName#> entityDto);
         Task<int> Delete(int id);
 
     }

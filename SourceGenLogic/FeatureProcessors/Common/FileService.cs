@@ -18,13 +18,13 @@ namespace Restarted.Generators.FeatureProcessors.Common
             string finalPath = generationPhysicalPath;
 
 
-          
+
 
 
             string nameSpace = finalPath.Replace('\\', '.');
             if (nameSpace.Substring(nameSpace.Length - 1, 1) == ".")
                 nameSpace = nameSpace.Remove(nameSpace.Length - 1, 1);
-            
+
 
 
             if (!string.IsNullOrEmpty(allFolderPathSuffix))
@@ -33,28 +33,43 @@ namespace Restarted.Generators.FeatureProcessors.Common
         }
 
 
-        internal static String ConventionBasedPath(string conventionPath, string featureName, string featureModuleName, string methodName = null)
+        internal static FolderAndNamespacePath ConventionBasedPath(string nameSpacePath, string conventionPath, string featureName, string featureModuleName, string methodName)
         {
             string finalPath = conventionPath;
-
+            string finalNameSpacePath = nameSpacePath;
 
             if (!string.IsNullOrEmpty(featureName))
+            {
                 finalPath=  finalPath.Replace("{Feature}", featureName);
+                finalNameSpacePath=  finalNameSpacePath.Replace("{Feature}", featureName);
+            }
             else
+            {
                 finalPath=  finalPath.Replace("\\{Feature}", "");
-
+                finalNameSpacePath=  finalNameSpacePath.Replace("\\{Feature}", "");
+            }
             if (!string.IsNullOrEmpty(featureModuleName))
+            {
                 finalPath=  finalPath.Replace("{FeatureModule}", featureModuleName);
+                finalNameSpacePath=  finalNameSpacePath.Replace("{FeatureModule}", featureModuleName);
+            }
             else
+            {
                 finalPath=  finalPath.Replace("\\{FeatureModule}", "");
-
+                finalNameSpacePath=  finalNameSpacePath.Replace("\\{FeatureModule}", "");
+            }
             if (!string.IsNullOrEmpty(methodName))
+            {
                 finalPath=  finalPath.Replace("{MethodName}", methodName);
+                finalNameSpacePath=  finalNameSpacePath.Replace("{MethodName}", methodName);
+            }
             else
+            {
                 finalPath=  finalPath.Replace("\\{MethodName}", "");
+                finalNameSpacePath=  finalNameSpacePath.Replace("\\{MethodName}", "");
 
-
-            return finalPath;
+            }
+            return new FolderAndNamespacePath(finalPath,finalNameSpacePath);
         }
 
         internal static string GenerateSourceAtFolderLocation(string filePath, string fileName, string generatedSourceCode)

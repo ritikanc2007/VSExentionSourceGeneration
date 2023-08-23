@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 namespace <#= Parameter.PreferredNameSpace #>{
 
-
+//Record with single constructor for mat is not used as Roslyn was expecting type with default constructor
 public record <#= Parameter.SourceFileName #>
 {
     public <#= Parameter.SourceFileName #>()

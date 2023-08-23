@@ -50,20 +50,22 @@ namespace Restarted.Generators.FeatureProcessors.Controllers
             //    data.ControllerName
             //    data.GenerationPath
             //    data.Actions
-            
 
-            ApiTemplateParameter parameter = new ApiTemplateParameter(typeDefinitionInfo, data.NameSpace, data.ControllerName,  data.EntityName, data.PluralName, data.Actions);
+
+
+            FolderAndNamespacePath finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
+
+
+            ApiTemplateParameter parameter = new ApiTemplateParameter(typeDefinitionInfo, finalReplacedPath.NameSpacePath, data.ControllerName,  data.EntityName, data.PluralName, data.Actions);
 
             // Process Validator
             ProcessResult processResult = ProcessControllerTemplate(parameter, typeDefinitionInfo);
 
-            var finalReplacedPath= FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
-
-            string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath, processResult.FileName, processResult.SourceCode);
-            files.Add(pathGenerated);
+           FileService.GenerateSourceAtFolderLocation(finalReplacedPath.FolderPath, processResult.FileName, processResult.SourceCode);
+            files.Add(finalReplacedPath.FolderPath);
 
             //GENERATORCONTEXT Adding namesapces
-            generatorContext.NameSpaces.Add(new NameSpaceInfo( TypeOfCode.Controller, data.ControllerName, data.NameSpace, pathGenerated));
+            generatorContext.NameSpaces.Add(new NameSpaceInfo( TypeOfCode.Controller, data.ControllerName, finalReplacedPath.NameSpacePath, finalReplacedPath.FolderPath));
 
 
 
@@ -91,7 +93,6 @@ namespace Restarted.Generators.FeatureProcessors.Controllers
         public string PluralName { get; set; }
 
         public string NameSpace { get; set; }
-
 
 
         public List<ControllerAction> Actions { get; set; }

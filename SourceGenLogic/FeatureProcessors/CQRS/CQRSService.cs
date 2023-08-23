@@ -37,19 +37,25 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
 
             List<string> files = new List<string>();
 
-            string NameSpacePath = data.NameSpace;
+          
             foreach (var methodDef in typeDefinitionInfo.Methods)
             {
 
                 var methodData = data.MethodInfo.Where(o => o.MethodName == methodDef.Name).FirstOrDefault();
 
-                var finalReplacedPath = FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, methodDef.Name);
+                var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, methodDef.Name);
                 if (methodData.RequestType == "Command")
-                    finalReplacedPath = finalReplacedPath.Replace("{RequestType}", "Commands");
+                {
+                    finalReplacedPath.FolderPath = finalReplacedPath.FolderPath.Replace("{RequestType}", "Commands");
+                    finalReplacedPath.NameSpacePath = finalReplacedPath.NameSpacePath.Replace("{RequestType}", "Commands");
+                }
                 else
-                    finalReplacedPath = finalReplacedPath.Replace("{RequestType}", "Queries");
+                {
+                    finalReplacedPath.FolderPath = finalReplacedPath.FolderPath.Replace("{RequestType}", "Queries");
+                    finalReplacedPath.NameSpacePath = finalReplacedPath.NameSpacePath.Replace("{RequestType}", "Queries");
+                }
                 // Transform Template
-                var result = ProcessCQRSTemplates(typeDefinitionInfo,generatorContext, NameSpacePath, finalReplacedPath, methodData.RequestType,  methodDef, methodData.CQRSRequestName, data.PluralName);
+                var result = ProcessCQRSTemplates(typeDefinitionInfo,generatorContext, finalReplacedPath.NameSpacePath, finalReplacedPath.FolderPath, methodData.RequestType,  methodDef, methodData.CQRSRequestName, data.PluralName);
 
                 //GENERATORCONTEXT Adding namesapces -- MOVED INSIDE TO CAPTURE ALL FILES
                // generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.CQRSActions, methodData.CQRSRequestName, NameSpacePath, data.GenerationPath));
@@ -118,8 +124,6 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
     }
     public class AttributeMetaDataCQRS : AttributeMetaData
     {
-
-
 
 
         public string EntityName { get; set; }

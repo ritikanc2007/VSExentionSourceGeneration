@@ -60,6 +60,8 @@ namespace ToolWindow
             VS.Events.SolutionEvents.OnAfterOpenSolution += SolutionEvents_OnAfterOpenSolution;
 
             VS.Events.SolutionEvents.OnBeforeCloseSolution +=SolutionEvents_OnBeforeCloseSolution;
+
+           
         }
 
         private void SolutionEvents_OnBeforeCloseSolution()

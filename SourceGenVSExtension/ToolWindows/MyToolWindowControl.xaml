@@ -15,7 +15,7 @@
     <Grid>
         <StackPanel Orientation="Vertical" >
             <Label x:Name="lblHeadline" Margin="10" HorizontalAlignment="Center">Source Explorer says:  Click me!!</Label>
-            <TreeView Width="200" Height="400"
+            <TreeView  Height="500"
             Grid.Row="1" 
             Grid.Column="0"
             x:Name="SourceTreeView"

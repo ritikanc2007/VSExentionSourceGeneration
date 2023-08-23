@@ -1,6 +1,7 @@
 ﻿using Community.VisualStudio.Toolkit;
 using EnvDTE;
 using Microsoft.VisualStudio.PlatformUI;
+using Restarted.Generators.Common.Configurations;
 using Restarted.Generators.Common.Context;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,8 @@ namespace ToolWindow.DynamicForm.Forms
                 txtControllersRoot.Text= pathNameSpaceInfo[TypeOfCode.ControllersRootPath].Path;
                 txtApplicationRoot.Text= pathNameSpaceInfo[TypeOfCode.ApplicationRootPath].Path;
                 txtInfrastructureRoot.Text= pathNameSpaceInfo[TypeOfCode.InfrastructureRootPath].Path;
+                if (pathNameSpaceInfo.ContainsKey(TypeOfCode.ContractsRootPath))
+                txtContractsRoot.Text= pathNameSpaceInfo[TypeOfCode.ContractsRootPath].Path;
 
                 // set conventions
                 txtDTOConvention.Text = pathNameSpaceInfo[TypeOfCode.DTO].Convention;
@@ -87,6 +90,13 @@ namespace ToolWindow.DynamicForm.Forms
                 pathNameSpaceInfo[TypeOfCode.ControllersRootPath].Path = txtControllersRoot.Text;
                 pathNameSpaceInfo[TypeOfCode.ApplicationRootPath].Path = txtApplicationRoot.Text;
                 pathNameSpaceInfo[TypeOfCode.InfrastructureRootPath].Path = txtInfrastructureRoot.Text;
+                pathNameSpaceInfo[TypeOfCode.ContractsRootPath].Path = txtContractsRoot.Text;
+
+                // set root NameSpaces as ProjectName 
+                pathNameSpaceInfo[TypeOfCode.ControllersRootPath].NameSpace = pathNameSpaceInfo[TypeOfCode.ControllersRootPath].ProjectName;
+                pathNameSpaceInfo[TypeOfCode.ApplicationRootPath].NameSpace = pathNameSpaceInfo[TypeOfCode.ApplicationRootPath].ProjectName;
+                pathNameSpaceInfo[TypeOfCode.InfrastructureRootPath].NameSpace = pathNameSpaceInfo[TypeOfCode.InfrastructureRootPath].ProjectName;
+                pathNameSpaceInfo[TypeOfCode.ContractsRootPath].NameSpace = pathNameSpaceInfo[TypeOfCode.ContractsRootPath].ProjectName;
 
                 // set conventions
                 pathNameSpaceInfo[TypeOfCode.DTO].Convention = txtDTOConvention.Text;
@@ -96,6 +106,12 @@ namespace ToolWindow.DynamicForm.Forms
                 pathNameSpaceInfo[TypeOfCode.CQRSActions].Convention = txtCQRSConvention.Text;
                 pathNameSpaceInfo[TypeOfCode.DI].Convention = txtDIConvention.Text;
                 pathNameSpaceInfo[TypeOfCode.Mapper].Convention = txtMappersConvention.Text;
+
+                //ReGenerate Namespaces based on the Conventions
+
+               
+
+
             }
         }
 
@@ -243,10 +259,21 @@ namespace ToolWindow.DynamicForm.Forms
                 else
                     pathNameSpaceInfo.Add(TypeOfCode.InfrastructureRootPath, pathInfo);
             };
+            ToolStripMenuItem contractsRootPathMenu = new ToolStripMenuItem();
+            contractsRootPathMenu.Text = "Contracts Root";
+            contractsRootPathMenu.Click+=(sender, e) =>
+            {
+                txtContractsRoot.Text = treeViewPaths.SelectedNode.FullPath.ToString();
+                var pathInfo = GetPathInfo(TypeOfCode.ContractsRootPath, treeViewPaths.SelectedNode);
+                if (pathNameSpaceInfo.ContainsKey(TypeOfCode.ContractsRootPath))
+                    pathNameSpaceInfo[TypeOfCode.ContractsRootPath] = pathInfo;
+                else
+                    pathNameSpaceInfo.Add(TypeOfCode.ContractsRootPath, pathInfo);
+            };
             //Add the menu items to the menu.
             docMenu.Items.AddRange(new ToolStripMenuItem[]{
                 dtoMenu,repoMenu, repoInterfaceMenu,CQRSMenu,
-                ControllerMenu,DIMenu,MapperMenu,ControllerRootPathMenu,ApplicationRootPathMenu,InfrastructureRootPathMenu});
+                ControllerMenu,DIMenu,MapperMenu,ControllerRootPathMenu,ApplicationRootPathMenu,InfrastructureRootPathMenu,contractsRootPathMenu});
 
 
             return docMenu;
@@ -275,30 +302,38 @@ namespace ToolWindow.DynamicForm.Forms
             if (solutionItem == null) return null;
 
             string fullPath = solutionItem.FullPath;
-            string nameSpace = "";
 
-            if (solutionItem.Type.ToString() == "Project")
+            var projectName = "";
+            if (solutionItem is Community.VisualStudio.Toolkit.Project projectItem)
             {
+                if (projectItem!= null) projectName = projectItem.Name;
                 int projNameIndex = fullPath.ToString().IndexOf(solutionItem.Name+".csproj");
                 if (projNameIndex != -1) {
                     fullPath = fullPath.ToString().Substring(0, projNameIndex);
                 }
             }
-
-                if (solutionItem is PhysicalFolder folder)
+          
+            if (solutionItem is PhysicalFolder folder)
             {
                 if (folder is null) return null;
-                var project = folder.ContainingProject;
-                var projectName = project.Name;
-                var folderPath = folder.FullPath.Trim().ToString();
-                var projIndex = folderPath.IndexOf(projectName, StringComparison.OrdinalIgnoreCase);
-                nameSpace = folderPath.Substring(projIndex).Replace("\\", ".");
-                if (nameSpace.Substring(nameSpace.Length-1, 1) ==".") // remove last dot
-                    nameSpace = nameSpace.Substring(0, nameSpace.Length-1);
+                var project = folder.ContainingProject as Community.VisualStudio.Toolkit.Project;
+                if (project!= null) projectName = project.Name;
+            
             }
 
-            return new PathNameSpaceInfo(typeOfCode, displayPath, nameSpace, fullPath);
+            return new PathNameSpaceInfo(typeOfCode, displayPath, projectName,  fullPath);
         }
+
+        //private static string GenerateNamespace(string projectName, string folderPath)
+        //{
+        //    string nameSpace;
+        //    var projIndex = folderPath.IndexOf(projectName, StringComparison.OrdinalIgnoreCase);
+        //    nameSpace = folderPath.Substring(projIndex).Replace("\\", ".");
+        //    if (nameSpace.Substring(nameSpace.Length-1, 1) ==".") // remove last dot
+        //        nameSpace = nameSpace.Substring(0, nameSpace.Length-1);
+        //    return nameSpace;
+        //}
+
         private void loadTree()
         {
             GetProjects();

@@ -17,6 +17,7 @@ namespace ToolWindow
         public override async Task<FrameworkElement> CreateAsync(int toolWindowId, CancellationToken cancellationToken)
         {
             Version vsVersion = await VS.Shell.GetVsVersionAsync();
+            
             return new MyToolWindowControl(vsVersion);
         }
 

@@ -65,6 +65,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.txtControllersRoot = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtContractsRoot = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.projectFileBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -210,7 +212,7 @@
             // btnSave
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSave.Location = new System.Drawing.Point(1355, 522);
+            this.btnSave.Location = new System.Drawing.Point(1355, 591);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(139, 40);
             this.btnSave.TabIndex = 15;
@@ -221,7 +223,7 @@
             // btnCancel
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(1519, 522);
+            this.btnCancel.Location = new System.Drawing.Point(1519, 591);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(139, 40);
             this.btnCancel.TabIndex = 16;
@@ -312,12 +314,12 @@
             // 
             this.richTextBoxConventions.BackColor = System.Drawing.SystemColors.Info;
             this.richTextBoxConventions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBoxConventions.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.richTextBoxConventions.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.richTextBoxConventions.ForeColor = System.Drawing.Color.Black;
             this.richTextBoxConventions.Location = new System.Drawing.Point(1119, 402);
             this.richTextBoxConventions.Name = "richTextBoxConventions";
             this.richTextBoxConventions.ReadOnly = true;
-            this.richTextBoxConventions.Size = new System.Drawing.Size(539, 108);
+            this.richTextBoxConventions.Size = new System.Drawing.Size(539, 181);
             this.richTextBoxConventions.TabIndex = 26;
             this.richTextBoxConventions.Text = resources.GetString("richTextBoxConventions.Text");
             this.richTextBoxConventions.TextChanged += new System.EventHandler(this.richTextBoxConventions_TextChanged);
@@ -381,6 +383,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtContractsRoot);
+            this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.txtControllersRoot);
             this.groupBox1.Controls.Add(this.txtInfrastructureRoot);
             this.groupBox1.Controls.Add(this.label9);
@@ -390,16 +394,35 @@
             this.groupBox1.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.groupBox1.Location = new System.Drawing.Point(412, 402);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(686, 185);
+            this.groupBox1.Size = new System.Drawing.Size(686, 235);
             this.groupBox1.TabIndex = 34;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Project Root Paths";
+            // 
+            // txtContractsRoot
+            // 
+            this.txtContractsRoot.Location = new System.Drawing.Point(134, 184);
+            this.txtContractsRoot.Multiline = true;
+            this.txtContractsRoot.Name = "txtContractsRoot";
+            this.txtContractsRoot.ReadOnly = true;
+            this.txtContractsRoot.Size = new System.Drawing.Size(539, 45);
+            this.txtContractsRoot.TabIndex = 33;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.label12.Location = new System.Drawing.Point(22, 199);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(78, 20);
+            this.label12.TabIndex = 34;
+            this.label12.Text = "Contracts";
             // 
             // frmPathSetup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1683, 626);
+            this.ClientSize = new System.Drawing.Size(1683, 649);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.richTextBoxConventions);
             this.Controls.Add(this.label8);
@@ -475,5 +498,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtControllersRoot;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox txtContractsRoot;
+        private System.Windows.Forms.Label label12;
     }
 }

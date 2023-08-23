@@ -19,7 +19,7 @@ namespace Restarted.Generators.Generators.DTO.Template
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\Narendra\source\repos\SourceGenerator\Restarted.Generators\Generators\DTO\Template\ModelDTO.tt"
+    #line 1 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\DTO\Template\ModelDTO.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class ModelDTO : ModelDTOBase
     {
@@ -31,49 +31,50 @@ namespace Restarted.Generators.Generators.DTO.Template
         {
             this.Write("using System;\r\nusing System.Collections.Generic;\r\nusing System.Text;\r\nnamespace ");
             
-            #line 10 "C:\Users\Narendra\source\repos\SourceGenerator\Restarted.Generators\Generators\DTO\Template\ModelDTO.tt"
+            #line 10 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\DTO\Template\ModelDTO.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.PreferredNameSpace));
             
             #line default
             #line hidden
-            this.Write("{\r\n\r\n\r\npublic record ");
+            this.Write("{\r\n\r\n//Record with single constructor for mat is not used as Roslyn was expecting" +
+                    " type with default constructor\r\npublic record ");
             
-            #line 13 "C:\Users\Narendra\source\repos\SourceGenerator\Restarted.Generators\Generators\DTO\Template\ModelDTO.tt"
+            #line 13 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\DTO\Template\ModelDTO.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.SourceFileName));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public ");
             
-            #line 15 "C:\Users\Narendra\source\repos\SourceGenerator\Restarted.Generators\Generators\DTO\Template\ModelDTO.tt"
+            #line 15 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\DTO\Template\ModelDTO.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.SourceFileName));
             
             #line default
             #line hidden
             this.Write("()\r\n    {\r\n\r\n    }\r\n    public ");
             
-            #line 19 "C:\Users\Narendra\source\repos\SourceGenerator\Restarted.Generators\Generators\DTO\Template\ModelDTO.tt"
+            #line 19 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\DTO\Template\ModelDTO.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.SourceFileName));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 19 "C:\Users\Narendra\source\repos\SourceGenerator\Restarted.Generators\Generators\DTO\Template\ModelDTO.tt"
+            #line 19 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\DTO\Template\ModelDTO.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ConstructorParamString().Key));
             
             #line default
             #line hidden
             this.Write(")\r\n    {\r\n        ");
             
-            #line 21 "C:\Users\Narendra\source\repos\SourceGenerator\Restarted.Generators\Generators\DTO\Template\ModelDTO.tt"
+            #line 21 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\DTO\Template\ModelDTO.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(ConstructorParamString().Value));
             
             #line default
             #line hidden
             this.Write("\r\n      \r\n    }\r\n\r\n    ");
             
-            #line 25 "C:\Users\Narendra\source\repos\SourceGenerator\Restarted.Generators\Generators\DTO\Template\ModelDTO.tt"
+            #line 25 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\DTO\Template\ModelDTO.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(PropertiesString()));
             
             #line default

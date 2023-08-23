@@ -167,8 +167,8 @@ namespace ToolWindow.ProcessRequest
 
         private static FileParamInfo MapFilePathConventionAndParams(AttributeMetaData data, string pathConvention, List<GeneratorSetting> settings)
         {
-           var featureSetting = settings.Where(o => o.Name =="Feature").FirstOrDefault();
-           var featureModuleSetting = settings.Where(o => o.Name =="FeatureModule").FirstOrDefault();
+           var featureSetting = settings?.Where(o => o.Name =="Feature").FirstOrDefault();
+           var featureModuleSetting = settings?.Where(o => o.Name =="FeatureModule").FirstOrDefault();
 
             string feature = string.Empty;
             string featureModule = string.Empty;
@@ -232,6 +232,7 @@ namespace ToolWindow.ProcessRequest
             var pathAppRoot = ConfigurationHelper.PathSettings()[TypeOfCode.ApplicationRootPath];
             var pathCtrlRoot = ConfigurationHelper.PathSettings()[TypeOfCode.ControllersRootPath];
             var pathInfraRoot = ConfigurationHelper.PathSettings()[TypeOfCode.InfrastructureRootPath];
+            var pathContraRoot = ConfigurationHelper.PathSettings()[TypeOfCode.ContractsRootPath];
             List<string> files = new List<string>();
 
             //AttributeMetaDataDI attributeMetaData = settings.ToMetadata<AttributeMetaDataDI>();
@@ -243,7 +244,8 @@ namespace ToolWindow.ProcessRequest
             {
                 { TypeOfCode.ControllersRootPath , pathCtrlRoot.FullPath },
                 { TypeOfCode.ApplicationRootPath , pathAppRoot.FullPath },
-                 {TypeOfCode.InfrastructureRootPath , pathInfraRoot.FullPath }
+                 {TypeOfCode.InfrastructureRootPath , pathInfraRoot.FullPath },
+                 {TypeOfCode.ContractsRootPath , pathContraRoot.FullPath }
             };
 
             // Map FilePath Convention Information

@@ -38,13 +38,15 @@ namespace Restarted.Generators.FeatureProcessors.GlobalUsing
             string controllerRootPath = data.RootProjectPaths.ContainsKey(TypeOfCode.ControllersRootPath) ? data.RootProjectPaths[TypeOfCode.ControllersRootPath] :null;
             string applicationRootPath = data.RootProjectPaths.ContainsKey(TypeOfCode.ApplicationRootPath) ? data.RootProjectPaths[TypeOfCode.ApplicationRootPath] : null;
             string infrastructureRootPath = data.RootProjectPaths.ContainsKey(TypeOfCode.InfrastructureRootPath) ? data.RootProjectPaths[TypeOfCode.InfrastructureRootPath] : null;
+            string contractsRootPath = data.RootProjectPaths.ContainsKey(TypeOfCode.ContractsRootPath) ? data.RootProjectPaths[TypeOfCode.ContractsRootPath] : null;
 
 
             ApplicationPaths.Add(controllerRootPath, new TypeOfCode[]  { TypeOfCode.DTO,TypeOfCode.CQRSActions });
             ApplicationPaths.Add(applicationRootPath, new TypeOfCode[] { TypeOfCode.DTO, TypeOfCode.Repository,TypeOfCode.RepositoryInterface });
-            ApplicationPaths.Add(infrastructureRootPath, new TypeOfCode[] { TypeOfCode.DTO, TypeOfCode.RepositoryInterface });
+            ApplicationPaths.Add(infrastructureRootPath, new TypeOfCode[] { TypeOfCode.DTO, TypeOfCode.RepositoryInterface , TypeOfCode.Repository });
+            ApplicationPaths.Add(contractsRootPath, new TypeOfCode[] { TypeOfCode.DTO });
 
-           
+
 
             foreach (var genPathConst in ApplicationPaths)
             {
@@ -64,12 +66,13 @@ namespace Restarted.Generators.FeatureProcessors.GlobalUsing
 
                 // Generate FileName
                 string fileName = data.FileName;
+                string finalReplacedPath = genPathConst.Key;
+                //FolderAndNamespacePath finalReplacedPath = FileService.ConventionBasedPath("", data?.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
 
                 // Transform Template
                 var result = ProcessGlobalUsingTemplate(fileName, uniqueNamespaces);
 
-                var finalReplacedPath = FileService.ConventionBasedPath(data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
-
+              
                 // 
                 string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath, fileName, result.SourceCode);
 
@@ -92,8 +95,8 @@ namespace Restarted.Generators.FeatureProcessors.GlobalUsing
         public class AttributeMetaDataGlobalUsing : AttributeMetaData
         {
             public string FileName { get; set; }
-           
 
+            public string ProjectName { get; set; }
             public Dictionary<TypeOfCode,string> RootProjectPaths { get; set; }
 
         }

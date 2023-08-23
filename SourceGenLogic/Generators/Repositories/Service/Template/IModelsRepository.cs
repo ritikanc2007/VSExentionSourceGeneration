@@ -19,7 +19,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Template
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
+    #line 1 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class IModelsRepository : IModelsRepositoryBase
     {
@@ -31,14 +31,14 @@ namespace Restarted.Generators.Generators.Repositories.Service.Template
         {
             this.Write("\r\n\r\n\r\nnamespace ");
             
-            #line 10 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
+            #line 10 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.PreferredNameSpace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    public interface ");
             
-            #line 12 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
+            #line 12 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.SourceFileName));
             
             #line default
@@ -46,41 +46,41 @@ namespace Restarted.Generators.Generators.Repositories.Service.Template
             this.Write(" : IBaseRepository\r\n    {\r\n        Task<IEnumerable<NameListDTO?>> Lookup();\r\n   " +
                     "    \r\n        Task<");
             
-            #line 16 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 16 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("DTO> Get(int id);\r\n\r\n        Task<IEnumerable<");
+            this.Write("> Get(int id);\r\n\r\n        Task<IEnumerable<");
             
-            #line 18 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
-            
-            #line default
-            #line hidden
-            this.Write("DTO>> GetAll();\r\n\r\n        Task<PagedResponse<IEnumerable<");
-            
-            #line 20 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 18 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("ListDTO>>> GetAll(int rowIndex, int pageSize);\r\n\r\n        Task<bool> IsExists(str" +
-                    "ing name);\r\n\r\n        Task<int> Add(");
+            this.Write(">> GetAll();\r\n\r\n        Task<PagedResponse<IEnumerable<");
             
-            #line 24 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
-            
-            #line default
-            #line hidden
-            this.Write("DTO entityDto);\r\n\r\n        Task<int> Update(");
-            
-            #line 26 "C:\Users\Narendra\source\repos\SourceGenerator-Dev\src\SourceGenerator\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.ClassName));
+            #line 20 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
             
             #line default
             #line hidden
-            this.Write("DTO entityDto);\r\n        Task<int> Delete(int id);\r\n\r\n    }\r\n}");
+            this.Write("List>>> GetAll(int rowIndex, int pageSize);\r\n\r\n        Task<bool> IsExists(string" +
+                    " name);\r\n\r\n        Task<int> Add(");
+            
+            #line 24 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
+            
+            #line default
+            #line hidden
+            this.Write(" entityDto);\r\n\r\n        Task<int> Update(");
+            
+            #line 26 "C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenLogic\Generators\Repositories\Service\Template\IModelsRepository.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(Parameter.DTOName));
+            
+            #line default
+            #line hidden
+            this.Write(" entityDto);\r\n        Task<int> Delete(int id);\r\n\r\n    }\r\n}");
             return this.GenerationEnvironment.ToString();
         }
     }
