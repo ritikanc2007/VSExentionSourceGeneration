@@ -1,4 +1,5 @@
-﻿using SourceGeneratorParser.Models.Metadata;
+﻿using Community.VisualStudio.Toolkit;
+using SourceGeneratorParser.Models.Metadata;
 using SourceGeneratorParser.Models.Types;
 using System;
 using System.Collections.Generic;
@@ -58,8 +59,11 @@ namespace WinFormsApp1.DynamicForm
             if (SelectedMenuAction == "CQRS")
                 settings = SettingHelper.GetGenerateCQRSSettings(typeDefinitionInfo, initialFolderDirectory);
             else if (SelectedMenuAction == "CTRL")
-                settings = SettingHelper.GetGenerateCTRLSettings(typeDefinitionInfo, initialFolderDirectory);
+            {
+                //settings = SettingHelper.GetGenerateCTRLSettings(typeDefinitionInfo, initialFolderDirectory);
 
+                settings= SettingHelper.GetGenerateControllerWithRepoSettings(typeDefinitionInfo, initialFolderDirectory);
+            }
 
             if (settings == null) return null;
             form = new Form();

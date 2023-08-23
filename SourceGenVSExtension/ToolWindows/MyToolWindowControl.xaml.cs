@@ -1,48 +1,25 @@
 ﻿using Community.VisualStudio.Toolkit;
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Data;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Text;
-using EnvDTE;
-using Microsoft.CSharp;
-using System.CodeDom.Compiler;
-using System.CodeDom;
-using Microsoft.VisualStudio.Shell.Interop;
-using System.IO;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis;
-using System.Linq;
-
+using Restarted.Generators.Common.Context;
 using SourceGeneratorParser;
+using SourceGeneratorParser.Models.Types;
 using SourceGeneratorParser.Parsers;
 using SourceGeneratorParser.Parsers.Common;
-using SourceGeneratorParser.Models.Types;
-using System.Windows.Controls;
-using Microsoft.VisualStudio.PlatformUI;
-using ToolWindow.Models;
-using WinFormsApp1.DynamicForm;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Restarted.Generators.Common.Context;
-using Restarted.Generators.FeatureProcessors.DTO;
-using ToolWindow.DynamicForm.Model;
-using Microsoft.VisualStudio.Shell.Design.Serialization;
-using Restarted.Generators.FeatureProcessors.Models;
-using Restarted.Generators.FeatureProcessors.Repository;
-using Restarted.Generators.FeatureProcessors.CQRS;
-using Restarted.Generators.FeatureProcessors.Controllers;
-using WinFormsApp1.DynamicForm.Model;
-using Newtonsoft.Json;
-using ToolWindow.Utility;
+using System.Windows;
+using System.Windows.Controls;
 using ToolWindow.DynamicForm;
-using System.Reflection;
-using static Restarted.Generators.FeatureProcessors.CQRS.CQRSService;
-using Restarted.Generators.Generators.CQRS.Models;
-using ToolWindow.ProcessRequest;
 using ToolWindow.DynamicForm.Forms;
-using System.Windows.Controls.Primitives;
+using ToolWindow.DynamicForm.Model;
+using ToolWindow.Models;
+using ToolWindow.ProcessRequest;
+using ToolWindow.Utility;
+using WinFormsApp1.DynamicForm;
+using WinFormsApp1.DynamicForm.Model;
 
 namespace ToolWindow
 {
@@ -196,7 +173,9 @@ namespace ToolWindow
                     {
 
                         // generate controllers
-                        files=  ProcessGeneration.ControllersCQRS(generatorContext, SelectedTypeDefinitionInfo, settings);
+                        //files=  ProcessGeneration.ControllersCQRS(generatorContext, SelectedTypeDefinitionInfo, settings);
+                        files=  ProcessGeneration.ControllerWithRepo(generatorContext, SelectedTypeDefinitionInfo, settings);
+
                     }
                     else if (SelectedTypeDefinitionInfo != null && menuItemName == "DI")
                     {

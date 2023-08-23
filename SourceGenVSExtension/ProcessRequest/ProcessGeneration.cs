@@ -165,6 +165,32 @@ namespace ToolWindow.ProcessRequest
             return files;
         }
 
+        public static List<string> ControllerWithRepo(GeneratorContext generatorContext, TypeDefinitionInfo typeDef, List<GeneratorSetting> settings)
+        {
+            //Class/Interface name conventions
+            ConventionSetting conventionSetting = ConfigurationHelper.ConventionSettings();
+            var pathSettings = ConfigurationHelper.PathSettings()[TypeOfCode.Controller];
+            List<string> files = new List<string>();
+
+
+            //START ControllerInf
+            AttributeMetaDataRepoController data = settings.ToMetadata<AttributeMetaDataRepoController>();
+
+            
+            data.GenerationPath = pathSettings.FullPath;
+            data.NameSpace = pathSettings.NameSpace;
+            data.EntityName = typeDef.Name;
+            data.PluralName = Utility.CommonHelper.GetPluralName(typeDef.Name);
+            data.ControllerName = conventionSetting.Controllers.Replace("{pluralName}", data.PluralName);
+            // Map FilePath Convention Information
+            MapFilePathConventionAndParams(data, pathSettings.Convention, settings);
+
+            files= ControllerRepoService.Process(typeDef, generatorContext, data);
+           
+            //END
+            return files;
+        }
+
         private static FileParamInfo MapFilePathConventionAndParams(AttributeMetaData data, string pathConvention, List<GeneratorSetting> settings)
         {
            var featureSetting = settings?.Where(o => o.Name =="Feature").FirstOrDefault();

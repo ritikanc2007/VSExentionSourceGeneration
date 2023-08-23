@@ -46,6 +46,11 @@
 		<PackageReference Include="System.CodeDom" Version="7.0.0" />
 	</ItemGroup>
   <ItemGroup>
+    <Compile Update="Generators\Controllers\Templates\ControllerWithRepository.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ControllerWithRepository.tt</DependentUpon>
+    </Compile>
     <Compile Update="Generators\Controllers\Templates\ModelsController.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -113,6 +118,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Update="Generators\Controllers\Templates\ControllerWithRepository.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ControllerWithRepository.cs</LastGenOutput>
+    </None>
     <None Update="Generators\Controllers\Templates\ModelsController.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ModelsController.cs</LastGenOutput>

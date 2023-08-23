@@ -98,6 +98,20 @@ namespace WinFormsApp1.DynamicForm.Model
             return settings;
 
         }
+        public static List<GeneratorSetting> GetGenerateControllerWithRepoSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
+        {
+            List<GeneratorSetting> settings = new List<GeneratorSetting>();
+
+            var dtoConvention = ConfigurationHelper.ConventionSettings().Controllers;
+            //START Add Feature and FeatureModule
+            //Add Feature and FeatureModule
+            settings.Add(new GeneratorSetting("Feature", "Feature", "", ControlType.text));
+            settings.Add(new GeneratorSetting("FeatureModule", "Module", "", ControlType.text));
+
+            //END FEATURE
+            return settings;
+
+        }
         public static List<GeneratorSetting> GetGenerateCQRSSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
