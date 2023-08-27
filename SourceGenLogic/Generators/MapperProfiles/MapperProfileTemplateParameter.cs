@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Restarted.Generators.Generators.MapperProfiles
 {
-    internal class MapperProfileTemplateParameter : ITemplateParameter
+    public class MapperProfileTemplateParameter : ITemplateParameter
     {
 
 

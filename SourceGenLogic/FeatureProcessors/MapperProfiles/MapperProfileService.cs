@@ -13,6 +13,7 @@ using Restarted.Generators.Common.Configurations;
 using System.Collections.Immutable;
 using Restarted.Generators.Generators.MapperProfiles;
 using Restarted.Generators.FeatureProcessors.Models;
+using Restarted.Generators.FeatureProcessors.Process;
 
 namespace Restarted.Generators.FeatureProcessors.MapperProfiles
 {
@@ -53,7 +54,16 @@ namespace Restarted.Generators.FeatureProcessors.MapperProfiles
             ITemplateParameter parameter = new MapperProfileTemplateParameter(nameSpace, sourceFileName, targetSourceMap);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new MapperProfileTemplate(parameter);
-            return processor.Process(codeTemplate);
+            //return processor.Process(codeTemplate);
+            var func = () =>
+            {
+                if (TemplateToUse.SwitchFlag == TemplateType.T4)
+                    return processor.Process(codeTemplate);
+                else
+                    return StaticTemplateProcessor.Process(TypeOfTemplate.Mapper, parameter);
+            };
+            IProcessorResult result = func();
+            return result;
         }
         public class AttributeMetaDataMapper : AttributeMetaData
         {

@@ -21,6 +21,8 @@ using System.Runtime.InteropServices.ComTypes;
 using SourceGeneratorParser.Models.Types;
 using SourceGeneratorParser.Models.Metadata;
 using Restarted.Generators.FeatureProcessors.CQRS;
+using Restarted.Generators.FeatureProcessors.Process;
+using System.Runtime.InteropServices;
 
 namespace Restarted.Generators.FeatureProcessors.Controllers
 {
@@ -78,7 +80,16 @@ namespace Restarted.Generators.FeatureProcessors.Controllers
             ITemplateParameter parameter = templateParameter;
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new ControllerWithRepository(parameter);
-            IProcessorResult result = processor.Process(codeTemplate);
+
+
+            var func = () =>
+            {
+                if (TemplateToUse.SwitchFlag == TemplateType.T4)
+                    return processor.Process(codeTemplate);
+                else
+                    return StaticTemplateProcessor.Process(TypeOfTemplate.ControllerWithRepository, parameter);
+            };
+            IProcessorResult result = func();
 
             return new ProcessResult(templateParameter.SourceFileName, result.SourceCode);
 

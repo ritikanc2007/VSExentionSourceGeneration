@@ -1,0 +1,16 @@
+﻿
+using Microsoft.Extensions.DependencyInjection;
+
+namespace {@NameSpace}
+{
+    public static partial class DependencyInjectionRegister
+    {
+        private static partial IServiceCollection AddPersistanceAuto(this IServiceCollection services)
+        {
+            
+            {@DependencyRegistrationString}
+            
+            return services;
+        }
+    }
+}

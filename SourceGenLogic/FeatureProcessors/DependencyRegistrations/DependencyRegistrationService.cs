@@ -3,6 +3,7 @@ using Restarted.Generators.Common.Context;
 using Restarted.Generators.Definitions;
 using Restarted.Generators.FeatureProcessors.Common;
 using Restarted.Generators.FeatureProcessors.Models;
+using Restarted.Generators.FeatureProcessors.Process;
 using Restarted.Generators.Generators.Dependencies;
 using Restarted.Generators.Processor;
 using Restarted.Generators.Processor.Interfaces;
@@ -43,7 +44,16 @@ namespace Restarted.Generators.FeatureProcessors
             ITemplateParameter parameter = new DependencyRegistrationTemplateParameter(nameSpace, sourceFileName, targetSourceMap);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new DependencyRegistrationTemplate(parameter);
-            return processor.Process(codeTemplate);
+            //return processor.Process(codeTemplate);
+            var func = () =>
+            {
+                if (TemplateToUse.SwitchFlag == TemplateType.T4)
+                    return processor.Process(codeTemplate);
+                else
+                    return StaticTemplateProcessor.Process(TypeOfTemplate.DI, parameter);
+            };
+            IProcessorResult result = func();
+            return result;
         }
         public class AttributeMetaDataDI : AttributeMetaData
         {

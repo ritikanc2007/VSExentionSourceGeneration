@@ -1,6 +1,7 @@
 ﻿using Restarted.Generators.Common.Context;
 using Restarted.Generators.FeatureProcessors.Common;
 using Restarted.Generators.FeatureProcessors.Models;
+using Restarted.Generators.FeatureProcessors.Process;
 using Restarted.Generators.Generators.CQRS.Templates.Commands;
 using Restarted.Generators.Generators.CQRS.Templates.Queries;
 using Restarted.Generators.Generators.Repositories.Service.Models;
@@ -30,7 +31,7 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
             foreach (var methodDef in typeDefinitionInfo.Methods)
             {
 
-                var methodData = data.MethodInfo.Where(o => o.MethodName == methodDef.Name).FirstOrDefault();
+                var methodData = data.MethodInfo.Where(o => o.QualifiedName == methodDef.QualifiedName).FirstOrDefault();
 
                 var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, methodDef.Name);
                 if (methodData.RequestType == "Command")
@@ -66,7 +67,7 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
             
 
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
-            ITemplateParameter parameter = new CQRSTemplateParameter(nameSpacePath, cqrsRequestName, typeDefinitionInfo, methodDefinitionInfo, cqrsRequestName, pluralName);
+            ITemplateParameter parameter = new CQRSTemplateParameter(nameSpacePath, cqrsRequestName, typeDefinitionInfo, methodDefinitionInfo, cqrsRequestName, pluralName, requestType);
             List<string> files = new List<string>();
 
             List<IProcessorResult> results = new List<IProcessorResult>();
@@ -92,7 +93,15 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
                 parameter.SourceFileName = requestName;
 
                 var codeTemplate = codeTemplates[requestName];
-                var result = processor.Process(codeTemplate);
+                //var result = processor.Process(codeTemplate);
+                var func = () =>
+                {
+                    if (TemplateToUse.SwitchFlag == TemplateType.T4)
+                        return processor.Process(codeTemplate);
+                    else
+                        return StaticTemplateProcessor.Process(TypeOfTemplate.CQRSActions, parameter,codeTemplate);
+                };
+                IProcessorResult result = func();
                 string pathGenerated = FileService.GenerateSourceAtFolderLocation(generationPath, requestName, result.SourceCode);
                 files.Add(pathGenerated);
                 results.Add(result);
@@ -125,13 +134,14 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
 
     public class CQRSMethodMap
     {
-        public CQRSMethodMap(string methodName, string cQRSRequestName, string requestType)
+        public CQRSMethodMap(string qualifiedName, string methodName, string cQRSRequestName, string requestType)
         {
-            MethodName=methodName;
+            QualifiedName = qualifiedName;
+            MethodName =methodName;
             CQRSRequestName=cQRSRequestName;
             RequestType=requestType;
         }
-
+        public string QualifiedName { get; set; }
         public string MethodName { get; set; }
 
         public string CQRSRequestName { get; set; }

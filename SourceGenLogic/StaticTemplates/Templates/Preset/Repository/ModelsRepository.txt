@@ -1,0 +1,120 @@
+﻿
+using System.Collections.Generic;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+
+
+namespace {@NameSpace};
+
+    public class {@Name} : {@Interface}
+    {
+        private readonly {@DBContext} context;
+        private readonly IMapper mapper;
+
+        public {@Name}({@DBContext} context, IMapper mapper)
+        {
+            this.context=context;
+            this.mapper=mapper;
+        }
+
+       
+        public async Task<int> Add({@DTO} entityDto)
+        {
+            var entity = this.mapper.Map<{@Entity}>(entityDto);
+            this.context.Add(entity);
+            return await this.context.SaveChangesAsync();
+
+        }
+
+        public Task<int> Delete(int id)
+        {
+            var entity = this.context.{@Plural}
+                  .Where(u => u.Id == id)
+                  .FirstOrDefault();
+
+            
+            if (entity == null)
+                return Task.FromResult(0);
+
+            if (context?.Entry(entity).State == EntityState.Detached)
+            {
+                context.Attach(entity);
+            }
+            
+            this.context.Remove(entity);
+
+            return this.context.SaveChangesAsync();
+        }
+
+        public async Task<{@DTO}> Get(int id)
+        {
+            var result = await this.context.{@Plural}
+                         .FirstOrDefaultAsync(o => o.Id == id);
+
+            var dto = this.mapper.Map<{@DTO}>(result);
+
+            return dto;
+        }
+
+
+        public async Task<IEnumerable<{@DTO}>> GetAll()
+        {
+            return await this.context.{@Plural}
+                .ProjectTo<{@DTO}>(mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
+        public async Task<PagedResponse<IEnumerable<{@DTO}List>>> GetAll(int rowIndex, int pageSize)
+        {
+            int totalCount = this.context.{@Plural}.Count();
+            
+              var data = this.context.{@Plural}
+                 .ProjectTo<{@DTO}List>(mapper.ConfigurationProvider)
+                 .Skip((rowIndex  -1) * pageSize)
+                 .Take(pageSize)
+                 .AsEnumerable();
+
+            return await Task.FromResult(new PagedResponse<IEnumerable<{@DTO}List>>(data, rowIndex, pageSize, totalCount));
+        }
+
+        public async Task<bool> IsExists(string name)
+        {
+            return await this.context
+                 .{@Plural}
+                 .Where(o => o.Name == name)
+                 .CountAsync() >0;
+        }
+
+
+
+     
+        public Task<int> Update({@DTO} entityDto)
+        {
+            var entity = this.context
+                            .{@Plural}
+                            .Where(u => u.Id == entityDto.Id)
+                            .FirstOrDefault();
+
+            if (entity == null)
+                return Task.FromResult(0);
+
+            this.mapper.Map(entityDto, entity);
+           
+  
+            this.context.Entry(entity).State = EntityState.Modified;
+
+            return this.context.SaveChangesAsync();
+        }
+
+         public async Task<IEnumerable<NameListDTO?>> Lookup()
+        {
+            return await this.context.{@Plural}
+                  .OrderBy(o => o.Name)
+                  .Select(o =>
+                  new NameListDTO { Id = o.Id, Name= o.Name }
+                  ).ToListAsync();;
+        }
+      
+    }
+

@@ -174,9 +174,47 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ModelsRepository.cs</LastGenOutput>
     </None>
+    <None Update="StaticTemplates\Templates\Preset\CQRS\Commands\CQRSModelCommand.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="StaticTemplates\Templates\Preset\CQRS\Commands\CQRSModelCommandHandler.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="StaticTemplates\Templates\Preset\CQRS\Commands\CQRSModelCommandValidator.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="StaticTemplates\Templates\Preset\CQRS\Queries\CQRSModelQueryHandler.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="StaticTemplates\Templates\Preset\CQRS\Queries\CQRSModelQueryRequest.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="StaticTemplates\Templates\Preset\CQRS\Queries\CQRSModelQueryValidator.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="StaticTemplates\Templates\Preset\DI\DependencyRegistrationTemplate.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="StaticTemplates\Templates\Preset\DTO\ModelDTO.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="StaticTemplates\Templates\Preset\GlobalUsings\GlobalUsingTemplate.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="StaticTemplates\Templates\Preset\Mappers\MapperProfileTemplate.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="StaticTemplates\Templates\Preset\Repository\IModelsRepository.txt">
+      <Generator></Generator>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SourceGeneratorParser\SourceGeneratorParser.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="StaticTemplates\Templates\Preset\Repository\UnitTest\" />
+    <Folder Include="StaticTemplates\Templates\Repository\Methods\Queries\GetAllPaged\" />
+    <Folder Include="StaticTemplates\Templates\Repository\Methods\Queries\GetAll\" />
   </ItemGroup>
 
 </Project>

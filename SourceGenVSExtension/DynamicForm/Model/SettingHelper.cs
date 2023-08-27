@@ -133,7 +133,9 @@ namespace WinFormsApp1.DynamicForm.Model
             foreach (var method in typeDefinitionInfo?.Methods)
             {
                 string methodName = method.Name;
-                settings.Add(new GeneratorSetting(methodName, methodName, methodName, ControlType.CQRSControl));
+                string qualifiedName = method.QualifiedName;
+                
+                settings.Add(new GeneratorSetting(methodName, methodName, methodName, ControlType.CQRSControl,qualifiedName: qualifiedName));
             }
 
            

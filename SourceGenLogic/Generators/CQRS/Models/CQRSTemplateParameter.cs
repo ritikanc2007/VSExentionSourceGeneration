@@ -12,7 +12,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
     {
 
        
-        public CQRSTemplateParameter(string nameSpace, string sourceFileName, TypeDefinitionInfo typeDefinitionInfo, MethodItemInfo currentMethod,string cqrsRequestName,string pluralEntityName)
+        public CQRSTemplateParameter(string nameSpace, string sourceFileName, TypeDefinitionInfo typeDefinitionInfo, MethodItemInfo currentMethod,string cqrsRequestName,string pluralEntityName,string requestType)
         {
 
             SourceFileName = sourceFileName;
@@ -28,6 +28,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
         public string PreferredNameSpace { get; set; }
         public TypeDefinitionInfo TypeDefinitionInfo { get; set;}
 
+        public string RequestType { get; set; }
         public MethodItemInfo CurrentMethod { get; set; }
 
        

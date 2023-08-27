@@ -77,7 +77,7 @@ namespace Restarted.Generators.FeatureProcessors.Common
 
             string directory = filePath;
             string extension = ".g.cs";
-            string generatedFolder = "Generated\\";
+            string generatedFolder = "";// @"Generated\";
             if (directory.Substring(directory.Length -1, 1) != "\\")
             {
                 directory = filePath + "\\";

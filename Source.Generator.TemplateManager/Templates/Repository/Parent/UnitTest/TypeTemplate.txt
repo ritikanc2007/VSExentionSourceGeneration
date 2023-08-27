@@ -1,0 +1,11 @@
+﻿using System.Collections.Generic;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+
+namespace {@NameSpace};
+
+    {AccessModifier} partial class {@Name} : {@Interface}
+    {
+     
+    }

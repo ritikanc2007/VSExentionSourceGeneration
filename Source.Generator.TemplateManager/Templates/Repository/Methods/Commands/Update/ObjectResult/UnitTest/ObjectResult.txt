@@ -1,0 +1,22 @@
+﻿    {AccessModifier} {@ReturnType} {@MethodName} {ParamString}
+    {		    
+        var entity = this.context
+                    .{EntityName}
+                    .Where(u => u.{KeyField} == entityDto.{KeyParam})
+                    .FirstOrDefault();
+
+        if (entity == null)
+            return Task.FromResult(0);
+
+        this.mapper.Map(entityDto, entity);
+ 
+        this.context.Entry(entity).State = EntityState.Modified;
+
+        this.context.SaveChangesAsync();	
+
+        return this.context
+                    .{EntityName}
+                    .Where(u => u.{KeyField} == entityDto.{KeyParam})
+                    .ProjectToFirstOrDefault<{DtoName}>();
+    }
+	

@@ -1,0 +1,19 @@
+﻿    {AccessModifier} {@ReturnType} {@MethodName} {ParamString}
+    {		    
+        var result = context.{LinqQuery}; // Query to select multiple or single 
+            
+        if (result == null)
+            return Task.FromResult(0);
+
+        foreach(var entity in result)
+        {
+
+            if (context?.Entry(entity).State == EntityState.Detached)
+                context.Attach(entity);
+
+            this.context.Remove(entity);
+        }
+        this.context.SaveChangesAsync();
+
+        return context.{LinqResultQuery}; // Not sure template can be refactored
+    }

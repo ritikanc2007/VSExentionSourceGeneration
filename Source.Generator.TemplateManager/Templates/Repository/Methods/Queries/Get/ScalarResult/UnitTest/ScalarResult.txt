@@ -1,0 +1,4 @@
+﻿   async {AccessModifier} {@ReturnType} {@MethodName} {ParamString}
+    {		    
+            return await context.{LinqQuery};
+    }

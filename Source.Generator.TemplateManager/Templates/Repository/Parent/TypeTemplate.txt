@@ -1,0 +1,28 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="Restarted.Generators.Generators.Repositories.Service.Template" #>
+
+using System.Collections.Generic;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+
+
+namespace {@NameSpace};
+
+    public class {@Name} : {@Interface}
+    {
+        private readonly {@DBContext} context;
+        private readonly IMapper mapper;
+
+        public {@Name}({@DBContext} context, IMapper mapper)
+        {
+            this.context=context;
+            this.mapper=mapper;
+        }
+
+     }
+

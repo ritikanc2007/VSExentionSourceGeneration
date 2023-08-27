@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+namespace {@NameSpace};
+
+//Record with single constructor for mat is not used as Roslyn was expecting type with default constructor
+public record {@Name}
+{
+        public {@Name}()
+        {
+
+        }
+        public {@Name}({@dtoContructorParameterStrings})
+        {
+            {@dtoContructorParameterPropertyAssignmentStrings}
+      
+        }
+
+        {@dtoPropertyDefinitionStrings}
+   
+}
+

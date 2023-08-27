@@ -1,0 +1,19 @@
+﻿    async public int {@Name} ({@DTO} dto)
+    {		    
+        var entity = this.context
+                    .{@Entity}
+                    .Where(u => u.Id == dto.Id)
+                    .FirstOrDefault();
+
+        if (entity == null)
+            return Task.FromResult(0);
+
+        this.mapper.Map(dto, entity);
+ 
+        this.context.Entry(entity).State = EntityState.Modified;
+
+        var result = this.context.SaveChangesAsync();	
+
+        return result;
+    }
+	

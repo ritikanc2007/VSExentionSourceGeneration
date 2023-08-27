@@ -37,22 +37,35 @@ namespace SourceGeneratorParser.Parsers.Code.Visitors.Metadata
 
             // Load parameters
             var parameterDefs = new List<ArgumentItemInfo>();
+            StringBuilder wrongQualifiedString = new StringBuilder(); // need to check how to get QualifiedName of method
+            int index = 0;
+
+           
             foreach (var parameter in parameters)
             {
-
+                index+=1;
                 var name = parameter.Identifier.Text;
                 var type = parameter.Type.ToString();
 
+                                wrongQualifiedString.Append($"{type}" + (index ==  parameters.Count()-1 ? "," : "")); 
                 parameterDefs.Add(new ArgumentItemInfo() { Name=name, Type=type }  );
             }
-
+            var paramString = wrongQualifiedString.ToString();
+            var qualifiedName = string.Empty;
+            if (!string.IsNullOrEmpty(paramString))
+            {
+                qualifiedName = $"{methodName}({paramString})";
+            }
+            else
+                qualifiedName = methodName;
 
             Method= new MethodItemInfo
             {
                 Name = methodName,
                 Arguments  = parameterDefs, //fieldArguments.ToArray(),
                 ReturnType = returnType.ToString(),
-                Attributes = AttributeDefinitions
+                Attributes = AttributeDefinitions,
+                QualifiedName= qualifiedName
             };
         }
 

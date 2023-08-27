@@ -1,0 +1,17 @@
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\bin\Debug\net6.0\Source.Generator.TemplateManager.deps.json
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\bin\Debug\net6.0\Source.Generator.TemplateManager.dll
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\bin\Debug\net6.0\Source.Generator.TemplateManager.pdb
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\obj\Debug\net6.0\Source.Generator.TemplateManager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\obj\Debug\net6.0\Source.Generator.TemplateManager.AssemblyInfoInputs.cache
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\obj\Debug\net6.0\Source.Generator.TemplateManager.AssemblyInfo.cs
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\obj\Debug\net6.0\Source.Generator.TemplateManager.csproj.CoreCompileInputs.cache
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\obj\Debug\net6.0\Source.Generator.TemplateManager.dll
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\obj\Debug\net6.0\refint\Source.Generator.TemplateManager.dll
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\obj\Debug\net6.0\Source.Generator.TemplateManager.pdb
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\obj\Debug\net6.0\ref\Source.Generator.TemplateManager.dll
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\obj\Debug\net6.0\Source.Generator.TemplateManager.csproj.AssemblyReference.cache
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\bin\Debug\net6.0\Restarted.Generators.dll
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\bin\Debug\net6.0\SourceGeneratorParser.dll
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\bin\Debug\net6.0\Restarted.Generators.pdb
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\bin\Debug\net6.0\SourceGeneratorParser.pdb
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\Source.Generator.TemplateManager\obj\Debug\net6.0\Source.Generator.TemplateManager.csproj.CopyComplete

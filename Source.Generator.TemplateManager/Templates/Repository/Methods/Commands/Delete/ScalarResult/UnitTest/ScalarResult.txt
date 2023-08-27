@@ -1,0 +1,18 @@
+﻿    {AccessModifier} {@ReturnType} {@MethodName} {ParamString}
+    {		    
+        var entity = this.context.{EntityName}
+                    .Where(u => u.Id == id)
+                    .FirstOrDefault();
+            
+        if (entity == null)
+            return Task.FromResult(0);
+
+        if (context?.Entry(entity).State == EntityState.Detached)
+        {
+            context.Attach(entity);
+        }
+
+        this.context.Remove(entity);
+        
+        return this.context.SaveChangesAsync();
+    }

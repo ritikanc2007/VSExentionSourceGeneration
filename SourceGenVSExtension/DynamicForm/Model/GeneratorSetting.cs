@@ -23,7 +23,9 @@ namespace WinFormsApp1.DynamicForm.Model
         {
             
         }
-        public GeneratorSetting(string name, string label, string value, ControlType controlType, bool isEventControl = false, bool isDependentControl = true, string eventMethod="")
+        public GeneratorSetting(string name, string label, string value, ControlType controlType,
+            bool isEventControl = false, bool isDependentControl = true, string eventMethod="",
+            string qualifiedName = null)
         {
             Name = name;
             Value = value;
@@ -33,6 +35,7 @@ namespace WinFormsApp1.DynamicForm.Model
             IsEventControl = isEventControl;
             EventMethod = eventMethod;
             IsDependentControl = isDependentControl;
+            QualifiedName = qualifiedName;
         }
         //public GeneratorSetting(string name, string label, TextBox eventControl, List<TextBox> dependentControls, string Value = null)
         //{
@@ -61,7 +64,7 @@ namespace WinFormsApp1.DynamicForm.Model
         [JsonIgnore]
         public List<TextBox> DependentControls { get; set; }
 
-
+        public string QualifiedName { get; set; }
         public ControllerSetting ContollerSetting { get; set; } = new ControllerSetting();
 
         private string generateControlId()

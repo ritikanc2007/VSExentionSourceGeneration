@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Restarted.Generators.Generators.GlobalUsings
 {
-    internal class GlobalUsingTemplateParameter : ITemplateParameter
+    public class GlobalUsingTemplateParameter : ITemplateParameter
     {
 
 

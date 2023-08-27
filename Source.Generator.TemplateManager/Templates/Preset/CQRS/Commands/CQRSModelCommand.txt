@@ -1,0 +1,9 @@
+﻿
+using MediatR;
+
+
+namespace {@NameSpace}
+{
+    public record {@CQRSRequestName}({@ArgumentsTypeNameString}) : IRequest<{@ReturnType}>;
+
+}

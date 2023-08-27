@@ -42,6 +42,19 @@ namespace Restarted.Generators.Common.Context
         InfrastructureRootPath,
         ContractsRootPath
     }
+
+    public enum TypeOfTemplate
+    {
+        ControllerWithRepository,
+        ControllerWithCQRS,
+        CQRSActions,
+        Repository,
+        RepositoryInterface,
+        DTO,
+        DI,
+        Mapper,
+        GlobalUsings
+    }
     public class NameSpaceInfo
     {
         public NameSpaceInfo(TypeOfCode typeOfCode, string className, string @namespace, string filePath)

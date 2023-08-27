@@ -1,0 +1,18 @@
+﻿    async public int {@Name} (int Id)
+    {		    
+        var entity = this.context.{@Entity}
+                    .Where(u => u.Id == Id)
+                    .FirstOrDefault();
+            
+        if (entity == null)
+            return Task.FromResult(0);
+
+        if (context?.Entry(entity).State == EntityState.Detached)
+        {
+            context.Attach(entity);
+        }
+
+        this.context.Remove(entity);
+        
+        return this.context.SaveChangesAsync();
+    }

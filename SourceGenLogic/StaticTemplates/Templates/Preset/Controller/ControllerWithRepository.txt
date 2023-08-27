@@ -1,0 +1,77 @@
+﻿
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace {@NameSpace};
+
+[AllowAnonymous]
+[ApiController]
+[Route("api/[controller]")]
+public class {@Name} : ControllerBase
+{
+    private readonly {@Interface} repository;
+
+    public {@Name}({@Interface} repository)
+    {
+
+        this.repository=repository;
+    }
+    [HttpGet("lookup")]
+    public async Task<IActionResult> Lookup()
+    {
+        var result = await repository.Lookup();
+        return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(int id)
+    {
+        var result = await repository.Get(id);
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+
+        var result = await repository.GetAll();
+        return Ok(result);
+    }
+
+    [HttpGet("paged/{pageIndex}/{pageSize}")]
+    public async Task<IActionResult> GetAll(int pageIndex, int pageSize)
+    {
+        var result = await repository.GetAll(pageIndex, pageSize);
+        return Ok(result);
+    }
+
+    [HttpGet("exists/{Name}")]
+    public async Task<IActionResult> IsExists(string name)
+    {
+
+        var result = await repository.IsExists(name);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Add({@DTO} entityDto)
+    {
+        var result = await repository.Add(entityDto);
+        return Ok(result);
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> Update({@DTO} entityDto)
+    {
+        var result = await repository.Update(entityDto);
+        return Ok(result);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+
+        var result = await repository.Delete(id);
+        return Ok(result);
+    }
+}

@@ -1,0 +1,9 @@
+﻿    {AccessModifier} {@ReturnType} {@MethodName} {ParamString}
+    {		    
+  	    var result = context.{LinqQuery}
+
+ 		var dto = this.mapper.Map<{@ReturnType}>(result);
+
+        return dto;
+    }
+			

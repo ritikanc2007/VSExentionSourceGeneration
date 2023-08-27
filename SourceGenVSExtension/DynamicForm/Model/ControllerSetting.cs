@@ -13,16 +13,18 @@ namespace ToolWindow.DynamicForm.Model
             
         }
 
-        public ControllerSetting(string hTTPAction, string methodName, string route)
+        public ControllerSetting(string qualifiedName, string hTTPAction, string methodName, string route)
         {
             HTTPAction=hTTPAction;
             MethodName=methodName;
+            QualifiedName=qualifiedName;
             Route=route;
         }
 
         public string HTTPAction { get; set; }
-        public string MethodName { get; set; }
+        public string QualifiedName { get; set; }
 
+        public string MethodName { get; set; }
         public string Route  { get; set; }
     }
 }

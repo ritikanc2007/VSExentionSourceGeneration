@@ -1,0 +1,211 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\Source.Generator.TemplateManager\\Source.Generator.TemplateManager.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\Source.Generator.TemplateManager\\Source.Generator.TemplateManager.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\Source.Generator.TemplateManager\\Source.Generator.TemplateManager.csproj",
+        "projectName": "Source.Generator.TemplateManager",
+        "projectPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\Source.Generator.TemplateManager\\Source.Generator.TemplateManager.csproj",
+        "packagesPath": "C:\\Users\\Narendra\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\Source.Generator.TemplateManager\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Narendra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGenLogic\\Restarted.Generators.csproj": {
+                "projectPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGenLogic\\Restarted.Generators.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGeneratorParser\\SourceGeneratorParser.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGeneratorParser\\SourceGeneratorParser.csproj",
+        "projectName": "SourceGeneratorParser",
+        "projectPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGeneratorParser\\SourceGeneratorParser.csproj",
+        "packagesPath": "C:\\Users\\Narendra\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGeneratorParser\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Narendra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.3, )"
+            },
+            "Microsoft.CodeAnalysis.CSharp.Workspaces": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGenLogic\\Restarted.Generators.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGenLogic\\Restarted.Generators.csproj",
+        "projectName": "Restarted.Generators",
+        "projectPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGenLogic\\Restarted.Generators.csproj",
+        "packagesPath": "C:\\Users\\Narendra\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGenLogic\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Narendra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "targetAlias": "netstandard2.0",
+            "projectReferences": {
+              "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGeneratorParser\\SourceGeneratorParser.csproj": {
+                "projectPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGeneratorParser\\SourceGeneratorParser.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "targetAlias": "netstandard2.0",
+          "dependencies": {
+            "Microsoft.CodeAnalysis.Analyzers": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.3.3, )"
+            },
+            "Microsoft.CodeAnalysis.CSharp.Workspaces": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "System.CodeDom": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

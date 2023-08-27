@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Process\IndividualMethodProcessingSample.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Templates\Preset\Repository\UnitTest\" />
+    <Folder Include="Templates\Repository\Methods\Queries\GetAll\" />
+    <Folder Include="Templates\Repository\Methods\Queries\GetAllPaged\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SourceGenLogic\Restarted.Generators.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Templates\Preset\CQRS\Commands\CQRSModelCommand.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="Templates\Preset\CQRS\Commands\CQRSModelCommandHandler.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="Templates\Preset\CQRS\Commands\CQRSModelCommandValidator.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="Templates\Preset\CQRS\Queries\CQRSModelQueryHandler.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="Templates\Preset\CQRS\Queries\CQRSModelQueryRequest.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="Templates\Preset\CQRS\Queries\CQRSModelQueryValidator.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="Templates\Preset\Dependencies\DependencyRegistrationTemplate.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="Templates\Preset\DTO\ModelDTO.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="Templates\Preset\GlobalUsings\GlobalUsingTemplate.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="Templates\Preset\MapperProfiles\MapperProfileTemplate.txt">
+      <Generator></Generator>
+    </None>
+    <None Update="Templates\Preset\Repository\IModelsRepository.txt">
+      <Generator></Generator>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+</Project>

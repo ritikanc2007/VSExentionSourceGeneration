@@ -15,6 +15,7 @@ using Restarted.Generators.Common.Context;
 using System.Reflection.Metadata;
 using SourceGeneratorParser.Models.Types;
 using SourceGeneratorParser.Models.Metadata;
+using Restarted.Generators.FeatureProcessors.Process;
 
 namespace Restarted.Generators.FeatureProcessors.DTO
 {
@@ -30,12 +31,12 @@ namespace Restarted.Generators.FeatureProcessors.DTO
             string SourceFileNAme = data.Name;
 
 
-            var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace,data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
+            var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
 
             // Transform Template
             var result = ProcessDTOTemplate(typeDefinitionInfo, finalReplacedPath.NameSpacePath, SourceFileNAme, data.Members, bool.Parse(data.AllPropertiesNullable));
 
-           
+
 
             // Generate FileName
             string fileName = SourceFileNAme;
@@ -48,7 +49,8 @@ namespace Restarted.Generators.FeatureProcessors.DTO
             generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.DTO, SourceFileNAme, finalReplacedPath.NameSpacePath, finalReplacedPath.FolderPath));
             // Key Contains Targe & value contains source i.e UserDTO is Key & User is value
             // Reason: you can have multiple DTOs for User entity
-            generatorContext.MapperProfiles.Add(SourceFileNAme, typeDefinitionInfo.Name);
+            if (!generatorContext.MapperProfiles.ContainsKey(SourceFileNAme))
+                generatorContext.MapperProfiles.Add(SourceFileNAme, typeDefinitionInfo.Name);
 
             return files;
 
@@ -62,7 +64,16 @@ namespace Restarted.Generators.FeatureProcessors.DTO
             ITemplateParameter parameter = new ModelTemplateParameter(typeDefinitionInfo, nameSpace, className, commanSeperatedMembers, allPropertiesNullable);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new ModelDTO(parameter);
-            return processor.Process(codeTemplate);
+            //return processor.Process(codeTemplate);
+            var func = () =>
+            {
+                if (TemplateToUse.SwitchFlag == TemplateType.T4)
+                    return processor.Process(codeTemplate);
+                else
+                    return StaticTemplateProcessor.Process(TypeOfTemplate.DTO, parameter);
+            };
+            IProcessorResult result = func();
+            return result;
         }
 
 

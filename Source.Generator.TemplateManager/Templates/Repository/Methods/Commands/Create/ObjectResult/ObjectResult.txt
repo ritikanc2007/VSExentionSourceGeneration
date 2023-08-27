@@ -1,0 +1,10 @@
+﻿    {AccessModifier} partial Task<{@DTO}> {@Name} {ParameterString}
+    {		    
+        var entity = this.mapper.Map<<{@Entity}>(dto);
+        this.context.Add(entity);
+        var result = await this.context.SaveChangesAsync();
+        if (result != null)
+            var response = await this.context.{LinqQuery};
+		return response;	
+    }
+		

@@ -1,0 +1,17 @@
+﻿
+
+using AutoMapper;
+using System.Runtime.CompilerServices;
+
+namespace {@NameSpace}
+{
+    public partial class MapperProfile : Profile
+    {
+        public partial void GeneratedCodeMapping()
+        {
+            
+            {@MapperString}
+        }
+    }
+
+}

@@ -47,7 +47,7 @@ namespace SourceGeneratorParser.Parsers.Code
             return root;
         }
 
-        private void FindTypeDeclarationSyntax(IEnumerable<SyntaxNode> childNodes, out SyntaxNode typeDeclarationSyntaxNode)
+        internal static void FindTypeDeclarationSyntax(IEnumerable<SyntaxNode> childNodes, out SyntaxNode typeDeclarationSyntaxNode)
         {
             typeDeclarationSyntaxNode = null;
             foreach (var node in childNodes)

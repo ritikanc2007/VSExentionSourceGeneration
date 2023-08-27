@@ -22,7 +22,7 @@
             ItemsSource="{Binding Projects}"
             SelectedItemChanged="SelectedClick"
             >
-                
+
 
                 <!-- TvShows template -->
                 <TreeView.ItemTemplate>
@@ -32,10 +32,10 @@
                         <!-- Seasons template -->
                         <HierarchicalDataTemplate.ItemTemplate >
                             <HierarchicalDataTemplate  ItemsSource="{Binding Projects}">
-                                <TextBlock Text="{Binding Name}"  ToolTip="{Binding ItemType}" >
-                                    <TextBlock.ContextMenu>
-                                        <ContextMenu  >
-                                            
+                                <TextBlock  x:Name="ParentBlock" Text="{Binding Name}"  ToolTip="{Binding ItemType}"  ContextMenuOpening="OnMenuOpening">
+                                    <TextBlock.ContextMenu  >
+                                        <!--<ContextMenu  Name="TreeMenu" ContextMenuOpening="OnMenuOpening" >
+                                            <MenuItem Click="OptionClick" Name="EXPLORE"  Header="EXPLORE"></MenuItem>
                                             <MenuItem Click="OptionClick" Name="DTO"  Header="DTO"></MenuItem>
                                             <MenuItem Click="OptionClick" Name="REPO"  Header="Repository"></MenuItem>
                                             <MenuItem Click="OptionClick" Name="CQRS"  Header="CQRS + Controller"></MenuItem>
@@ -46,6 +46,28 @@
                                             <MenuItem Click="OptionClick" Name="PATHS"  Header="Setup Paths"></MenuItem>
                                             <MenuItem Click="OptionClick" Name="CONVENTIONS"  Header="Define Conventions"></MenuItem>
                                             <MenuItem Click="OptionClick" Name="DELETE"  Header="Delete All Settings"></MenuItem>
+                                            -->
+                                        <!--<MenuItem Click="OptionClick" Name="TREEPATH"  Header="Define TREEPATH"></MenuItem>-->
+                                        <!--
+                                        </ContextMenu>-->
+                                        <ContextMenu  Name="TreeMenu" >
+                                            <MenuItem  Name="Generate" Header="Generate" ContextMenuOpening="OnMenuOpening" >
+                                                <MenuItem Click="OptionClick" Name="EXPLORE"   Header="EXPLORE"></MenuItem>
+                                                <MenuItem Click="OptionClick" Name="DTO"  Header="DTO"></MenuItem>
+                                                <MenuItem Click="OptionClick" Name="REPO"  Header="Repository"></MenuItem>
+                                                <MenuItem Click="OptionClick" Name="CQRS"  Header="CQRS + Controller"></MenuItem>
+                                                <MenuItem Click="OptionClick" Name="CTRL"   Header="Controller"></MenuItem>
+                                            </MenuItem>
+                                            <MenuItem Name="Dependencies" Header="Dependencies" ContextMenuOpening="OnMenuOpening">
+                                                <MenuItem Click="OptionClick" Name="DI"  Header="Register DI"></MenuItem>
+                                                <MenuItem Click="OptionClick" Name="MAPPERS"  Header="Mapper Profiles"></MenuItem>
+                                                <MenuItem Click="OptionClick" Name="GLOBALUSING"  Header="Global Usings"></MenuItem>
+                                            </MenuItem>
+                                            <MenuItem Name="Setup" Header="Setup"  ContextMenuOpening="OnMenuOpening">
+                                                <MenuItem Click="OptionClick" Name="PATHS"  Header="Paths"></MenuItem>
+                                                <MenuItem Click="OptionClick" Name="CONVENTIONS"  Header="Conventions"></MenuItem>
+                                                <MenuItem Click="OptionClick" Name="DELETE"  Header="Delete All Settings"></MenuItem>
+                                            </MenuItem>
                                             <!--<MenuItem Click="OptionClick" Name="TREEPATH"  Header="Define TREEPATH"></MenuItem>-->
                                         </ContextMenu>
                                     </TextBlock.ContextMenu>

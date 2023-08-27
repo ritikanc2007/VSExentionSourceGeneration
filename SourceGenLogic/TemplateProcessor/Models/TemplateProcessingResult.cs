@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Restarted.Generators.Processor.Models
 {
-    internal class TemplateProcessingResult
+    public class TemplateProcessingResult
     {
         public string SourceCode { get; set; }
     }

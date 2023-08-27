@@ -11,6 +11,9 @@ namespace SourceGeneratorParser.Models.Metadata
 
         public string ReturnType { get; set; }
 
+        public string QualifiedName { get; set; }
         public List<AttributeItemInfo> Attributes { get; set; }
+
+
     }
 }

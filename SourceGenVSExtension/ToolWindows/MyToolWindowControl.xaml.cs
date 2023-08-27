@@ -1,5 +1,9 @@
 ﻿using Community.VisualStudio.Toolkit;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text;
 using Restarted.Generators.Common.Context;
 using SourceGeneratorParser;
 using SourceGeneratorParser.Models.Types;
@@ -20,6 +24,9 @@ using ToolWindow.ProcessRequest;
 using ToolWindow.Utility;
 using WinFormsApp1.DynamicForm;
 using WinFormsApp1.DynamicForm.Model;
+using System.Threading;
+using System.CodeDom;
+using Microsoft.VisualStudio.PlatformUI;
 
 namespace ToolWindow
 {
@@ -35,10 +42,16 @@ namespace ToolWindow
             lblHeadline.Content = $"Visual Studio v{vsVersion}";
 
             VS.Events.SolutionEvents.OnAfterOpenSolution += SolutionEvents_OnAfterOpenSolution;
-
+            VS.Events.SolutionEvents.OnAfterBackgroundSolutionLoadComplete+=SolutionEvents_OnAfterBackgroundSolutionLoadComplete;
             VS.Events.SolutionEvents.OnBeforeCloseSolution +=SolutionEvents_OnBeforeCloseSolution;
 
-           
+
+        }
+
+        private void SolutionEvents_OnAfterBackgroundSolutionLoadComplete()
+        {
+            if (SourceTreeView.ItemsSource == null)
+                LoadSourceExplores();
         }
 
         private void SolutionEvents_OnBeforeCloseSolution()
@@ -63,11 +76,91 @@ namespace ToolWindow
             SelectedSolutionItem = SourceTreeView.SelectedItem as ProjectFile;
             if (SelectedSolutionItem != null)
             {
-                //read all content and load type, attributes, methods and member information
+#warning added for testing - DELETE
+                //var doc = await VS.Documents.OpenAsync(SelectedSolutionItem.Path);
+                //if (doc != null)
+                //{
+                //    doc.TextView.Selection.SelectionChanged +=Selection_SelectionChanged;
+
+                //    // Warning ends here
+                //}
                 this.SelectedTypeDefinitionInfo= await GetTypeInformation();
             }
         }
 
+        async private void Selection_SelectionChanged(object sender, EventArgs e)
+        {
+            DocumentView docView = await VS.Documents.GetActiveDocumentViewAsync();
+            var position = docView.TextView?.Selection.Start.Position.Position;
+            //var text = docView.TextView?.Selection.TextView.TextBuffer.CurrentSnapshot;
+            if (position.HasValue)
+            {
+                //docView.TextBuffer.Insert(position.Value, Guid.NewGuid().ToString());
+                //var textDoc= docView.TextBuffer.GetTextDocument();
+
+                //var doc = await VS.Documents.GetActiveDocumentViewAsync();
+
+                var span = docView.TextView.Selection.SelectedSpans.FirstOrDefault();
+                var text = span.GetText();
+                if (text.Length >10)
+                    CheckSelectionIsMethod(text);
+            }
+        }
+
+
+
+        void OnMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+
+            FrameworkElement fe = e.Source as FrameworkElement;
+            if (this.SelectedTypeDefinitionInfo == null)
+            {
+
+                //cm.ContextMenu.Opened =;
+                fe.ContextMenu.IsOpen=false;
+                e.Handled=true;
+            }
+            else
+            {
+                TextBlock block = e.Source as TextBlock;
+                //cm.ContextMenu.Opened =;
+                ContextMenu cm = block.ContextMenu;
+
+                var child = cm.Items.Count;
+                foreach (var item in cm.Items)
+                {
+                    var sm = item as MenuItem;
+                    if (sm.Name =="Generate" && this.SelectedTypeDefinitionInfo != null)
+                    {
+                        foreach (MenuItem sub in sm.Items)
+                        {
+                            if (this.SelectedTypeDefinitionInfo.DeclarationType == TypeOfDeclaration.Class)
+                            {
+                                sub.Visibility= Visibility.Visible;
+                                if (new string[] { "DTO", "REPO", "CTRL" }.Contains(sub.Name))
+                                    sub.IsEnabled=true;
+                                else
+                                    sub.IsEnabled= false;
+                            }
+                            else if (this.SelectedTypeDefinitionInfo.DeclarationType == TypeOfDeclaration.Interface)
+                            {
+                                sub.Visibility= Visibility.Visible;
+                                if (new string[] { "CQRS", "EXPLORE" }.Contains(sub.Name))
+                                    sub.IsEnabled= true;
+                                else
+                                    sub.IsEnabled= false;
+                            }
+                        }
+                    }
+
+
+
+                }
+
+
+            }
+
+        }
         void OptionClick(object sender, RoutedEventArgs e)
         {
             //Code 5
@@ -212,8 +305,95 @@ namespace ToolWindow
             }
         }
 
+        void CheckSelectionIsMethod(string text)
+        {
+            //CompilationUnitSyntax root = null;
+            try
+            {
+                CancellationToken token = new CancellationTokenSource().Token;
+                var root = CSharpSyntaxTree.ParseText(text).GetRoot(token);
 
+                if (root is CompilationUnitSyntax)
+                {
 
+                    foreach (var item in root.ChildNodes())
+                    {
+                        foreach (var item1 in item.ChildNodes())
+                        {
+                            if (item1 is LocalFunctionStatementSyntax fs)
+                            {
+                                var txt = fs.Identifier.Text;
+                                var check = $"Do you want to generate Controller and Repo method for {txt}?";
+                                if (txt.Length > 0)
+                                {
+                                    var method = SelectedTypeDefinitionInfo.Methods.Where(o => o.Name == txt);
+                                    if (method != null &&  SelectedTypeDefinitionInfo.DeclarationType == TypeOfDeclaration.Interface)
+                                    {
+                                        // find repo class
+                                        // lets assume we found it
+
+                                        string filePath = @"C:\Users\Narendra\source\repos\VSExentionSourceGeneration\ApiTemplate_For_Testing\Restarted.System.Infrastructure\Persistence\Repositories\UserRepository.cs";
+                                        string repoText = File.ReadAllText(filePath);
+                                        var rootClass = CSharpSyntaxTree.ParseText(repoText).GetRoot(token);
+                                        SyntaxNode classSyntaxNode = null;
+                                        FindTypeDeclarationSyntax(rootClass.ChildNodes(), out classSyntaxNode);
+                                        if (classSyntaxNode is ClassDeclarationSyntax classSyntax)
+                                        {
+                                            string methodSource = @"string Lookup(){ return 'Hello';}";
+                                            var methodSyntax = CSharpSyntaxTree.ParseText(methodSource).GetRoot(token);
+                                            var tree = methodSyntax as SyntaxNode;
+                                            foreach (var node in tree.ChildNodes())
+                                            {
+                                                if (node is MemberDeclarationSyntax foundMethod)
+                                                {
+                                                    tree = node;
+                                                }
+                                            }
+                                            if (tree is MemberDeclarationSyntax mm)
+                                            {
+                                                // Replacing class node
+                                                // access old node
+                                                ClassDeclarationSyntax old = classSyntax;
+                                                // Search node with identified i.e classname e.g. IUserRepository and store new node
+                                                ClassDeclarationSyntax New = old.WithIdentifier(classSyntax.Identifier);
+                                                // add member to new node
+                                                var value = New.AddMembers(mm);
+                                                // replace old node with new in the ROOT
+#warning Method name is used to locate the node. Overloaded methods will not work
+#warning refer https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/get-started/syntax-transformation
+                                                rootClass = rootClass.ReplaceNode(old, value);
+                                                var source = rootClass.ToFullString();
+                                                File.WriteAllText(filePath+".temp", source);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Couldnot parse the provided source code string", ex);
+            }
+        }
+        private void FindTypeDeclarationSyntax(IEnumerable<SyntaxNode> childNodes, out SyntaxNode typeDeclarationSyntaxNode)
+        {
+            typeDeclarationSyntaxNode = null;
+            foreach (var node in childNodes)
+            {
+                if (node is ClassDeclarationSyntax)
+                {
+                    typeDeclarationSyntaxNode = node;
+                    return;
+                }
+
+                FindTypeDeclarationSyntax(node.ChildNodes(), out typeDeclarationSyntaxNode);
+            }
+        }
         async Task<TypeDefinitionInfo> GetTypeInformation()
         {
             TypeDefinitionInfo typeDefinition = null;
@@ -234,6 +414,25 @@ namespace ToolWindow
             return typeDefinition;
         }
 
+        async Task<TypeDefinitionInfo> GetTypeInformation(string filePath)
+        {
+            TypeDefinitionInfo typeDefinition = null;
+            try
+            {
+
+                string source = File.ReadAllText(filePath);
+
+                IParser Parser = TransformFactory.Create(ParserType.SyntaxTree);
+                typeDefinition = Parser.Parse(new ParsingDetails(source));
+            }
+            catch (Exception ex)
+            {
+
+
+            }
+
+            return typeDefinition;
+        }
 
 
 

@@ -1,0 +1,5 @@
+﻿    async public {@DTO} {@Name} (int id)
+    {		    
+            return this.context.{@Plural}
+                     .FirstOrDefaultAsync(o => o.Id == id);
+    }	

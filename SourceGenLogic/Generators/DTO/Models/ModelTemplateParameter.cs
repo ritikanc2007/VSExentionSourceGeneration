@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Restarted.Generators.Generators.DTO.Template
 {
-    internal class ModelTemplateParameter: ITemplateParameter
+    public class ModelTemplateParameter: ITemplateParameter
     {
 
        

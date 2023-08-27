@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
+using System.Security.Permissions;
 using System.Windows.Forms;
 using ToolWindow.DynamicForm.Model;
 using WinFormsApp1.DynamicForm.CustomControl;
@@ -109,8 +110,8 @@ namespace WinFormsApp1.DynamicForm
                     {
                         string[] Getkeywords = { "Get", "Find", "Exist", "Duplicate", "Validate" };
                         string[] Createkeywords = { "Create", "Add", "Save", "Insert" };
-                        string[] Updatekeywords = { "Save", "Update", "Modiry", "Change", };
-                        string[] Deletekeywords = { "Delete", "Remove",  };
+                        string[] Updatekeywords = { "Save", "Update", "Modify", "Change" };
+                        string[] Deletekeywords = { "Delete", "Remove"  };
 
                         if (Getkeywords.Any(g => methodItemInfo.Name.Contains(g)))
                         {
@@ -147,9 +148,9 @@ namespace WinFormsApp1.DynamicForm
                             route= $"{methodItemInfo.Name}";
 
                     }
-
-                    MethodSettingsControl ctrl = new MethodSettingsControl(kvp.Name,route,action);
-                    ctrl.Name= kvp.Name;
+                    
+                    MethodSettingsControl ctrl = new MethodSettingsControl(kvp.QualifiedName, kvp.Name,route,action);
+                    ctrl.Name= kvp.QualifiedName;
                     ctrl.Top = usedHeight + 5;
                     ctrl.Left = 5;
                     form.Controls.Add(ctrl);
@@ -371,11 +372,11 @@ namespace WinFormsApp1.DynamicForm
                         {
                             if (ctrl is MethodSettingsControl methodCtrl)
                             {
-                                if (setting.Name == methodCtrl.Name)
+                                if (setting.QualifiedName == methodCtrl.QualifiedName)
                                 { 
                                     setting.Value=  methodCtrl.CQRSRequestNameTextBox.Text;
                                     setting.LabelText = methodCtrl.IsCQRSQuery.ToString(); // Just extra checkbox value stored in label
-                                    setting.ContollerSetting = new ControllerSetting(methodCtrl.HttpAction, methodCtrl.ControllerMethod, methodCtrl.Route);
+                                    setting.ContollerSetting = new ControllerSetting(methodCtrl.QualifiedName, methodCtrl.HttpAction, methodCtrl.ControllerMethod, methodCtrl.Route);
                                    
                                 }
                             }

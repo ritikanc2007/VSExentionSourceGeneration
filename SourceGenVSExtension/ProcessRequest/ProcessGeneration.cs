@@ -110,12 +110,12 @@ namespace ToolWindow.ProcessRequest
 
             foreach (var method in typeDef.Methods)
             {
-                var setting = settings.Where(s => s.Name == method.Name).FirstOrDefault();
+                var setting = settings.Where(s => s.QualifiedName == method.QualifiedName).FirstOrDefault();
                 string requestType = "Command";
                 if (setting.LabelText.ToLower() == "true")
                     requestType = "Query";
 
-                data.MethodInfo.Add(new CQRSMethodMap(method.Name, setting.Value, requestType));
+                data.MethodInfo.Add(new CQRSMethodMap(method.QualifiedName, method.Name, setting.Value, requestType));
             }
 
 
@@ -144,7 +144,7 @@ namespace ToolWindow.ProcessRequest
 
             foreach (var method in typeDef.Methods)
             {
-                var setting = settings.Where(s => s.Name == method.Name).FirstOrDefault();
+                var setting = settings.Where(s => s.QualifiedName == method.QualifiedName).FirstOrDefault();
                 string cqrSRequestName = setting.Value;
                 //setting.ContollerSetting.
 
@@ -152,6 +152,7 @@ namespace ToolWindow.ProcessRequest
                 {
                     CQRSRequestName = cqrSRequestName,
                     HttpAction = setting.ContollerSetting.HTTPAction,
+                    QualifiedName= setting.QualifiedName,
                     MethodName = setting.ContollerSetting.MethodName,
                     Route = setting.ContollerSetting.Route,
                     MethodReturnType = method.ReturnType,

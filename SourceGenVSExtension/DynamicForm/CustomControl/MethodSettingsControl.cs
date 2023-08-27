@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace WinFormsApp1.DynamicForm.CustomControl
 {
@@ -15,17 +17,22 @@ namespace WinFormsApp1.DynamicForm.CustomControl
         public string EntityName { get; set; } = "";
 
         bool isFormloading = false;
-        public MethodSettingsControl(string method, string route, string httpAction)
+
+        public string MethodName { get; set; }
+        public string QualifiedName { get; set; }
+        public MethodSettingsControl(string qualifiedName, string method, string route, string httpAction)
         {
 
 
             InitializeComponent();
-            lblMethodName.Text = method;
+            lblMethodName.Text = qualifiedName;
             EntityHiddenTextBox = txtEntityHidden;
+            QualifiedName =qualifiedName; // setting user controll name in the tag property to access it later
+            MethodName = method;
             CQRSRequestNameTextBox = txtCQRSRequestName;
            
             //cmbHTTPAction.SelectedIndex = 0;
-            txtControllerAction.Text = lblMethodName.Text;
+            txtControllerAction.Text = method;
 
             cmbHTTPAction.Items.Add("GET");
             cmbHTTPAction.Items.Add("POST");
@@ -66,12 +73,12 @@ namespace WinFormsApp1.DynamicForm.CustomControl
             {
                 if (checkBox1.Checked)
                 {
-                    txtCQRSRequestName.Text = lblMethodName.Text + EntityHiddenTextBox.Text + "Query";
+                    txtCQRSRequestName.Text = MethodName + EntityHiddenTextBox.Text + "Query";
                     cmbHTTPAction.SelectedItem="GET";
                 }
                 else
                 {
-                    txtCQRSRequestName.Text = lblMethodName.Text +EntityHiddenTextBox.Text+ "Command";
+                    txtCQRSRequestName.Text = MethodName +EntityHiddenTextBox.Text+ "Command";
                     cmbHTTPAction.SelectedItem="POST";
                 }
             }

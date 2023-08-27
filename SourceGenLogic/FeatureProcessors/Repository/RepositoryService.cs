@@ -16,6 +16,7 @@ using Microsoft.CodeAnalysis;
 using Restarted.Generators.FeatureProcessors.Models;
 using SourceGeneratorParser.Models.Types;
 using SourceGeneratorParser.Models.Metadata;
+using Restarted.Generators.FeatureProcessors.Process;
 
 namespace Restarted.Generators.FeatureProcessors.Repository
 {
@@ -97,7 +98,16 @@ namespace Restarted.Generators.FeatureProcessors.Repository
             ITemplateParameter parameter = new RepositoryTemplateParameter(typeDefinitionInfo, nameSpace, sourceFileName, dtoName, className, pluralEntityName, dbContextName, includes);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new ModelsRepository(parameter);
-            return processor.Process(codeTemplate);
+            //return processor.Process(codeTemplate);
+            var func = () =>
+            {
+                if (TemplateToUse.SwitchFlag == TemplateType.T4)
+                    return processor.Process(codeTemplate);
+                else
+                    return StaticTemplateProcessor.Process(TypeOfTemplate.Repository, parameter);
+            };
+            IProcessorResult result = func();
+            return result;
         }
 
         private static IProcessorResult ProcessInterface(TypeDefinitionInfo typeDefinitionInfo, string nameSpace, string sourceFileName, string dtoName, string className, string dbContextName, string pluralEntityName)
@@ -105,7 +115,16 @@ namespace Restarted.Generators.FeatureProcessors.Repository
             ITemplateParameter parameter = new RepositoryTemplateParameter(typeDefinitionInfo, nameSpace, sourceFileName, dtoName, className, pluralEntityName, dbContextName);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new IModelsRepository(parameter);
-            return processor.Process(codeTemplate);
+            // return processor.Process(codeTemplate);
+            var func = () =>
+            {
+                if (TemplateToUse.SwitchFlag == TemplateType.T4)
+                    return processor.Process(codeTemplate);
+                else
+                    return StaticTemplateProcessor.Process(TypeOfTemplate.RepositoryInterface, parameter);
+            };
+            IProcessorResult result = func();
+            return result;
         }
 
 

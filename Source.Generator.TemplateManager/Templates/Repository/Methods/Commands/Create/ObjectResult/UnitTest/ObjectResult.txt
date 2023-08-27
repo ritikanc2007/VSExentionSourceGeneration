@@ -1,0 +1,10 @@
+﻿    {AccessModifier} {@ReturnType} {@MethodName} {ParamString}
+    {		    
+        var entity = this.mapper.Map<<{ParamObject}>(entityDto);
+        this.context.Add(entity);
+        var result = await this.context.SaveChangesAsync();
+        if (result != null)
+            var response = await this.context.{LinqQuery.ProjectToListAsync<ReturnType>()};
+		return response;	
+    }
+			

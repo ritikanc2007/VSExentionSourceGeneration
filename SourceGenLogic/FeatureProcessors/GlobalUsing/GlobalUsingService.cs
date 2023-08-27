@@ -12,6 +12,7 @@ using Restarted.Generators.FeatureProcessors.Common;
 using Restarted.Generators.Common.Configurations;
 using System.Collections.Immutable;
 using Restarted.Generators.FeatureProcessors.Models;
+using Restarted.Generators.FeatureProcessors.Process;
 
 namespace Restarted.Generators.FeatureProcessors.GlobalUsing
 {
@@ -89,7 +90,16 @@ namespace Restarted.Generators.FeatureProcessors.GlobalUsing
             ITemplateParameter parameter = new GlobalUsingTemplateParameter(sourceFileName, uniqueNamespaces);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new GlobalUsingTemplate(parameter);
-            return processor.Process(codeTemplate);
+            //return processor.Process(codeTemplate);
+            var func = () =>
+            {
+                if (TemplateToUse.SwitchFlag == TemplateType.T4)
+                    return processor.Process(codeTemplate);
+                else
+                    return StaticTemplateProcessor.Process(TypeOfTemplate.GlobalUsings, parameter);
+            };
+            IProcessorResult result = func();
+            return result;
         }
 
         public class AttributeMetaDataGlobalUsing : AttributeMetaData

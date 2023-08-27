@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Restarted.Generators.Processor.Interfaces
 {
-    internal interface ICodeTemplate
+    public interface ICodeTemplate
     {
         
         

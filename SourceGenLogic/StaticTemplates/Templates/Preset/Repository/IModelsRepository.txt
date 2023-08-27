@@ -1,0 +1,25 @@
+﻿
+
+
+
+namespace {@NameSpace}
+{
+    public interface {@Name} : IBaseRepository
+    {
+        Task<IEnumerable<NameListDTO?>> Lookup();
+       
+        Task<{@DTO}> Get(int id);
+
+        Task<IEnumerable<{@DTO}>> GetAll();
+
+        Task<PagedResponse<IEnumerable<{@DTO}List>>> GetAll(int rowIndex, int pageSize);
+
+        Task<bool> IsExists(string name);
+
+        Task<int> Add({@DTO} entityDto);
+
+        Task<int> Update({@DTO} entityDto);
+        Task<int> Delete(int id);
+
+    }
+}

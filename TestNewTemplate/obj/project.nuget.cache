@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "8Ng1sMZJtu1F3nJ+FH+VXUHCwNa+4yAD2Y3gap/QfntXKKEWFVE4LTpdCmbKnqZLCEbM7dO1vZUPKu1okiu1Dw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\TestNewTemplate\\TestNewTemplate.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Narendra\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.4\\microsoft.codeanalysis.analyzers.3.3.4.nupkg.sha512",
+    "C:\\Users\\Narendra\\.nuget\\packages\\microsoft.codeanalysis.common\\4.7.0\\microsoft.codeanalysis.common.4.7.0.nupkg.sha512",
+    "C:\\Users\\Narendra\\.nuget\\packages\\microsoft.codeanalysis.csharp\\4.7.0\\microsoft.codeanalysis.csharp.4.7.0.nupkg.sha512",
+    "C:\\Users\\Narendra\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",
+    "C:\\Users\\Narendra\\.nuget\\packages\\system.reflection.metadata\\7.0.0\\system.reflection.metadata.7.0.0.nupkg.sha512",
+    "C:\\Users\\Narendra\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

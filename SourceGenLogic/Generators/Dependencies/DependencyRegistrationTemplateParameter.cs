@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Restarted.Generators.Generators.Dependencies
 {
-    internal class DependencyRegistrationTemplateParameter : ITemplateParameter
+    public class DependencyRegistrationTemplateParameter : ITemplateParameter
     {
 
 

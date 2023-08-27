@@ -1,0 +1,153 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "Restarted.Generators/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "SourceGeneratorParser": "1.0.0",
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Restarted.Generators.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Restarted.Generators.dll": {}
+        }
+      },
+      "SourceGeneratorParser/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/SourceGeneratorParser.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SourceGeneratorParser.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "System.CodeDom/7.0.0": {
+      "sha512": "GLltyqEsE5/3IE+zYRP5sNa1l44qKl9v+bfdMcwg+M9qnQf47wK3H0SUR/T+3N4JEQXF3vV4CSuuo0rsg+nq2A==",
+      "type": "package",
+      "path": "system.codedom/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.CodeDom.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.CodeDom.targets",
+        "lib/net462/System.CodeDom.dll",
+        "lib/net462/System.CodeDom.xml",
+        "lib/net6.0/System.CodeDom.dll",
+        "lib/net6.0/System.CodeDom.xml",
+        "lib/net7.0/System.CodeDom.dll",
+        "lib/net7.0/System.CodeDom.xml",
+        "lib/netstandard2.0/System.CodeDom.dll",
+        "lib/netstandard2.0/System.CodeDom.xml",
+        "system.codedom.7.0.0.nupkg.sha512",
+        "system.codedom.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "Restarted.Generators/1.0.0": {
+      "type": "project",
+      "path": "../SourceGenLogic/Restarted.Generators.csproj",
+      "msbuildProject": "../SourceGenLogic/Restarted.Generators.csproj"
+    },
+    "SourceGeneratorParser/1.0.0": {
+      "type": "project",
+      "path": "../SourceGeneratorParser/SourceGeneratorParser.csproj",
+      "msbuildProject": "../SourceGeneratorParser/SourceGeneratorParser.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "Restarted.Generators >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\Narendra\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\Source.Generator.TemplateManager\\Source.Generator.TemplateManager.csproj",
+      "projectName": "Source.Generator.TemplateManager",
+      "projectPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\Source.Generator.TemplateManager\\Source.Generator.TemplateManager.csproj",
+      "packagesPath": "C:\\Users\\Narendra\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\Source.Generator.TemplateManager\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\Narendra\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGenLogic\\Restarted.Generators.csproj": {
+              "projectPath": "C:\\Users\\Narendra\\source\\repos\\VSExentionSourceGeneration\\SourceGenLogic\\Restarted.Generators.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

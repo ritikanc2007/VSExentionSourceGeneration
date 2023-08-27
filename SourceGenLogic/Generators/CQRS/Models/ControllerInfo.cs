@@ -7,8 +7,8 @@ namespace Restarted.Generators.Generators.CQRS.Models
 {
     public class ControllerAction
     {
-    
 
+        public string QualifiedName { get; set; }
         public string HttpAction { get; set; }
         public string Route { get; set; }
         public string MethodName { get; set; }

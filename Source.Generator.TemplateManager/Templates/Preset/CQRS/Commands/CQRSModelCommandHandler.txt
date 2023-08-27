@@ -1,0 +1,20 @@
+﻿using MediatR;
+
+
+namespace {@NameSpace}
+{
+    public class {@CQRSRequestName}Handler : IRequestHandler<{@CQRSRequestName}, {@ReturnType}>
+    {
+        private readonly {@Interface} repository;
+
+        public {@CQRSRequestName}Handler({@Interface} repository)
+        {
+            this.repository=repository;
+        }
+        public async Task<{@ReturnType}> Handle({@CQRSRequestName} request, CancellationToken cancellationToken)
+        {
+
+            return this.repository.{@MethodName}({@RequestArgumentsString});
+        }
+    }
+}
