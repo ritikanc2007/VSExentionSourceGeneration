@@ -1,0 +1,6 @@
+﻿        public Task<{@ReturnType}> Add({@DTO} entityDto)
+        {
+             var entity = this.mapper.Map<{@Entity}>(entityDto);
+            this.context.Add(entity);
+            return await this.context.SaveChangesAsync();
+        }

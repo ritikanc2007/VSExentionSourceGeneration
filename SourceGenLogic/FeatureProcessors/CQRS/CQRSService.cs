@@ -27,29 +27,30 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
 
             List<string> files = new List<string>();
 
-          
+
             foreach (var methodDef in typeDefinitionInfo.Methods)
             {
 
                 var methodData = data.MethodInfo.Where(o => o.QualifiedName == methodDef.QualifiedName).FirstOrDefault();
-
-                var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, methodDef.Name);
-                if (methodData.RequestType == "Command")
+                if (methodData != null)
                 {
-                    finalReplacedPath.FolderPath = finalReplacedPath.FolderPath.Replace("{RequestType}", "Commands");
-                    finalReplacedPath.NameSpacePath = finalReplacedPath.NameSpacePath.Replace("{RequestType}", "Commands");
-                }
-                else
-                {
-                    finalReplacedPath.FolderPath = finalReplacedPath.FolderPath.Replace("{RequestType}", "Queries");
-                    finalReplacedPath.NameSpacePath = finalReplacedPath.NameSpacePath.Replace("{RequestType}", "Queries");
-                }
-                // Transform Template
-                var result = ProcessCQRSTemplates(typeDefinitionInfo,generatorContext, finalReplacedPath.NameSpacePath, finalReplacedPath.FolderPath, methodData.RequestType,  methodDef, methodData.CQRSRequestName, data.PluralName);
+                    var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, methodDef.Name);
+                    if (methodData.RequestType == "Command")
+                    {
+                        finalReplacedPath.FolderPath = finalReplacedPath.FolderPath.Replace("{RequestType}", "Commands");
+                        finalReplacedPath.NameSpacePath = finalReplacedPath.NameSpacePath.Replace("{RequestType}", "Commands");
+                    }
+                    else
+                    {
+                        finalReplacedPath.FolderPath = finalReplacedPath.FolderPath.Replace("{RequestType}", "Queries");
+                        finalReplacedPath.NameSpacePath = finalReplacedPath.NameSpacePath.Replace("{RequestType}", "Queries");
+                    }
+                    // Transform Template
+                    var result = ProcessCQRSTemplates(typeDefinitionInfo, generatorContext, finalReplacedPath.NameSpacePath, finalReplacedPath.FolderPath, methodData.RequestType, methodDef, methodData.CQRSRequestName, data.PluralName, data.IsMethodGeneration == "true");
 
-                //GENERATORCONTEXT Adding namesapces -- MOVED INSIDE TO CAPTURE ALL FILES
-               // generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.CQRSActions, methodData.CQRSRequestName, NameSpacePath, data.GenerationPath));
-
+                    //GENERATORCONTEXT Adding namesapces -- MOVED INSIDE TO CAPTURE ALL FILES
+                    // generatorContext.NameSpaces.Add(new NameSpaceInfo(TypeOfCode.CQRSActions, methodData.CQRSRequestName, NameSpacePath, data.GenerationPath));
+                }
             }
 
 
@@ -60,14 +61,14 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
 
 
 
-        private static List<string> ProcessCQRSTemplates(TypeDefinitionInfo typeDefinitionInfo,GeneratorContext generatorContext,string nameSpacePath, string generationPath, string requestType,  MethodItemInfo methodDefinitionInfo, string cqrsRequestName,string pluralName)
+        private static List<string> ProcessCQRSTemplates(TypeDefinitionInfo typeDefinitionInfo, GeneratorContext generatorContext, string nameSpacePath, string generationPath, string requestType, MethodItemInfo methodDefinitionInfo, string cqrsRequestName, string pluralName, bool isMethodGeneration)
         {
-            
 
-            
+
+
 
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
-            ITemplateParameter parameter = new CQRSTemplateParameter(nameSpacePath, cqrsRequestName, typeDefinitionInfo, methodDefinitionInfo, cqrsRequestName, pluralName, requestType);
+            ITemplateParameter parameter = new CQRSTemplateParameter(nameSpacePath, cqrsRequestName, typeDefinitionInfo, methodDefinitionInfo, cqrsRequestName, pluralName, requestType, isMethodGeneration);
             List<string> files = new List<string>();
 
             List<IProcessorResult> results = new List<IProcessorResult>();
@@ -99,7 +100,7 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
                     if (TemplateToUse.SwitchFlag == TemplateType.T4)
                         return processor.Process(codeTemplate);
                     else
-                        return StaticTemplateProcessor.Process(TypeOfTemplate.CQRSActions, parameter,codeTemplate);
+                        return StaticTemplateProcessor.Process(TypeOfTemplate.CQRSActions, parameter, codeTemplate);
                 };
                 IProcessorResult result = func();
                 string pathGenerated = FileService.GenerateSourceAtFolderLocation(generationPath, requestName, result.SourceCode);
@@ -118,7 +119,7 @@ namespace Restarted.Generators.FeatureProcessors.CQRS
 
 
 
-      
+
     }
     public class AttributeMetaDataCQRS : AttributeMetaData
     {

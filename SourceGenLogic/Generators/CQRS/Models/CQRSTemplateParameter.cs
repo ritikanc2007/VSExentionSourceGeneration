@@ -12,7 +12,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
     {
 
        
-        public CQRSTemplateParameter(string nameSpace, string sourceFileName, TypeDefinitionInfo typeDefinitionInfo, MethodItemInfo currentMethod,string cqrsRequestName,string pluralEntityName,string requestType)
+        public CQRSTemplateParameter(string nameSpace, string sourceFileName, TypeDefinitionInfo typeDefinitionInfo, MethodItemInfo currentMethod,string cqrsRequestName,string pluralEntityName,string requestType, bool isMethodGeneration)
         {
 
             SourceFileName = sourceFileName;
@@ -21,6 +21,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
             CurrentMethod = currentMethod;
             CQRSRequestName=cqrsRequestName;
             PluralEntityName = pluralEntityName;
+            IsMethodGeneration = isMethodGeneration;
         }
 
         public string PluralEntityName { get; set; }
@@ -31,8 +32,8 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
         public string RequestType { get; set; }
         public MethodItemInfo CurrentMethod { get; set; }
 
-       
 
+        public bool IsMethodGeneration { get; set; }
         public string SourceFileName { get; set; }
     }
 

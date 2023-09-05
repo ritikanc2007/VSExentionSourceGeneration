@@ -1,0 +1,19 @@
+﻿
+        #define GETSINGLE
+
+        public async Task<{@ReturnType}> {@MethodName}({@ArgumentsTypeNameString})
+        {
+            var result = await this.context.{@Plural}
+                         .ProjectTo<@ReturnType}>(mapper.ConfigurationProvider)
+                         .Where({@LinqQueryWhere})
+        #if GETSINGLE                      
+                         .FirstOrDefaultAsync();
+        #elif MULTIPLE
+                         .ToListAsync();
+        #else SCALAR
+                         .{@ScalarConditonOrValue} // e.g. CountAsync() >0 or .Name/Id
+        #endif
+            
+
+            return result;
+        }

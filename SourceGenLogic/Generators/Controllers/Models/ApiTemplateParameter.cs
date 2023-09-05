@@ -17,7 +17,8 @@ namespace Restarted.Generators.Generators.Controllers.Models
             string sourceFileName,
             string entityName,
             string pluralName,
-            List<ControllerAction> actions)
+            List<ControllerAction> actions,
+            bool isMethodGeneration)
         {
             TypeDefinitionInfo = typeDefinitionInfo;
             PreferredNameSpace = nameSpace;
@@ -25,6 +26,7 @@ namespace Restarted.Generators.Generators.Controllers.Models
             EntityName= entityName;
             PluralName = pluralName;
             Actions = actions;
+            IsMethodGeneration = isMethodGeneration;
         }
 
         public TypeDefinitionInfo TypeDefinitionInfo { get; set; }
@@ -36,7 +38,7 @@ namespace Restarted.Generators.Generators.Controllers.Models
 
         public string PluralName { get; set; }
         public List<ControllerAction> Actions { get; set; } = new List<ControllerAction> { };
-
+        public bool IsMethodGeneration  { get; set; }
 
     }
 }

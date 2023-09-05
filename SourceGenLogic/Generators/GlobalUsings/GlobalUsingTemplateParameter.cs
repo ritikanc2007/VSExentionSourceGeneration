@@ -12,19 +12,19 @@ namespace Restarted.Generators.Generators.GlobalUsings
     {
 
 
-        public GlobalUsingTemplateParameter(string sourceFileName, HashSet<string> uniqueNamespaces)
+        public GlobalUsingTemplateParameter(string sourceFileName, HashSet<string> uniqueNamespaces, bool isMethodGeneration)
         {
             SourceFileName = sourceFileName;
             UniqueNamespaces = uniqueNamespaces;
-
+            IsMethodGeneration = isMethodGeneration;
           
         }
         public string SourceFileName { get; set; }
         public string PreferredNameSpace { get; set; }
         public HashSet<string> UniqueNamespaces { get; set; }
 
-          
 
+        public bool IsMethodGeneration { get; set; }
 
     }
 

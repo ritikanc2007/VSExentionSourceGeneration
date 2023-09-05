@@ -1,0 +1,21 @@
+﻿        #define GETSINGLE
+
+        public async Task<{@ReturnType}> {@MethodName}({@ArgumentsTypeNameString})
+        {
+            var entity = this.context.{@Plural}
+                  .Where({@LinqQueryWhere})
+                  .FirstOrDefault();
+
+            
+            if (entity == null)
+                return Task.FromResult(0);
+
+            if (context?.Entry(entity).State == EntityState.Detached)
+            {
+                context.Attach(entity);
+            }
+            
+            this.context.Remove(entity);
+
+            return this.context.SaveChangesAsync();
+        }

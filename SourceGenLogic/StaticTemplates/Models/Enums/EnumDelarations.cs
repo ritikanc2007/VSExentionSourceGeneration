@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Restarted.Generators.FeatureProcessors.Models.Enums
 {
+    
     public enum MethodTypes
     {
         Commands,
@@ -18,6 +20,7 @@ namespace Restarted.Generators.FeatureProcessors.Models.Enums
     }
     public enum PresetType
     {
+        
         DTO,
         Controller,
         Repository,

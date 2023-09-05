@@ -67,9 +67,9 @@ namespace Restarted.Generators.FeatureProcessors.Repository
                 IProcessorResult result = null;
 
                 if (isRepositoryProcessing)
-                result= ProcessRepository(typeDefinitionInfo, finalReplacedPath.NameSpacePath, sourcefileName, data.DTOName, data.EntityName, data.DatabaseContextName, data.PluralEntityName, null);
+                result= ProcessRepository(typeDefinitionInfo, finalReplacedPath.NameSpacePath, sourcefileName, data.DTOName, data.EntityName, data.DatabaseContextName, data.PluralEntityName, null,data.IsMethodGeneration == "true");
                 else
-                result= ProcessInterface(typeDefinitionInfo, finalReplacedPath.NameSpacePath, sourcefileName, data.DTOName, data.EntityName, data.DatabaseContextName, data.PluralEntityName);
+                result= ProcessInterface(typeDefinitionInfo, finalReplacedPath.NameSpacePath, sourcefileName, data.DTOName, data.EntityName, data.DatabaseContextName, data.PluralEntityName,data.IsMethodGeneration == "true");
 
 
                 FileService.GenerateSourceAtFolderLocation(finalReplacedPath.FolderPath, sourcefileName, result.SourceCode);
@@ -93,9 +93,9 @@ namespace Restarted.Generators.FeatureProcessors.Repository
 
         }
 
-        private static IProcessorResult ProcessRepository(TypeDefinitionInfo typeDefinitionInfo, string nameSpace, string sourceFileName, string dtoName, string className, string dbContextName, string pluralEntityName,string includes)
+        private static IProcessorResult ProcessRepository(TypeDefinitionInfo typeDefinitionInfo, string nameSpace, string sourceFileName, string dtoName, string className, string dbContextName, string pluralEntityName,string includes,bool isMethodGeneration)
         {
-            ITemplateParameter parameter = new RepositoryTemplateParameter(typeDefinitionInfo, nameSpace, sourceFileName, dtoName, className, pluralEntityName, dbContextName, includes);
+            ITemplateParameter parameter = new RepositoryTemplateParameter(typeDefinitionInfo, nameSpace, sourceFileName, dtoName, className, pluralEntityName, dbContextName, includes, isMethodGeneration);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new ModelsRepository(parameter);
             //return processor.Process(codeTemplate);
@@ -110,9 +110,9 @@ namespace Restarted.Generators.FeatureProcessors.Repository
             return result;
         }
 
-        private static IProcessorResult ProcessInterface(TypeDefinitionInfo typeDefinitionInfo, string nameSpace, string sourceFileName, string dtoName, string className, string dbContextName, string pluralEntityName)
+        private static IProcessorResult ProcessInterface(TypeDefinitionInfo typeDefinitionInfo, string nameSpace, string sourceFileName, string dtoName, string className, string dbContextName, string pluralEntityName, bool isMethodGeneration)
         {
-            ITemplateParameter parameter = new RepositoryTemplateParameter(typeDefinitionInfo, nameSpace, sourceFileName, dtoName, className, pluralEntityName, dbContextName);
+            ITemplateParameter parameter = new RepositoryTemplateParameter(typeDefinitionInfo, nameSpace, sourceFileName, dtoName, className, pluralEntityName, dbContextName,null, isMethodGeneration);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new IModelsRepository(parameter);
             // return processor.Process(codeTemplate);

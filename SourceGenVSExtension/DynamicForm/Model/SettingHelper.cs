@@ -27,7 +27,7 @@ namespace WinFormsApp1.DynamicForm.Model
         private const string ConstEntityName = "EntityName";
         private const string ConstIncludes = "Includes";
 
-        public static List<GeneratorSetting> GetGenerateAllSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
+        public static List<GeneratorSetting> GetGenerateAllSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath, string selectedMethod)
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
 
@@ -54,7 +54,7 @@ namespace WinFormsApp1.DynamicForm.Model
         }
 
 
-        public static List<GeneratorSetting> GetGenerateDTOSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
+        public static List<GeneratorSetting> GetGenerateDTOSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath, string selectedMethod)
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
 
@@ -80,7 +80,7 @@ namespace WinFormsApp1.DynamicForm.Model
             return settings;
 
         }
-        public static List<GeneratorSetting> GetGenerateRepositorySettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
+        public static List<GeneratorSetting> GetGenerateRepositorySettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath, string selectedMethod)
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
 
@@ -98,7 +98,7 @@ namespace WinFormsApp1.DynamicForm.Model
             return settings;
 
         }
-        public static List<GeneratorSetting> GetGenerateControllerWithRepoSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
+        public static List<GeneratorSetting> GetGenerateControllerWithRepoSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath, string selectedMethod)
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
 
@@ -112,7 +112,7 @@ namespace WinFormsApp1.DynamicForm.Model
             return settings;
 
         }
-        public static List<GeneratorSetting> GetGenerateCQRSSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
+        public static List<GeneratorSetting> GetGenerateCQRSSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath, string selectedMethod)
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
 
@@ -127,14 +127,18 @@ namespace WinFormsApp1.DynamicForm.Model
             var dependentControl = new GeneratorSetting("PluralName", "Plural", "", ControlType.text);
             settings.Add(eventControl);
             settings.Add(dependentControl); // Remove 
-            
 
-            List<string> Methods = new List<string>();
-            foreach (var method in typeDefinitionInfo?.Methods)
+
+            List<MethodItemInfo> Methods = typeDefinitionInfo?.Methods;
+
+            if (!string.IsNullOrEmpty(selectedMethod))
+                Methods = Methods.Where(o => o.QualifiedName == selectedMethod).ToList();
+            foreach (var method in Methods)
             {
                 string methodName = method.Name;
                 string qualifiedName = method.QualifiedName;
                 
+
                 settings.Add(new GeneratorSetting(methodName, methodName, methodName, ControlType.CQRSControl,qualifiedName: qualifiedName));
             }
 
@@ -143,7 +147,7 @@ namespace WinFormsApp1.DynamicForm.Model
             return settings;
 
         }
-        internal static List<GeneratorSetting> GetGenerateCTRLSettings(TypeDefinitionInfo typeDefinitionInfo, string initialFolderDirectory)
+        internal static List<GeneratorSetting> GetGenerateCTRLSettings(TypeDefinitionInfo typeDefinitionInfo, string initialFolderDirectory, string selectedMethod)
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
 
@@ -158,8 +162,11 @@ namespace WinFormsApp1.DynamicForm.Model
             settings.Add(dependentControl); // Remove 
 
 
-            List<string> Methods = new List<string>();
-            foreach (var method in typeDefinitionInfo?.Methods)
+            List<MethodItemInfo> Methods = typeDefinitionInfo?.Methods;
+
+            if (!string.IsNullOrEmpty(selectedMethod))
+                Methods = Methods.Where(o => o.QualifiedName == selectedMethod).ToList();
+            foreach (var method in Methods)
             {
                 string methodName = method.Name;
                 settings.Add(new GeneratorSetting(methodName, methodName, methodName, ControlType.CQRSControl));
@@ -168,7 +175,7 @@ namespace WinFormsApp1.DynamicForm.Model
             return settings;
         }
 
-        public static List<GeneratorSetting> GetPathSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
+        public static List<GeneratorSetting> GetPathSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath, string selectedMethod)
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
 
@@ -188,7 +195,7 @@ namespace WinFormsApp1.DynamicForm.Model
 
         }
 
-        public static List<GeneratorSetting> GetConventionSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath)
+        public static List<GeneratorSetting> GetConventionSettings(TypeDefinitionInfo typeDefinitionInfo, string currentFolderPath, string selectedMethod)
         {
             List<GeneratorSetting> settings = new List<GeneratorSetting>();
 

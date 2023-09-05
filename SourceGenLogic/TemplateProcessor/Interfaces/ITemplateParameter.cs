@@ -15,5 +15,7 @@ namespace Restarted.Generators.Processor.Interfaces
         string SourceFileName { get; set; }
 
         string PreferredNameSpace { get; set; }
+
+        bool IsMethodGeneration { get; set; }
     }
 }

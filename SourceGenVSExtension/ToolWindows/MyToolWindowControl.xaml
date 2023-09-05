@@ -51,12 +51,21 @@
                                         <!--
                                         </ContextMenu>-->
                                         <ContextMenu  Name="TreeMenu" >
+                                            <MenuItem  Name="TREE" Header="Explorer" ContextMenuOpening="OnMenuOpening" >
+                                                <MenuItem Click="OptionClick" Name="RELOAD"   Header="Reload"></MenuItem>
+                                                
+                                            </MenuItem>
                                             <MenuItem  Name="Generate" Header="Generate" ContextMenuOpening="OnMenuOpening" >
                                                 <MenuItem Click="OptionClick" Name="EXPLORE"   Header="EXPLORE"></MenuItem>
                                                 <MenuItem Click="OptionClick" Name="DTO"  Header="DTO"></MenuItem>
                                                 <MenuItem Click="OptionClick" Name="REPO"  Header="Repository"></MenuItem>
                                                 <MenuItem Click="OptionClick" Name="CQRS"  Header="CQRS + Controller"></MenuItem>
                                                 <MenuItem Click="OptionClick" Name="CTRL"   Header="Controller"></MenuItem>
+                                            </MenuItem>
+                                            <MenuItem  Name="GenerateMethod" Header="Generate Method" ContextMenuOpening="OnMenuOpening" >
+                                                <MenuItem Click="OptionClick" Name="REPOMETHOD"  Header="Repository"></MenuItem>
+                                                <MenuItem Click="OptionClick" Name="CQRSMETHOD"  Header="CQRS + Controller"></MenuItem>
+                                                <MenuItem Click="OptionClick" Name="CTRLMETHOD"   Header="Controller"></MenuItem>
                                             </MenuItem>
                                             <MenuItem Name="Dependencies" Header="Dependencies" ContextMenuOpening="OnMenuOpening">
                                                 <MenuItem Click="OptionClick" Name="DI"  Header="Register DI"></MenuItem>

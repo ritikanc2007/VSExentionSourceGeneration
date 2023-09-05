@@ -12,19 +12,19 @@ namespace Restarted.Generators.Generators.MapperProfiles
     {
 
 
-        public MapperProfileTemplateParameter(string preferredNameSpace, string sourceFileName, Dictionary<string,string> targetSourceMap)
+        public MapperProfileTemplateParameter(string preferredNameSpace, string sourceFileName, Dictionary<string,string> targetSourceMap, bool isMethodGeneration)
         {
             PreferredNameSpace = preferredNameSpace;
             SourceFileName = sourceFileName;
             TargetSourceMap = targetSourceMap;
 
-          
+          IsMethodGeneration = isMethodGeneration;
         }
         public string SourceFileName { get; set; }
         public string PreferredNameSpace { get; set; }
         public Dictionary<string,string> TargetSourceMap { get; set; }
 
-          
+        public bool IsMethodGeneration { get; set; }
 
 
     }

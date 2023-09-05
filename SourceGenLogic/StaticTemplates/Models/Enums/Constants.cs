@@ -29,15 +29,17 @@ namespace Restarted.Generators.FeatureProcessors.Models.Enums
         public static string Plural = @"{@Plural}";
         public static string DTO = @"{@DTO}";
 
-        public static string ParameterString = @"{ParameterString}";
+        public static string ParameterString = @"{@ParameterString}";
         public static string ReturnType = @"{@ReturnType}";
         public static string LinqQuery = @"{@LinqQuery}";
+        public static string LinqQueryWhere = @"{@LinqQueryWhere}"; //(o=> o.Id == Id)
+        public static string ScalarConditonOrValue = @"{@ScalarConditonOrValue}"; //// e.g. CountAsync() >0 or .Name/Id
 
         public static string CQRSRequestName = "{@CQRSRequestName}";
         public static string MethodName = "{@MethodName}";
         public static string RequestArgumentsString = "{@RequestArgumentsString}";// request.Id,request.Name
         public static string ArgumentsTypeNameString = "{@ArgumentsTypeNameString}"; //"int id,string name"
-
+        public static string ArgumentsValuesString = "{@ArgumentsValuesString}"; //"id,name"
         // DTO
         public static string dtoContructorParameterStrings="{@dtoContructorParameterStrings}";
         public static string dtoContructorParameterPropertyAssignmentStrings="{@dtoContructorParameterPropertyAssignmentStrings}";
@@ -52,7 +54,8 @@ namespace Restarted.Generators.FeatureProcessors.Models.Enums
         public static string ActionMethodsPostBodies = "{@ActionMethodsPostBodies}";
         public static string ActionMethodsPutBodies = "{@ActionMethodsPutBodies}";
         public static string ActionMethodsDeleteBodies = "{@ActionMethodsDeleteBodies}";
-
+        public static string Route = "{@Route}";
+        public static string ImplementationType = "{@ImplementationType}"; //VALID VALUES REPOSITORY OR CQRS
         //Controller Repo
 
     }  

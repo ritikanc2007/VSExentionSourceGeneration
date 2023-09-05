@@ -30,13 +30,14 @@ namespace WinFormsApp1.DynamicForm
         {
             
         }
-        public List<GeneratorSetting> Generate(TypeDefinitionInfo typeDefinitionInfo, string SelectedMenuAction, string initialFolderDirectory, List<GeneratorSetting> savedSettings = null)
+        public List<GeneratorSetting> Generate(TypeDefinitionInfo typeDefinitionInfo,string selectedMethod, string SelectedMenuAction, string initialFolderDirectory, List<GeneratorSetting> savedSettings =null)
         {
+            
             initialFolderPath = initialFolderDirectory;
             if (SelectedMenuAction == "DTO")
-                settings = SettingHelper.GetGenerateDTOSettings(typeDefinitionInfo, initialFolderDirectory);
+                settings = SettingHelper.GetGenerateDTOSettings(typeDefinitionInfo, initialFolderDirectory,selectedMethod);
             if (SelectedMenuAction == "REPO")
-                settings = SettingHelper.GetGenerateRepositorySettings(typeDefinitionInfo, initialFolderDirectory);
+                settings = SettingHelper.GetGenerateRepositorySettings(typeDefinitionInfo, initialFolderDirectory, selectedMethod);
             if (SelectedMenuAction == "PATHS")
             {
                 if (savedSettings !=null)
@@ -44,7 +45,7 @@ namespace WinFormsApp1.DynamicForm
                 else
                 {
                     settings = new List<GeneratorSetting>();
-                    settings = SettingHelper.GetPathSettings(typeDefinitionInfo, initialFolderDirectory);
+                    settings = SettingHelper.GetPathSettings(typeDefinitionInfo, initialFolderDirectory, selectedMethod);
                 }
             }
             if (SelectedMenuAction == "CONVENTIONS")
@@ -54,16 +55,16 @@ namespace WinFormsApp1.DynamicForm
                 else
                 {
                     settings = new List<GeneratorSetting>();
-                    settings = SettingHelper.GetConventionSettings(typeDefinitionInfo, initialFolderDirectory);
+                    settings = SettingHelper.GetConventionSettings(typeDefinitionInfo, initialFolderDirectory, selectedMethod);
                 }
             }
             if (SelectedMenuAction == "CQRS")
-                settings = SettingHelper.GetGenerateCQRSSettings(typeDefinitionInfo, initialFolderDirectory);
+                settings = SettingHelper.GetGenerateCQRSSettings(typeDefinitionInfo, initialFolderDirectory, selectedMethod);
             else if (SelectedMenuAction == "CTRL")
             {
                 //settings = SettingHelper.GetGenerateCTRLSettings(typeDefinitionInfo, initialFolderDirectory);
 
-                settings= SettingHelper.GetGenerateControllerWithRepoSettings(typeDefinitionInfo, initialFolderDirectory);
+                settings= SettingHelper.GetGenerateControllerWithRepoSettings(typeDefinitionInfo, initialFolderDirectory, selectedMethod);
             }
 
             if (settings == null) return null;

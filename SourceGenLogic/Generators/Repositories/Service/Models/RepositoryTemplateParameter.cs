@@ -10,7 +10,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
     {
         
       
-        public RepositoryTemplateParameter(TypeDefinitionInfo typeDefinitionInfo,string nameSpace,string sourceFileName, string dtoName, string className,string pluralEntityName, string dbContextName, string includes=null)
+        public RepositoryTemplateParameter(TypeDefinitionInfo typeDefinitionInfo,string nameSpace,string sourceFileName, string dtoName, string className,string pluralEntityName, string dbContextName, string includes, bool isMethodGeneration)
         {
             SourceFileName = sourceFileName;
             DTOName = dtoName;
@@ -20,6 +20,7 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
             PluralEntityName = pluralEntityName;
             TypeDefinitionInfo=typeDefinitionInfo;
             Includes = !string.IsNullOrEmpty(includes) ? includes.Split(',') : null;
+            IsMethodGeneration = isMethodGeneration;
         }
 
         public TypeDefinitionInfo TypeDefinitionInfo { get; set; }
@@ -32,6 +33,8 @@ namespace Restarted.Generators.Generators.Repositories.Service.Models
         public string DatabaseContextName { get; set; }
         public string[] Includes  { get; set; }
         public string SourceFileName { get; set; }
+
+        public bool IsMethodGeneration { get; set; }
     }
 
    

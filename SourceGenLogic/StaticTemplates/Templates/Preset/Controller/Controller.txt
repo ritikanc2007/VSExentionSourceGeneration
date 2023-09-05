@@ -1,0 +1,35 @@
+﻿#define {@ImplementationType}
+
+    namespace {@NameSpace};
+
+    [AllowAnonymous]
+    [ApiController]
+    [Route("api/[controller]")]
+    public class {@Name} : ControllerBase
+    {
+
+#if REPOSITORY
+
+    private readonly {@Interface} repository;
+
+    public {@Name}({@Interface} repository)
+    {
+
+        this.repository=repository;
+    }
+
+#elif CQRS
+	
+        private readonly IMediator mediator;
+        private readonly IMapper mapper;
+
+        public {@Name}(IMediator mediator, IMapper mapper)
+        {
+            this.mediator=mediator;
+            this.mapper=mapper;
+        }
+#endif
+
+
+       
+    }

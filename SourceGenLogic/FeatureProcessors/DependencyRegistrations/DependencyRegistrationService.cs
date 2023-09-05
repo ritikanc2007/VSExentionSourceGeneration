@@ -26,7 +26,7 @@ namespace Restarted.Generators.FeatureProcessors
             var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
 
             // Transform Template
-            var result = ProcessDependencyRegistrationTemplate(finalReplacedPath.NameSpacePath, fileName, generatorContext.DependencyRepositories);
+            var result = ProcessDependencyRegistrationTemplate(finalReplacedPath.NameSpacePath, fileName, generatorContext.DependencyRepositories, data.IsMethodGeneration == "true");
 
         
             string pathGenerated = FileService.GenerateSourceAtFolderLocation(finalReplacedPath.FolderPath, fileName, result.SourceCode);
@@ -39,9 +39,9 @@ namespace Restarted.Generators.FeatureProcessors
 
 
         }
-        private static IProcessorResult ProcessDependencyRegistrationTemplate(string nameSpace, string sourceFileName, Dictionary<string, string> targetSourceMap)
+        private static IProcessorResult ProcessDependencyRegistrationTemplate(string nameSpace, string sourceFileName, Dictionary<string, string> targetSourceMap, bool isMethodGeneration)
         {
-            ITemplateParameter parameter = new DependencyRegistrationTemplateParameter(nameSpace, sourceFileName, targetSourceMap);
+            ITemplateParameter parameter = new DependencyRegistrationTemplateParameter(nameSpace, sourceFileName, targetSourceMap, isMethodGeneration);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new DependencyRegistrationTemplate(parameter);
             //return processor.Process(codeTemplate);

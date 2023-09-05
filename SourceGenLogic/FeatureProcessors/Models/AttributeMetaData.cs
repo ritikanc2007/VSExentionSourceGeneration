@@ -14,6 +14,8 @@ namespace Restarted.Generators.FeatureProcessors.Models
         }
         public string GenerationPath { get; set; }
         public FileParamInfo PathConvention { get; set; }
+
+        public string IsMethodGeneration { get; set; }
     }
 
     public class FileParamInfo

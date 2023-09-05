@@ -71,7 +71,7 @@ namespace Restarted.Generators.FeatureProcessors.GlobalUsing
                 //FolderAndNamespacePath finalReplacedPath = FileService.ConventionBasedPath("", data?.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
 
                 // Transform Template
-                var result = ProcessGlobalUsingTemplate(fileName, uniqueNamespaces);
+                var result = ProcessGlobalUsingTemplate(fileName, uniqueNamespaces,data.IsMethodGeneration == "true");
 
               
                 // 
@@ -85,9 +85,9 @@ namespace Restarted.Generators.FeatureProcessors.GlobalUsing
 
 
         }
-        private static IProcessorResult ProcessGlobalUsingTemplate(string sourceFileName, HashSet<string> uniqueNamespaces)
+        private static IProcessorResult ProcessGlobalUsingTemplate(string sourceFileName, HashSet<string> uniqueNamespaces, bool isMethodGeneration)
         {
-            ITemplateParameter parameter = new GlobalUsingTemplateParameter(sourceFileName, uniqueNamespaces);
+            ITemplateParameter parameter = new GlobalUsingTemplateParameter(sourceFileName, uniqueNamespaces, isMethodGeneration);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new GlobalUsingTemplate(parameter);
             //return processor.Process(codeTemplate);

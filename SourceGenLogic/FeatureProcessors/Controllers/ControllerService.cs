@@ -57,7 +57,7 @@ namespace Restarted.Generators.FeatureProcessors.Controllers
             FolderAndNamespacePath finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
 
 
-            ApiTemplateParameter parameter = new ApiTemplateParameter(typeDefinitionInfo, finalReplacedPath.NameSpacePath, data.ControllerName,  data.EntityName, data.PluralName, data.Actions);
+            ApiTemplateParameter parameter = new ApiTemplateParameter(typeDefinitionInfo, finalReplacedPath.NameSpacePath, data.ControllerName,  data.EntityName, data.PluralName, data.Actions, data.IsMethodGeneration == "true");
 
             // Process Validator
             ProcessResult processResult = ProcessControllerTemplate(parameter, typeDefinitionInfo);

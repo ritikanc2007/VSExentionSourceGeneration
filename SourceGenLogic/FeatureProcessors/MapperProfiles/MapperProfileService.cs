@@ -35,7 +35,7 @@ namespace Restarted.Generators.FeatureProcessors.MapperProfiles
             var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
 
             // Transform Template
-            var result = ProcessMapperProfileTemplate(finalReplacedPath.NameSpacePath, fileName, generatorContext.MapperProfiles);
+            var result = ProcessMapperProfileTemplate(finalReplacedPath.NameSpacePath, fileName, generatorContext.MapperProfiles, data.IsMethodGeneration == "true");
 
 
 
@@ -49,9 +49,9 @@ namespace Restarted.Generators.FeatureProcessors.MapperProfiles
 
 
         }
-        private static IProcessorResult ProcessMapperProfileTemplate(string nameSpace, string sourceFileName, Dictionary<string,string> targetSourceMap)
+        private static IProcessorResult ProcessMapperProfileTemplate(string nameSpace, string sourceFileName, Dictionary<string,string> targetSourceMap, bool isMethodGeneration)
         {
-            ITemplateParameter parameter = new MapperProfileTemplateParameter(nameSpace, sourceFileName, targetSourceMap);
+            ITemplateParameter parameter = new MapperProfileTemplateParameter(nameSpace, sourceFileName, targetSourceMap, isMethodGeneration);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new MapperProfileTemplate(parameter);
             //return processor.Process(codeTemplate);

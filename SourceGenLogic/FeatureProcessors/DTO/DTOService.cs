@@ -34,7 +34,7 @@ namespace Restarted.Generators.FeatureProcessors.DTO
             var finalReplacedPath = FileService.ConventionBasedPath(data.NameSpace, data.PathConvention.ConventionPath, data.PathConvention.FeatureName, data.PathConvention.FeatureModuleName, "");
 
             // Transform Template
-            var result = ProcessDTOTemplate(typeDefinitionInfo, finalReplacedPath.NameSpacePath, SourceFileNAme, data.Members, bool.Parse(data.AllPropertiesNullable));
+            var result = ProcessDTOTemplate(typeDefinitionInfo, finalReplacedPath.NameSpacePath, SourceFileNAme, data.Members, bool.Parse(data.AllPropertiesNullable),data.IsMethodGeneration == "true");
 
 
 
@@ -59,9 +59,9 @@ namespace Restarted.Generators.FeatureProcessors.DTO
         }
 
 
-        private static IProcessorResult ProcessDTOTemplate(TypeDefinitionInfo typeDefinitionInfo, string nameSpace, string className, string commanSeperatedMembers, bool allPropertiesNullable)
+        private static IProcessorResult ProcessDTOTemplate(TypeDefinitionInfo typeDefinitionInfo, string nameSpace, string className, string commanSeperatedMembers, bool allPropertiesNullable,bool isMethodGeneration)
         {
-            ITemplateParameter parameter = new ModelTemplateParameter(typeDefinitionInfo, nameSpace, className, commanSeperatedMembers, allPropertiesNullable);
+            ITemplateParameter parameter = new ModelTemplateParameter(typeDefinitionInfo, nameSpace, className, commanSeperatedMembers, allPropertiesNullable, isMethodGeneration);
             ITemplateProcessor processor = ProcessorFactory.Get(ProcessorType.Default);
             ICodeTemplate codeTemplate = new ModelDTO(parameter);
             //return processor.Process(codeTemplate);

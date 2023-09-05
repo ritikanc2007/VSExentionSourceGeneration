@@ -137,6 +137,8 @@ namespace Restarted.Generators.FeatureProcessors.Process
 
         internal static string ArgumentsTypeNameString(MethodItemInfo currentMethod)
         {
+
+           //return string.Join($",{Environment.NewLine}", currentMethod.Arguments.ToList().Select(o => $"{o.Type} {o.Name}").ToArray<string>());
             StringBuilder bldr = new StringBuilder();
                 int index=0;
             foreach (ArgumentItemInfo prop in currentMethod.Arguments)
@@ -149,6 +151,7 @@ namespace Restarted.Generators.FeatureProcessors.Process
 
         internal static string RequestArgumentsString(MethodItemInfo currentMethod)
         {
+           // return string.Join($",{Environment.NewLine}", currentMethod.Arguments.ToList().Select(o => $"request.{o.Name}").ToArray<string>());
             StringBuilder bldr = new StringBuilder();
             int index = 0;
             foreach (ArgumentItemInfo prop in currentMethod.Arguments)

@@ -16,6 +16,7 @@ using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using SourceGeneratorParser.Parsers.Helpers;
 
 namespace Restarted.Generators.FeatureProcessors.Process
 {
@@ -38,6 +39,8 @@ namespace Restarted.Generators.FeatureProcessors.Process
                 case TypeOfTemplate.ControllerWithCQRS:
                     ConstTemplateFileNameNoExt = "ControllerWithCQRS";
                     replacementParameters = ReplacementHelper.ControllerWithCQRS(parameter);
+
+
                     presetType= PresetType.Controller;
                     break;
                 case TypeOfTemplate.CQRSActions:
@@ -99,6 +102,38 @@ namespace Restarted.Generators.FeatureProcessors.Process
         {
 
             var pathInfo = PathHelper.GetPresetPaths(basePath: "", PathConstants.PresetPathTemplate, ConstTemplateFileNameNoExt,presetType);
+
+            var SourceTemplate = File.ReadAllText(pathInfo.Main);
+
+            foreach (var placeHolder in replacementParameters)
+            {
+                SourceTemplate= SourceTemplate.Replace(placeHolder.Key, placeHolder.Value);
+            }
+
+            return SourceTemplate;
+        }
+
+        private static string TransformAndAddMethod(Dictionary<string, string> replacementParameters, PresetType presetType)
+        {
+            // Method processor
+            // condition if IsMethodGeneration
+            // 1. Generate source code for method based on the template
+            // 2. Get SourceCode of main file and add method
+            // 3. Return source code
+            // Can add method to repo and controller but cqrs are new files.. so no change needed for CQRS
+            
+            if (presetType == PresetType.Controller || presetType == PresetType.Repository)
+            {
+                // get method templates
+                // replace params
+                // 
+
+                string sourceOfClass = @"public class Employee{}"; //File.ReadAllText(pathInfo.Main);
+                string sourceofMethod = @"public void DoSomething(){}";
+
+                ClassParserHelper.AddNewMethodsToClass(sourceOfClass, new List<string>() {sourceofMethod });
+            }
+            var pathInfo = PathHelper.GetPresetPaths(basePath: "", PathConstants.PresetPathTemplate, ConstTemplateFileNameNoExt, presetType);
 
             var SourceTemplate = File.ReadAllText(pathInfo.Main);
 

@@ -75,18 +75,18 @@ namespace ToolWindow.ProcessRequest
                 { "Interface", pathSettingsInterface.NameSpace }
             };
 
-           
+
             // Map FilePath Convention Information
             // Mapping repository convention
             FileParamInfo repoParams = MapFilePathConventionAndParams(attributeMetaData, pathSettingsRepo.Convention, settings);
-            
+
             attributeMetaData.PathConventions = new Dictionary<string, FileParamInfo>
             {
                 { "Repository", new FileParamInfo(pathSettingsRepo.Convention, repoParams.FeatureName,repoParams.FeatureModuleName,"") },
                 { "Interface", new FileParamInfo(pathSettingsInterface.Convention, repoParams.FeatureName,repoParams.FeatureModuleName,"") }
             };
             // Map FilePath Convention Information
-           
+
 
             files = RepositoryService.Process(typeDef, generatorContext, attributeMetaData);
             return files;
@@ -112,20 +112,20 @@ namespace ToolWindow.ProcessRequest
             {
                 var setting = settings.Where(s => s.QualifiedName == method.QualifiedName).FirstOrDefault();
                 string requestType = "Command";
-                if (setting.LabelText.ToLower() == "true")
+                if (setting !=null && setting.LabelText.ToLower() == "true")
                     requestType = "Query";
 
-                data.MethodInfo.Add(new CQRSMethodMap(method.QualifiedName, method.Name, setting.Value, requestType));
+                if (setting !=null)
+                    data.MethodInfo.Add(new CQRSMethodMap(method.QualifiedName, method.Name, setting.Value, requestType));
             }
-
 
             // Generate CQRS
             files = CQRSService.Process(typeDef, generatorContext, data);
             return files;
         }
-        public static List<string> ControllersCQRS(GeneratorContext generatorContext, TypeDefinitionInfo typeDef,List<GeneratorSetting> settings)
+        public static List<string> ControllersCQRS(GeneratorContext generatorContext, TypeDefinitionInfo typeDef, List<GeneratorSetting> settings)
         {
-           //Class/Interface name conventions
+            //Class/Interface name conventions
             ConventionSetting conventionSetting = ConfigurationHelper.ConventionSettings();
             var pathSettings = ConfigurationHelper.PathSettings()[TypeOfCode.Controller];
             List<string> files = new List<string>();
@@ -145,22 +145,26 @@ namespace ToolWindow.ProcessRequest
             foreach (var method in typeDef.Methods)
             {
                 var setting = settings.Where(s => s.QualifiedName == method.QualifiedName).FirstOrDefault();
-                string cqrSRequestName = setting.Value;
-                //setting.ContollerSetting.
 
-                data.Actions.Add(new ControllerAction()
+                if (setting!=null)
                 {
-                    CQRSRequestName = cqrSRequestName,
-                    HttpAction = setting.ContollerSetting.HTTPAction,
-                    QualifiedName= setting.QualifiedName,
-                    MethodName = setting.ContollerSetting.MethodName,
-                    Route = setting.ContollerSetting.Route,
-                    MethodReturnType = method.ReturnType,
-                    MethodParameterDefinition=   string.Join(",", method.Arguments.Select(x => ($"{x.Type} {x.Name}"))),
-                    MethodParametersString = string.Join(",", method.Arguments.Select(x => x.Name))
+                    string cqrSRequestName = setting.Value;
+                    //setting.ContollerSetting.
 
-                });
-                files = ControllerService.Process(typeDef, generatorContext, data);
+                    data.Actions.Add(new ControllerAction()
+                    {
+                        CQRSRequestName = cqrSRequestName,
+                        HttpAction = setting.ContollerSetting.HTTPAction,
+                        QualifiedName= setting.QualifiedName,
+                        MethodName = setting.ContollerSetting.MethodName,
+                        Route = setting.ContollerSetting.Route,
+                        MethodReturnType = method.ReturnType,
+                        MethodParameterDefinition=   string.Join(",", method.Arguments.Select(x => ($"{x.Type} {x.Name}"))),
+                        MethodParametersString = string.Join(",", method.Arguments.Select(x => x.Name))
+
+                    });
+                    files = ControllerService.Process(typeDef, generatorContext, data);
+                }
             }
             //END
             return files;
@@ -177,7 +181,7 @@ namespace ToolWindow.ProcessRequest
             //START ControllerInf
             AttributeMetaDataRepoController data = settings.ToMetadata<AttributeMetaDataRepoController>();
 
-            
+
             data.GenerationPath = pathSettings.FullPath;
             data.NameSpace = pathSettings.NameSpace;
             data.EntityName = typeDef.Name;
@@ -187,15 +191,15 @@ namespace ToolWindow.ProcessRequest
             MapFilePathConventionAndParams(data, pathSettings.Convention, settings);
 
             files= ControllerRepoService.Process(typeDef, generatorContext, data);
-           
+
             //END
             return files;
         }
 
         private static FileParamInfo MapFilePathConventionAndParams(AttributeMetaData data, string pathConvention, List<GeneratorSetting> settings)
         {
-           var featureSetting = settings?.Where(o => o.Name =="Feature").FirstOrDefault();
-           var featureModuleSetting = settings?.Where(o => o.Name =="FeatureModule").FirstOrDefault();
+            var featureSetting = settings?.Where(o => o.Name =="Feature").FirstOrDefault();
+            var featureModuleSetting = settings?.Where(o => o.Name =="FeatureModule").FirstOrDefault();
 
             string feature = string.Empty;
             string featureModule = string.Empty;
@@ -206,7 +210,7 @@ namespace ToolWindow.ProcessRequest
                 featureModule = featureModuleSetting.Value;
 
 
-            data.PathConvention = new FileParamInfo(pathConvention,feature, featureModule,"");
+            data.PathConvention = new FileParamInfo(pathConvention, feature, featureModule, "");
 
             return data.PathConvention;
         }
@@ -276,7 +280,7 @@ namespace ToolWindow.ProcessRequest
             };
 
             // Map FilePath Convention Information
-           // MapFilePathConventionAndParams(attributeMetaData, pathSettings.Convention, settings);
+            // MapFilePathConventionAndParams(attributeMetaData, pathSettings.Convention, settings);
 
             files = GlobalUsingService.Process(generatorContext, attributeMetaData);
 

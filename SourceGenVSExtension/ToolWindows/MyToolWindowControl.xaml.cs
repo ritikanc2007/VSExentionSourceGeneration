@@ -35,6 +35,7 @@ namespace ToolWindow
 
         private TypeDefinitionInfo SelectedTypeDefinitionInfo;
         private ProjectFile SelectedSolutionItem;
+        private string SelectedMethod;
         public MyToolWindowControl(Version vsVersion)
         {
             InitializeComponent();
@@ -74,18 +75,26 @@ namespace ToolWindow
         {
             //TreeViewItem selectedItem = SourceTreeView.SelectedItem as TreeViewItem;
             SelectedSolutionItem = SourceTreeView.SelectedItem as ProjectFile;
-            if (SelectedSolutionItem != null)
+            if (SelectedSolutionItem != null && (SelectedSolutionItem.ItemType == "PhysicalFile" || SelectedSolutionItem.ItemType == "Method"))
             {
-#warning added for testing - DELETE
-                //var doc = await VS.Documents.OpenAsync(SelectedSolutionItem.Path);
-                //if (doc != null)
-                //{
-                //    doc.TextView.Selection.SelectionChanged +=Selection_SelectionChanged;
 
-                //    // Warning ends here
-                //}
+#warning added for testing - DELETE
+                var doc = await VS.Documents.OpenAsync(SelectedSolutionItem.Path);
+                if (doc != null)
+                {
+                    doc.TextView.Selection.SelectionChanged +=Selection_SelectionChanged;
+
+                    // Warning ends here
+                }
+                this.SelectedMethod=string.Empty;
+                if (SelectedSolutionItem.ItemType == "Method")
+                    this.SelectedMethod =  SelectedSolutionItem.Name;
+
                 this.SelectedTypeDefinitionInfo= await GetTypeInformation();
             }
+
+
+
         }
 
         async private void Selection_SelectionChanged(object sender, EventArgs e)
@@ -102,7 +111,7 @@ namespace ToolWindow
 
                 var span = docView.TextView.Selection.SelectedSpans.FirstOrDefault();
                 var text = span.GetText();
-                if (text.Length >10)
+                if (text.Length >5)
                     CheckSelectionIsMethod(text);
             }
         }
@@ -130,28 +139,37 @@ namespace ToolWindow
                 foreach (var item in cm.Items)
                 {
                     var sm = item as MenuItem;
+
+
                     if (sm.Name =="Generate" && this.SelectedTypeDefinitionInfo != null)
                     {
-                        foreach (MenuItem sub in sm.Items)
+                        if (!string.IsNullOrEmpty(SelectedMethod))
+                            sm.IsEnabled = false;
+                        else
                         {
-                            if (this.SelectedTypeDefinitionInfo.DeclarationType == TypeOfDeclaration.Class)
+                            foreach (MenuItem sub in sm.Items)
                             {
-                                sub.Visibility= Visibility.Visible;
-                                if (new string[] { "DTO", "REPO", "CTRL" }.Contains(sub.Name))
-                                    sub.IsEnabled=true;
-                                else
-                                    sub.IsEnabled= false;
-                            }
-                            else if (this.SelectedTypeDefinitionInfo.DeclarationType == TypeOfDeclaration.Interface)
-                            {
-                                sub.Visibility= Visibility.Visible;
-                                if (new string[] { "CQRS", "EXPLORE" }.Contains(sub.Name))
-                                    sub.IsEnabled= true;
-                                else
-                                    sub.IsEnabled= false;
+                                if (this.SelectedTypeDefinitionInfo.DeclarationType == TypeOfDeclaration.Class)
+                                {
+                                    sub.Visibility= Visibility.Visible;
+                                    if (new string[] { "DTO", "REPO", "CTRL" }.Contains(sub.Name))
+                                        sub.IsEnabled=true;
+                                    else
+                                        sub.IsEnabled= false;
+                                }
+                                else if (this.SelectedTypeDefinitionInfo.DeclarationType == TypeOfDeclaration.Interface)
+                                {
+                                    sub.Visibility= Visibility.Visible;
+                                    if (new string[] { "CQRS", "EXPLORE" }.Contains(sub.Name))
+                                        sub.IsEnabled= true;
+                                    else
+                                        sub.IsEnabled= false;
+                                }
                             }
                         }
                     }
+                    else if (sm.Name =="GenerateMethod" && !string.IsNullOrEmpty(this.SelectedMethod))
+                        sm.IsEnabled = true;
 
 
 
@@ -176,7 +194,13 @@ namespace ToolWindow
 
                 var formBuilder = new DynamicFormBuilder();
 
-
+                if (menuItemName == "RELOAD")
+                {
+                    if (VS.MessageBox.ShowConfirm($"Do you want to repolulate the explorer?"))
+                        LoadSourceExplores();
+                    else
+                        return;
+                }
 
                 #region Validate Path and Convention setting and enforce
                 // Path setting related
@@ -222,16 +246,35 @@ namespace ToolWindow
 
                         genSetting = SerializationHelper.DeserializeSettings(fileName);
 
-                        genSetting = formBuilder.Generate(SelectedTypeDefinitionInfo, menuItemName, SelectedSolutionItem.ParentFolderPath, genSetting);
+                        genSetting = formBuilder.Generate(SelectedTypeDefinitionInfo, SelectedMethod, menuItemName, SelectedSolutionItem.ParentFolderPath, genSetting);
 
                         SerializationHelper.SaveSettings(genSetting, fileName);
                         return;
                     }
                 }
                 #endregion
+#warning changing menu name when method item clicked, just to check the flow
+                if (!string.IsNullOrEmpty(SelectedMethod) &&
+                       (new string[] { "REPOMETHOD", "CQRSMETHOD", "CTRLMETHOD" }.Contains(menuItemName)))
+                {
+                    if (menuItemName == "REPOMETHOD")
+                    {
+                        menuItemName = "CTRL";
+                    }
+                    else if (menuItemName == "CQRSMETHOD")
+                    {
+                        menuItemName = "CQRS";
+                    }
+                    else if (menuItemName == "CTRLMETHOD")
+                    {
+                        menuItemName = "CTRL";
+                    }
+
+                }
+#warning ENDS here
 
                 // Code generation related
-                var settings = formBuilder.Generate(SelectedTypeDefinitionInfo, menuItemName, SelectedSolutionItem.ParentFolderPath, null);
+                var settings = formBuilder.Generate(SelectedTypeDefinitionInfo, SelectedMethod, menuItemName, SelectedSolutionItem.ParentFolderPath, null);
 
                 if (VS.MessageBox.ShowConfirm("Do you want to proceed with generation?", "File will be create in the SubFolder named 'Generated'") == true)
                 {
@@ -241,6 +284,8 @@ namespace ToolWindow
                     if (generatorContext == null) generatorContext = new GeneratorContext();
 
 
+                    string isMethodGen = string.IsNullOrEmpty(SelectedMethod) ? "false" : "true";
+                    settings.Add(new GeneratorSetting("IsMethodGeneration", "IsMethodGeneration", isMethodGen, ControlType.CheckBox));
 
                     if (SelectedTypeDefinitionInfo != null && menuItemName == "DTO")
                     {
@@ -287,6 +332,23 @@ namespace ToolWindow
 
                         // generate controllers
                         files=  ProcessGeneration.GlobalUsings(generatorContext, SelectedTypeDefinitionInfo, settings);
+                    }
+                    else if (!string.IsNullOrEmpty(SelectedMethod) &&
+                        (new string[] { "REPOMETHOD", "CQRSMETHOD", "CTRLMETHOD" }.Contains(menuItemName)))
+                    {
+                        if (menuItemName == "REPOMETHOD")
+                        {
+
+                        }
+                        else if (menuItemName == "CQRSMETHOD")
+                        {
+
+                        }
+                        else if (menuItemName == "CTRLMETHOD")
+                        {
+
+                        }
+
                     }
 
                     // Save Generation Context
@@ -470,6 +532,27 @@ namespace ToolWindow
 
                 ProjectFile childCode = new ProjectFile(ch.Name, ch.Type.ToString(), ch.FullPath, parentFolderPAth);
                 parentItem.Projects.Add(childCode);
+
+                if (ch is PhysicalFile file)
+                {
+
+                    var task = GetTypeInformation(file.FullPath);
+
+                    var typeInfo = task.Result;
+                    if (typeInfo != null)
+                    {
+
+                        if (typeInfo.Methods.Count>0)
+                        {
+                            foreach (var method in typeInfo.Methods)
+                            {
+                                childCode.Projects.Add(new ProjectFile(method.QualifiedName, "Method", file.FullPath, file.FullPath));
+                            }
+
+                        }
+
+                    }
+                }
                 loadChildren(ch.Children, ref childCode);
             }
         }

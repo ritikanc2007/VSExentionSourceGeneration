@@ -13,19 +13,20 @@ namespace Restarted.Generators.Generators.DTO.Template
     {
 
        
-        public ModelTemplateParameter(TypeDefinitionInfo typeDefinitionInfo,string nameSpace, string sourceFileName,string commaSeperatedMembers,bool allMembersNullable)
+        public ModelTemplateParameter(TypeDefinitionInfo typeDefinitionInfo,string nameSpace, string sourceFileName,string commaSeperatedMembers,bool allMembersNullable, bool isMethodGeneration)
         {
             SourceFileName = sourceFileName;
             PreferredNameSpace = nameSpace;
 
             TypeDefinitionInfo = typeDefinitionInfo;
             Members = MapMembers( commaSeperatedMembers, typeDefinitionInfo.Members.ToNameTypeList(),  allMembersNullable);
+            IsMethodGeneration = isMethodGeneration;
         }
         public string SourceFileName { get; set; }
         public string PreferredNameSpace { get; set; }
         public  List<NameType> Members { get;  }
         public TypeDefinitionInfo TypeDefinitionInfo { get; set; }
-
+        public bool IsMethodGeneration { get; set; }
         private  List<NameType> MapMembers(string commaSeperatedMembers, List<NameType> classMembers, bool allMembersNullable)
         {
             Dictionary<string, string> membersAndTypes = new Dictionary<string, string>();

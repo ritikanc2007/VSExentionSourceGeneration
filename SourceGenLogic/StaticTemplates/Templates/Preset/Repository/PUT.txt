@@ -1,0 +1,17 @@
+﻿        public Task<{@ReturnType}> Update({@ArgumentsTypeNameString})
+        {
+            var entity = this.context
+                            .{@Plural}
+                            .Where({@LinqQueryWhere})
+                            .FirstOrDefault();
+
+            if (entity == null)
+                return Task.FromResult(0);
+
+            this.mapper.Map(entityDto, entity);
+           
+  
+            this.context.Entry(entity).State = EntityState.Modified;
+
+            return this.context.SaveChangesAsync();
+        }

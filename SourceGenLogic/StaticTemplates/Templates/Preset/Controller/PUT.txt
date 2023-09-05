@@ -1,0 +1,18 @@
+﻿#define {@ImplementationType}
+[HttpPut("{@Route}")]
+public async Task<IActionResult> {@MethodName}({@ArgumentsTypeNameString})
+{
+
+#if REPOSITORY
+	
+	var result = await repository.Update({@ArgumentsValuesString});
+	return Ok(result);
+
+#elif CQRS
+	
+	var result = await this.mediator.Send(new {@CQRSRequestName}({@ArgumentsValuesString})).Result;
+	return Ok(result);
+
+#endif
+
+}

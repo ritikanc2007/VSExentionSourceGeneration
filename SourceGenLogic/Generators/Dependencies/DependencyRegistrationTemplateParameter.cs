@@ -13,12 +13,12 @@ namespace Restarted.Generators.Generators.Dependencies
     {
 
 
-        public DependencyRegistrationTemplateParameter(string preferredNameSpace, string sourceFileName, Dictionary<string, string> targetSourceMap)
+        public DependencyRegistrationTemplateParameter(string preferredNameSpace, string sourceFileName, Dictionary<string, string> targetSourceMap, bool isMethodGeneration)
         {
             PreferredNameSpace = preferredNameSpace;
             SourceFileName = sourceFileName;
             TargetSourceMap = targetSourceMap;
-
+            IsMethodGeneration = isMethodGeneration;
 
         }
         public string SourceFileName { get; set; }
@@ -26,7 +26,7 @@ namespace Restarted.Generators.Generators.Dependencies
         public Dictionary<string, string> TargetSourceMap { get; set; }
 
 
-
+        public bool IsMethodGeneration { get; set; }
 
     }
 
