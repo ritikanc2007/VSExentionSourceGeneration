@@ -46,6 +46,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DynamicForm\CustomControl\GenerationParamsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DynamicForm\CustomControl\GenerationParamsControl.Designer.cs">
+      <DependentUpon>GenerationParamsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicForm\Forms\frmGenerator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DynamicForm\Forms\frmGenerator.Designer.cs">
+      <DependentUpon>frmGenerator.cs</DependentUpon>
+    </Compile>
     <Compile Include="DynamicForm\Forms\frmPathSetup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,8 +168,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="DynamicForm\CustomControl\GenerationParamsControl.resx">
+      <DependentUpon>GenerationParamsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DynamicForm\CustomControl\MethodSettingsControl.resx">
       <DependentUpon>MethodSettingsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DynamicForm\Forms\frmGenerator.resx">
+      <DependentUpon>frmGenerator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DynamicForm\Forms\frmPathSetup.resx">
       <DependentUpon>frmPathSetup.cs</DependentUpon>

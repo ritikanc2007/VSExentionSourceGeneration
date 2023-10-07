@@ -215,12 +215,15 @@ namespace WinFormsApp1.DynamicForm.Model
      
         public static string ToMemberString(List<MemberItemInfo> members)
         {
-            StringBuilder bldr = new StringBuilder();
+            //StringBuilder bldr = new StringBuilder();
+            if (members!= null && members.Count>0)
+               return string.Join(",",members.Select(o=>o.Name).ToArray());
+            //members.ForEach(o => bldr.Append(o.Name + ","));
+            //string memberString = bldr.ToString();
+            //memberString = memberString.Substring(0, memberString.Length - 1);
+            //return memberString;
 
-            members.ForEach(o => bldr.Append(o.Name + ","));
-            string memberString = bldr.ToString();
-            memberString = memberString.Substring(0, memberString.Length - 1);
-            return memberString;
+            return string.Empty;
         }
        
 

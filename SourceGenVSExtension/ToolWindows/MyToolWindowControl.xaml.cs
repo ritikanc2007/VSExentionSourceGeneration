@@ -285,7 +285,8 @@ namespace ToolWindow
 
 
                     string isMethodGen = string.IsNullOrEmpty(SelectedMethod) ? "false" : "true";
-                    settings.Add(new GeneratorSetting("IsMethodGeneration", "IsMethodGeneration", isMethodGen, ControlType.CheckBox));
+                    if (isMethodGen == "true" && settings!= null)
+                        settings.Add(new GeneratorSetting("IsMethodGeneration", "IsMethodGeneration", isMethodGen, ControlType.CheckBox));
 
                     if (SelectedTypeDefinitionInfo != null && menuItemName == "DTO")
                     {

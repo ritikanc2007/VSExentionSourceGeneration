@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Permissions;
 using System.Windows.Forms;
+using ToolWindow.DynamicForm.CustomControl;
 using ToolWindow.DynamicForm.Model;
 using WinFormsApp1.DynamicForm.CustomControl;
 using WinFormsApp1.DynamicForm.Model;
@@ -149,7 +150,7 @@ namespace WinFormsApp1.DynamicForm
                             route= $"{methodItemInfo.Name}";
 
                     }
-                    
+                   // GenerationParamsControl ctrl = new GenerationParamsControl();
                     MethodSettingsControl ctrl = new MethodSettingsControl(kvp.QualifiedName, kvp.Name,route,action);
                     ctrl.Name= kvp.QualifiedName;
                     ctrl.Top = usedHeight + 5;

@@ -62,7 +62,6 @@ C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\o
 C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\VSCT.write.1.tlog
 C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\resources.json
 C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\ctoFiles.json
-C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\_EmptyResource.resources.original
 C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\mergeCto.cache
 C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\ToolWindow.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\ToolWindow.csproj.CoreCompileInputs.cache
@@ -74,3 +73,5 @@ C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\o
 C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\extension.vsixmanifest
 C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\files.json
 C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\createTemplateManifests.cache
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\ToolWindow.DynamicForm.CustomControl.GenerationParamsControl.resources
+C:\Users\Narendra\source\repos\VSExentionSourceGeneration\SourceGenVSExtension\obj\Debug\ToolWindow.DynamicForm.Forms.frmGenerator.resources
